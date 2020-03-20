@@ -17,7 +17,7 @@ class SFMLDisplay : public arcade::IDisplayModule {
         ~SFMLDisplay();
 
         void display(std::vector<arcade::Element *> &elements);
-        arcade::inputs getInputs(void) const;
+        std::vector<arcade::inputs> getInputs(void);
 
     private:
         sf::RenderWindow _window;

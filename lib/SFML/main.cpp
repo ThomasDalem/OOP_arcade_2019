@@ -7,28 +7,38 @@
 
 #include <dlfcn.h>
 #include <iostream>
-#include "SFMLDisplay.hpp"
+#include "IDisplayModule.hpp"
+
+using namespace std;
+
+bool checkQuit(vector<arcade::inputs> inputs)
+{
+    if (inputs.size() == 0)
+        return (false);
+    for (auto it = inputs.begin(); it != inputs.end(); it++) {
+        if (*it == arcade::QUIT)
+            return (true);
+    }
+    return (false);
+}
 
 int main(void)
 {
-    void *handle = dlopen("./lib_arcade_sfml.so", RTLD_LAZY | RTLD_GLOBAL);
-    arcade::IDisplayModule *displayModule;
+    void *handle = dlopen("./lib_arcade_sfml.so", RTLD_LAZY);
     arcade::inputs key = arcade::PAUSE;
-    std::vector<arcade::Element *> elements;
-    std::string image("./minecraft.png");
-    std::unique_ptr<SFMLDisplay> (*fptr)();
+    vector<arcade::Element *> elements;
+    string image("./minecraft.png");
+    arcade::IDisplayModule *(*fptr)();
+    arcade::IDisplayModule *displayModule;
 
-    if (handle == NULL) {
-        std::cout << "Handle is empty" << std::endl;
-        std::cout << "Error: " << dlerror() << std::endl;
-        return (84);
-    }
-    fptr = (std::unique_ptr<SFMLDisplay>(*)())dlsym(handle, "createObject");
-    displayModule = fptr().get();
-    elements[0] = new arcade::Element(arcade::WHITE, image, Point{0, 0});
-    while (key != arcade::QUIT) {
+    fptr = (arcade::IDisplayModule *(*)()) dlsym(handle, "createObject");
+    displayModule = fptr();
+    elements.push_back(new arcade::Element(arcade::WHITE, image, Point{0, 0}));
+    while (checkQuit(displayModule->getInputs()) != true) {
         displayModule->display(elements);
     }
+    delete(elements[0]);
+    delete(displayModule);
     dlclose(handle);
     return (0);
 }

@@ -5,33 +5,55 @@
 ** SFMLDisplay
 */
 
+#include <iostream>
+#include <memory>
 #include "SFMLDisplay.hpp"
 
-extern "C" std::unique_ptr<SFMLDisplay> createObject()
+extern "C" SFMLDisplay *createObject()
 {
-    return (std::make_unique<SFMLDisplay>());
+    return (new SFMLDisplay);
 }
 
 SFMLDisplay::SFMLDisplay() : _window(sf::VideoMode(800, 600), "Game")
 {}
 
 SFMLDisplay::~SFMLDisplay()
-{}
+{
+    if (_window.isOpen())
+        _window.close();
+}
 
 void SFMLDisplay::display(std::vector<arcade::Element *> &elements)
 {
+    if (_window.isOpen() == false)
+        return;
     _window.clear();
     for (auto it = elements.begin(); it != elements.end(); it++) {
         sf::Texture texture;
-        if (texture.loadFromFile((*it)->getFilename()))
-            throw(std::string("Error: failed to load texture from" + (*it)->getFilename()));
+        if (!texture.loadFromFile((*it)->getFilename()))
+            throw(std::string("Error: failed to load texture"));
         sf::Sprite sprite(texture);
         _window.draw(sprite);
     }
     _window.display();
 }
 
-arcade::inputs SFMLDisplay::getInputs(void) const
+std::vector<arcade::inputs> SFMLDisplay::getInputs(void)
 {
-    return (arcade::inputs::QUIT);
+    sf::Event event;
+    std::vector<arcade::inputs> inputs;
+
+    if (_window.isOpen() == false)
+        return (inputs);
+    while (_window.pollEvent(event)) {
+        if (event.type == sf::Event::KeyPressed) {
+            if (event.key.code == sf::Keyboard::Up)
+                inputs.push_back(arcade::UP);
+            if (event.key.code == sf::Keyboard::Q)
+                inputs.push_back(arcade::QUIT);
+        }
+        if (event.type == sf::Event::Closed)
+            inputs.push_back(arcade::QUIT);
+    }
+    return (inputs);
 }

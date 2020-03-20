@@ -22,13 +22,13 @@ NO_COLOR	=	\033[0m
 
 %.o: %.cpp
 	@echo -e "$(YELLOW)Building object files...$(NO_COLOR)"
-	g++ -o $@ -c -fPIC $< $(CPPFLAGS)
+	g++ -o $@ -c -fPIC $< $(CPPFLAGS) -g3
 	@echo -e "$(GREEN)Files building complete !$(NO_COLOR)"
 
 $(NAME): all
 
 all: $(OBJ)
-	$(CC) -shared -o $(NAME) $(OBJ)
+	$(CC) -shared -o $(NAME) $(OBJ) -g3
 
 clean:
 	rm -f $(OBJ)
