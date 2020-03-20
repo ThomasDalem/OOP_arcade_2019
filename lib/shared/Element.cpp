@@ -32,3 +32,8 @@ const std::string &Element::getFilename(void) const
 {
     return (_filename);
 }
+
+void Element::setPosition(Point position)
+{
+    _position = position;
+}

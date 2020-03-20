@@ -29,6 +29,8 @@ namespace arcade {
             const std::string &getFilename(void) const;
             Point getPosition(void) const;
 
+            void setPosition(Point position);
+
         private:
             std::string &_filename;
             color _color;

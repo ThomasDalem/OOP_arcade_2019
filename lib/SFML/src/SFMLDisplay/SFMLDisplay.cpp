@@ -14,7 +14,7 @@ extern "C" SFMLDisplay *createObject()
     return (new SFMLDisplay);
 }
 
-SFMLDisplay::SFMLDisplay() : _window(sf::VideoMode(800, 600), "Game")
+SFMLDisplay::SFMLDisplay() : _window(sf::VideoMode(1000, 800), "Game")
 {}
 
 SFMLDisplay::~SFMLDisplay()
@@ -25,14 +25,19 @@ SFMLDisplay::~SFMLDisplay()
 
 void SFMLDisplay::display(std::vector<arcade::Element *> &elements)
 {
+    sf::Texture texture;
+    sf::Sprite sprite;
+    sf::Vector2f position;
+
     if (_window.isOpen() == false)
         return;
     _window.clear();
     for (auto it = elements.begin(); it != elements.end(); it++) {
-        sf::Texture texture;
         if (!texture.loadFromFile((*it)->getFilename()))
             throw(std::string("Error: failed to load texture"));
-        sf::Sprite sprite(texture);
+        sprite.setTexture(texture);
+        position = sf::Vector2f((*it)->getPosition().x * 50, (*it)->getPosition().y * 50);
+        sprite.setPosition(position);
         _window.draw(sprite);
     }
     _window.display();

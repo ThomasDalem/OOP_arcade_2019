@@ -7,6 +7,8 @@
 
 #include <dlfcn.h>
 #include <iostream>
+#include <chrono>
+#include <ctime>
 #include "IDisplayModule.hpp"
 
 using namespace std;
@@ -22,6 +24,16 @@ bool checkQuit(vector<arcade::inputs> inputs)
     return (false);
 }
 
+chrono::duration<double> getElapsedTime(
+    chrono::time_point<chrono::system_clock> start,
+    chrono::time_point<chrono::system_clock> end
+)
+{
+    chrono::duration<double> elapsedSeconds = end - start;
+
+    return (elapsedSeconds);
+}
+
 int main(void)
 {
     void *handle = dlopen("./lib_arcade_sfml.so", RTLD_LAZY);
@@ -30,12 +42,19 @@ int main(void)
     string image("./minecraft.png");
     arcade::IDisplayModule *(*fptr)();
     arcade::IDisplayModule *displayModule;
+    chrono::time_point<chrono::system_clock> now;
+    chrono::time_point<chrono::system_clock> last = chrono::system_clock::now();
 
     fptr = (arcade::IDisplayModule *(*)()) dlsym(handle, "createObject");
     displayModule = fptr();
     elements.push_back(new arcade::Element(arcade::WHITE, image, Point{0, 0}));
     while (checkQuit(displayModule->getInputs()) != true) {
-        displayModule->display(elements);
+        now = chrono::system_clock::now();
+        if (getElapsedTime(last, now).count() > 0.5) {
+            displayModule->display(elements);
+            last = chrono::system_clock::now();
+            elements[0]->setPosition(Point{elements[0]->getPosition().x + 1, 0}); // décale le perso de 1 pour test
+        }
     }
     delete(elements[0]);
     delete(displayModule);
