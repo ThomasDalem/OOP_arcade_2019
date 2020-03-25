@@ -43,7 +43,7 @@ void PacmanGame::initGame(void)
 
 void PacmanGame::playLoop(void)
 {
-
+    _elements.push_back(_player.getElement());
 }
 
 void PacmanGame::restart(void)

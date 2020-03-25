@@ -9,6 +9,7 @@
 #define PacmanGame_HPP_
 
 #include "IGameModule.hpp"
+#include "Entity.hpp"
 
 class PacmanGame : public arcade::IGameModule {
     public:
@@ -23,6 +24,7 @@ class PacmanGame : public arcade::IGameModule {
 
     private:
         std::vector<arcade::Element> _elements;
+        Entity _player;
 };
 
 #endif /* !PacmanGame_HPP_ */

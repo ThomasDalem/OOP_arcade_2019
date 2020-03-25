@@ -64,6 +64,7 @@ int main(void)
     while (checkQuit(displayModule->getInputs()) != true) {
         now = chrono::system_clock::now();
         if (getElapsedTime(last, now).count() > 0.5) {
+            gameModule->playLoop();
             std::vector<arcade::Element> elements = gameModule->getElements();
             displayModule->display(elements);
             last = chrono::system_clock::now();

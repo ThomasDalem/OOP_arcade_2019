@@ -5,7 +5,8 @@
 ## Makefile
 ##
 
-SRC			= 	src/PacmanGame.cpp
+SRC			= 	src/PacmanGame.cpp	\
+				src/Entity.cpp
 
 OBJ			=	$(SRC:.cpp=.o)
 
