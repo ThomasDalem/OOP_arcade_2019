@@ -17,13 +17,13 @@ class PacmanGame : public arcade::IGameModule {
         ~PacmanGame();
 
         void initGame(void);
-        void playLoop(void);
+        void playLoop(std::vector<arcade::Inputs> inputs);
         void restart(void);
         const std::vector<arcade::Element> &getElements() const;
-        const std::vector<arcade::Element *> &getConstElements() const;
 
     private:
         std::vector<arcade::Element> _elements;
+        std::vector<arcade::Element> _constElements;
         Entity _player;
 };
 

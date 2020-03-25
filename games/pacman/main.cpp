@@ -14,7 +14,7 @@
 
 using namespace std;
 
-bool checkQuit(vector<arcade::inputs> inputs)
+bool checkQuit(vector<arcade::Inputs> inputs)
 {
     if (inputs.size() == 0)
         return (false);
@@ -40,7 +40,7 @@ int main(void)
     void *graphHandle = dlopen("./../../lib/SFML/lib_arcade_sfml.so", RTLD_LAZY);
     void *gameHandle = dlopen("./lib_arcade_pacman.so", RTLD_LAZY);
 
-    arcade::inputs key = arcade::PAUSE;
+    arcade::Inputs key = arcade::PAUSE;
 
     arcade::IDisplayModule *(*fptr)();
     arcade::IDisplayModule *displayModule;
@@ -60,13 +60,18 @@ int main(void)
     chrono::time_point<chrono::system_clock> last = chrono::system_clock::now();
 
     gameModule->initGame();
+    std::vector<arcade::Inputs> inputs;
+    std::vector<arcade::Inputs> retreivedInputs;
 
-    while (checkQuit(displayModule->getInputs()) != true) {
+    while (checkQuit(inputs) != true) {
+        retreivedInputs = displayModule->getInputs();
+        inputs.insert(inputs.end(), retreivedInputs.begin(), retreivedInputs.end());
         now = chrono::system_clock::now();
-        if (getElapsedTime(last, now).count() > 0.5) {
-            gameModule->playLoop();
+        if (getElapsedTime(last, now).count() > 0.35) {
+            gameModule->playLoop(inputs);
             std::vector<arcade::Element> elements = gameModule->getElements();
             displayModule->display(elements);
+            inputs.clear();
             last = chrono::system_clock::now();
         }
     }

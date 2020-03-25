@@ -42,10 +42,10 @@ void SFMLDisplay::display(std::vector<arcade::Element> &elements)
     _window.display();
 }
 
-std::vector<arcade::inputs> SFMLDisplay::getInputs(void)
+std::vector<arcade::Inputs> SFMLDisplay::getInputs(void)
 {
     sf::Event event;
-    std::vector<arcade::inputs> inputs;
+    std::vector<arcade::Inputs> inputs;
 
     if (_window.isOpen() == false)
         return (inputs);
@@ -53,6 +53,12 @@ std::vector<arcade::inputs> SFMLDisplay::getInputs(void)
         if (event.type == sf::Event::KeyPressed) {
             if (event.key.code == sf::Keyboard::Up)
                 inputs.push_back(arcade::UP);
+            if (event.key.code == sf::Keyboard::Down)
+                inputs.push_back(arcade::DOWN);
+            if (event.key.code == sf::Keyboard::Left)
+                inputs.push_back(arcade::LEFT);
+            if (event.key.code == sf::Keyboard::Right)
+                inputs.push_back(arcade::RIGHT);
             if (event.key.code == sf::Keyboard::Q)
                 inputs.push_back(arcade::QUIT);
         }

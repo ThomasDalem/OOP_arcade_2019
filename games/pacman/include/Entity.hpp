@@ -12,35 +12,27 @@
 #include <string>
 #include "Element.hpp"
 
-enum Direction {
-    UP,
-    DOWN,
-    LEFT,
-    RIGHT
-};
-
 class Entity {
     public:
         Entity();
-        Entity(Point position, Direction direction, arcade::Element element);
+        Entity(Point direction, arcade::Element element);
         ~Entity();
 
-        Direction getDirection(void) const;
+        Point getDirection(void) const;
         const Point &getPosition(void) const;
         bool isAlive(void) const;
         const arcade::Element &getElement(void) const;
 
-        void setDirection(Direction direction);
+        void setDirection(Point direction);
         void setPosition(const Point &position);
         void setStatus(bool isAlive);
         void setElement(arcade::Element &element);
 
-        void move(std::vector<std::string> map);
+        void move(std::vector<arcade::Element> &map);
 
     private:
         bool _isAlive;
-        Point _position;
-        Direction _direction;
+        Point _direction;
         arcade::Element _element;
 };
 

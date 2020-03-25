@@ -9,6 +9,7 @@
 #define IGAMEMODULE_HPP_
 
 #include <vector>
+#include "Inputs.hpp"
 #include "Element.hpp"
 
 namespace arcade {
@@ -17,7 +18,7 @@ namespace arcade {
             virtual ~IGameModule() = default;
 
             virtual void initGame(void) = 0;
-            virtual void playLoop() = 0;
+            virtual void playLoop(std::vector<arcade::Inputs> inputs) = 0;
             virtual void restart() = 0;
             virtual const std::vector<arcade::Element> &getElements() const = 0;
     };

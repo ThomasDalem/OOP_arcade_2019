@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include "PacmanGame.hpp"
+#include "Inputs.hpp"
 
 extern "C" PacmanGame *createGame()
 {
@@ -32,18 +33,31 @@ void PacmanGame::initGame(void)
     strMap[5] = "**********";
 
     for (int i = 0; i < 6; i++) {
-        for (int j = 0; j < 9; j++) {
+        for (int j = 0; j < 10; j++) {
             if (strMap[i][j] == '*') {
-                arcade::Element element{filename, arcade::BLUE, Point{i, j}};
-                _elements.push_back(element);
+                arcade::Element element{filename, arcade::BLUE, Point{j, i}};
+                _constElements.push_back(element);
             }
         }
     }
 }
 
-void PacmanGame::playLoop(void)
+void PacmanGame::playLoop(std::vector<arcade::Inputs> inputs)
 {
+    _elements.clear();
+    for (auto it = inputs.begin(); it != inputs.end(); it++) {
+        if (*it == arcade::UP)
+            _player.setDirection(Point{0, -1});
+        else if (*it == arcade::DOWN)
+            _player.setDirection(Point{0, 1});
+        else if (*it == arcade::LEFT)
+            _player.setDirection(Point{-1, 0});
+        else if (*it == arcade::RIGHT)
+            _player.setDirection(Point{1, 0});
+    }
+    _player.move(_constElements);
     _elements.push_back(_player.getElement());
+    _elements.insert(_elements.end(), _constElements.begin(), _constElements.end());
 }
 
 void PacmanGame::restart(void)

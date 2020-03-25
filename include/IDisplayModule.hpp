@@ -9,29 +9,17 @@
 #define IDISPLAYMODULE_HPP_
 
 #include <vector>
+#include "Inputs.hpp"
 #include "Element.hpp"
 
 namespace arcade {
-    enum inputs {
-        QUIT,
-        PAUSE,
-        RESTART,
-        NEXT_LIB,
-        PREV_LIB,
-        NEXT_GAME,
-        PREV_GAME,
-        UP,
-        DOWN,
-        LEFT,
-        RIGHT
-    };
 
     class IDisplayModule {
         public:
             virtual ~IDisplayModule() = default;
 
             virtual void display(std::vector<Element> &elements) = 0;
-            virtual std::vector<inputs> getInputs(void) = 0;
+            virtual std::vector<Inputs> getInputs(void) = 0;
     };
 }
 
