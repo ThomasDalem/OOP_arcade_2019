@@ -15,12 +15,6 @@ extern "C" PacmanGame *createGame()
 }
 
 PacmanGame::PacmanGame()
-{}
-
-PacmanGame::~PacmanGame()
-{}
-
-void PacmanGame::initGame(void)
 {
     std::string strMap[6];
     std::string filename("../../games/pacman/assets/blue.png");
@@ -40,23 +34,27 @@ void PacmanGame::initGame(void)
             }
         }
     }
+    _player = std::make_unique<Entity>(_constElements);
 }
+
+PacmanGame::~PacmanGame()
+{}
 
 void PacmanGame::playLoop(std::vector<arcade::Inputs> inputs)
 {
     _elements.clear();
     for (auto it = inputs.begin(); it != inputs.end(); it++) {
         if (*it == arcade::UP)
-            _player.setDirection(Point{0, -1});
+            _player->setDirection(Point{0, -1});
         else if (*it == arcade::DOWN)
-            _player.setDirection(Point{0, 1});
+            _player->setDirection(Point{0, 1});
         else if (*it == arcade::LEFT)
-            _player.setDirection(Point{-1, 0});
+            _player->setDirection(Point{-1, 0});
         else if (*it == arcade::RIGHT)
-            _player.setDirection(Point{1, 0});
+            _player->setDirection(Point{1, 0});
     }
-    _player.move(_constElements);
-    _elements.push_back(_player.getElement());
+    _player->move();
+    _elements.push_back(_player->getElement());
     _elements.insert(_elements.end(), _constElements.begin(), _constElements.end());
 }
 

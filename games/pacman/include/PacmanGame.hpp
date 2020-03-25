@@ -8,6 +8,7 @@
 #ifndef PacmanGame_HPP_
 #define PacmanGame_HPP_
 
+#include <memory>
 #include "IGameModule.hpp"
 #include "Entity.hpp"
 
@@ -16,7 +17,6 @@ class PacmanGame : public arcade::IGameModule {
         PacmanGame();
         ~PacmanGame();
 
-        void initGame(void);
         void playLoop(std::vector<arcade::Inputs> inputs);
         void restart(void);
         const std::vector<arcade::Element> &getElements() const;
@@ -24,7 +24,7 @@ class PacmanGame : public arcade::IGameModule {
     private:
         std::vector<arcade::Element> _elements;
         std::vector<arcade::Element> _constElements;
-        Entity _player;
+        std::unique_ptr<Entity> _player;
 };
 
 #endif /* !PacmanGame_HPP_ */

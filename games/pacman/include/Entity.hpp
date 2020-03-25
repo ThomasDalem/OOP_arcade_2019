@@ -14,8 +14,12 @@
 
 class Entity {
     public:
-        Entity();
-        Entity(Point direction, arcade::Element element);
+        Entity(std::vector<arcade::Element> &map);
+        Entity(
+            Point direction,
+            arcade::Element element,
+            std::vector<arcade::Element> &map
+        );
         ~Entity();
 
         Point getDirection(void) const;
@@ -28,12 +32,14 @@ class Entity {
         void setStatus(bool isAlive);
         void setElement(arcade::Element &element);
 
-        void move(std::vector<arcade::Element> &map);
+        bool canMove(void);
+        void move(void);
 
     private:
         bool _isAlive;
         Point _direction;
         arcade::Element _element;
+        std::vector<arcade::Element> &_map;
 };
 
 #endif /* !ENTITY_HPP_ */

@@ -59,7 +59,6 @@ int main(void)
     chrono::time_point<chrono::system_clock> now;
     chrono::time_point<chrono::system_clock> last = chrono::system_clock::now();
 
-    gameModule->initGame();
     std::vector<arcade::Inputs> inputs;
     std::vector<arcade::Inputs> retreivedInputs;
 

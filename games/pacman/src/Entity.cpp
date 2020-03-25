@@ -8,16 +8,18 @@
 #include <iostream>
 #include "Entity.hpp"
 
-Entity::Entity() :
+Entity::Entity(std::vector<arcade::Element> &map) :
     _isAlive(true),
     _direction(Point{0, 0}),
-    _element(arcade::Element{std::string("./assets/pacman.png"), arcade::GREEN, Point{1, 1}})
+    _element(arcade::Element{std::string("./assets/pacman.png"), arcade::GREEN, Point{1, 1}}),
+    _map(map)
 {}
 
-Entity::Entity(Point direction, arcade::Element element) :
+Entity::Entity(Point direction, arcade::Element element, std::vector<arcade::Element> &map) :
     _isAlive(true),
     _direction(direction),
-    _element(element)
+    _element(element),
+    _map(map)
 {}
 
 Entity::~Entity()
@@ -45,7 +47,11 @@ const arcade::Element &Entity::getElement(void) const
 
 void Entity::setDirection(Point direction)
 {
+    Point prevDirection = _direction;
+
     _direction = direction;
+    if (!canMove())
+        _direction = prevDirection;
 }
 
 void Entity::setPosition(const Point &position)
@@ -63,14 +69,21 @@ void Entity::setElement(arcade::Element &element)
     _element = element;
 }
 
-void Entity::move(std::vector<arcade::Element> &map)
+bool Entity::canMove(void)
 {
-    for (auto it = map.begin(); it != map.end(); it++) {
+    for (auto it = _map.begin(); it != _map.end(); it++) {
         if (it->position.x == _element.position.x + _direction.x &&
             it->position.y == _element.position.y + _direction.y) {
-            return;
+            return (false);
         }
     }
+    return (true);
+}
+
+void Entity::move(void)
+{
+    if (!canMove())
+        return;
     _element.position.x += _direction.x;
     _element.position.y += _direction.y;
 }
