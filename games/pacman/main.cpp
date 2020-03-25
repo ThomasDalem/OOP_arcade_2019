@@ -10,6 +10,7 @@
 #include <chrono>
 #include <ctime>
 #include "IDisplayModule.hpp"
+#include "IGameModule.hpp"
 
 using namespace std;
 
@@ -36,28 +37,42 @@ chrono::duration<double> getElapsedTime(
 
 int main(void)
 {
-    void *handle = dlopen("./lib_arcade_sfml.so", RTLD_LAZY);
+    void *graphHandle = dlopen("./../../lib/SFML/lib_arcade_sfml.so", RTLD_LAZY);
+    void *gameHandle = dlopen("./lib_arcade_pacman.so", RTLD_LAZY);
+
     arcade::inputs key = arcade::PAUSE;
-    vector<arcade::Element> elements;
-    string image("./minecraft.png");
+
     arcade::IDisplayModule *(*fptr)();
     arcade::IDisplayModule *displayModule;
+
+    arcade::IGameModule *(*fptr2)();
+    arcade::IGameModule *gameModule;
+
+    fptr = (arcade::IDisplayModule *(*)()) dlsym(graphHandle, "createObject");
+
+    fptr2 = (arcade::IGameModule *(*)()) dlsym(gameHandle, "createGame");
+
+    displayModule = fptr();
+
+    gameModule = fptr2();
+
     chrono::time_point<chrono::system_clock> now;
     chrono::time_point<chrono::system_clock> last = chrono::system_clock::now();
 
-    fptr = (arcade::IDisplayModule *(*)()) dlsym(handle, "createObject");
-    displayModule = fptr();
-    elements.push_back(arcade::Element{image, arcade::WHITE, Point{0, 0}});
-    std::cout << "value : " << image << std::endl;
+    gameModule->initGame();
+
     while (checkQuit(displayModule->getInputs()) != true) {
         now = chrono::system_clock::now();
         if (getElapsedTime(last, now).count() > 0.5) {
+            std::vector<arcade::Element> elements = gameModule->getElements();
             displayModule->display(elements);
             last = chrono::system_clock::now();
-            elements[0].position.x = elements[0].position.x + 1; // décale le perso de 1 pour test
         }
     }
+
     delete(displayModule);
-    dlclose(handle);
+    delete(gameModule);
+    dlclose(graphHandle);
+    dlclose(gameHandle);
     return (0);
 }

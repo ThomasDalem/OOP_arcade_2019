@@ -20,21 +20,10 @@ namespace arcade {
         BLACK
     };
 
-    class Element {
-        public:
-            Element(color color, std::string &filename, Point pos);
-            ~Element();
-
-            color getColor(void) const;
-            const std::string &getFilename(void) const;
-            Point getPosition(void) const;
-
-            void setPosition(Point position);
-
-        private:
-            std::string &_filename;
-            color _color;
-            Point _position;
+    struct Element {
+        std::string filename;
+        arcade::color color;
+        Point position;
     };
 }
 

@@ -29,8 +29,8 @@ namespace arcade {
     class IDisplayModule {
         public:
             virtual ~IDisplayModule() = default;
-    
-            virtual void display(std::vector<Element *> &elements) = 0;
+
+            virtual void display(std::vector<Element> &elements) = 0;
             virtual std::vector<inputs> getInputs(void) = 0;
     };
 }

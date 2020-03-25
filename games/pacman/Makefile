@@ -5,15 +5,15 @@
 ## Makefile
 ##
 
-SRC			= 	src/SFMLDisplay/SFMLDisplay.cpp
+SRC			= 	src/PacmanGame.cpp
 
 OBJ			=	$(SRC:.cpp=.o)
 
-CPPFLAGS	=	-Wall -Werror -Wextra -I./include/ -I../../include/ -lsfml-graphics
+CPPFLAGS	=	-Wall -Werror -Wextra -I./include/ -I../../include/
 
 CC			=	g++
 
-NAME		=	lib_arcade_sfml.so
+NAME		=	lib_arcade_pacman.so
 
 GREEN		=	\033[32m
 YELLOW		=	\033[33m
@@ -27,7 +27,7 @@ NO_COLOR	=	\033[0m
 $(NAME): all
 
 all: $(OBJ)
-	$(CC) -shared -o $(NAME) $(OBJ) -g3 -lsfml-graphics
+	$(CC) -shared -o $(NAME) $(OBJ) -g3
 
 clean:
 	rm -f $(OBJ)
