@@ -16,18 +16,20 @@ extern "C" PacmanGame *createGame()
 
 PacmanGame::PacmanGame()
 {
-    std::string strMap[6];
+    std::string strMap[8];
     std::string filename("../../games/pacman/assets/blue.png");
 
-    strMap[0] = "**********";
-    strMap[1] = "*        *";
-    strMap[2] = "*  ** *  *";
-    strMap[3] = "*  * **  *";
-    strMap[4] = "*        *";
-    strMap[5] = "**********";
+    strMap[0] = "*************";
+    strMap[1] = "*           *";
+    strMap[2] = "* **** **** *";
+    strMap[3] = "* **** *    *";
+    strMap[4] = "*      * ** *";
+    strMap[5] = "* ****   ** *";
+    strMap[6] = "*           *";
+    strMap[7] = "*************";
 
-    for (int i = 0; i < 6; i++) {
-        for (int j = 0; j < 10; j++) {
+    for (int i = 0; i < 8; i++) {
+        for (int j = 0; j < 13; j++) {
             if (strMap[i][j] == '*') {
                 arcade::Element element{filename, arcade::BLUE, Point{j, i}};
                 _constElements.push_back(element);
@@ -35,6 +37,12 @@ PacmanGame::PacmanGame()
         }
     }
     _player = std::make_unique<Entity>(_constElements);
+    _enemy = std::make_unique<Ghost>(
+        Point{-1, 0},
+        arcade::Element{"./assets/pink.png",arcade::RED, Point{11, 6}},
+        _constElements,
+        *_player
+    );
 }
 
 PacmanGame::~PacmanGame()
@@ -53,8 +61,10 @@ void PacmanGame::playLoop(std::vector<arcade::Inputs> inputs)
         else if (*it == arcade::RIGHT)
             _player->setDirection(Point{1, 0});
     }
+    _enemy->move();
     _player->move();
     _elements.push_back(_player->getElement());
+    _elements.push_back(_enemy->getElement());
     _elements.insert(_elements.end(), _constElements.begin(), _constElements.end());
 }
 

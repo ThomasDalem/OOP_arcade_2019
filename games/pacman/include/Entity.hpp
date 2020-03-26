@@ -11,6 +11,7 @@
 #include <vector>
 #include <string>
 #include "Element.hpp"
+#include "IBehavior.hpp"
 
 class Entity {
     public:
@@ -20,7 +21,6 @@ class Entity {
             arcade::Element element,
             std::vector<arcade::Element> &map
         );
-        ~Entity();
 
         Point getDirection(void) const;
         const Point &getPosition(void) const;
@@ -33,9 +33,9 @@ class Entity {
         void setElement(arcade::Element &element);
 
         bool canMove(void);
-        void move(void);
+        virtual void move(void);
 
-    private:
+    protected:
         bool _isAlive;
         Point _direction;
         arcade::Element _element;

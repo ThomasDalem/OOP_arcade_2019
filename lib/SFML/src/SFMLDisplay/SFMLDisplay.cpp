@@ -14,7 +14,7 @@ extern "C" SFMLDisplay *createObject()
     return (new SFMLDisplay);
 }
 
-SFMLDisplay::SFMLDisplay() : _window(sf::VideoMode(1200, 1000), "Game")
+SFMLDisplay::SFMLDisplay() : _window(sf::VideoMode(1300, 1200), "Game")
 {}
 
 SFMLDisplay::~SFMLDisplay()

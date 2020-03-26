@@ -11,6 +11,7 @@
 #include <memory>
 #include "IGameModule.hpp"
 #include "Entity.hpp"
+#include "Ghost.hpp"
 
 class PacmanGame : public arcade::IGameModule {
     public:
@@ -25,6 +26,7 @@ class PacmanGame : public arcade::IGameModule {
         std::vector<arcade::Element> _elements;
         std::vector<arcade::Element> _constElements;
         std::unique_ptr<Entity> _player;
+        std::unique_ptr<Ghost> _enemy;
 };
 
 #endif /* !PacmanGame_HPP_ */

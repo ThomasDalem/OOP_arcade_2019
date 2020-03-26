@@ -22,9 +22,6 @@ Entity::Entity(Point direction, arcade::Element element, std::vector<arcade::Ele
     _map(map)
 {}
 
-Entity::~Entity()
-{}
-
 Point Entity::getDirection(void) const
 {
     return (_direction);

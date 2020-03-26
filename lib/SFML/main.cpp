@@ -9,11 +9,12 @@
 #include <iostream>
 #include <chrono>
 #include <ctime>
+#include "Point.hpp"
 #include "IDisplayModule.hpp"
 
 using namespace std;
 
-bool checkQuit(vector<arcade::inputs> inputs)
+bool checkQuit(vector<arcade::Inputs> inputs)
 {
     if (inputs.size() == 0)
         return (false);
@@ -37,7 +38,7 @@ chrono::duration<double> getElapsedTime(
 int main(void)
 {
     void *handle = dlopen("./lib_arcade_sfml.so", RTLD_LAZY);
-    arcade::inputs key = arcade::PAUSE;
+    arcade::Inputs key = arcade::PAUSE;
     vector<arcade::Element> elements;
     string image("./minecraft.png");
     arcade::IDisplayModule *(*fptr)();
@@ -48,13 +49,12 @@ int main(void)
     fptr = (arcade::IDisplayModule *(*)()) dlsym(handle, "createObject");
     displayModule = fptr();
     elements.push_back(arcade::Element{image, arcade::WHITE, Point{0, 0}});
-    std::cout << "value : " << image << std::endl;
     while (checkQuit(displayModule->getInputs()) != true) {
         now = chrono::system_clock::now();
         if (getElapsedTime(last, now).count() > 0.5) {
             displayModule->display(elements);
             last = chrono::system_clock::now();
-            elements[0].position.x = elements[0].position.x + 1; // décale le perso de 1 pour test
+            elements[0].position.x += 1; // décale le perso de 1 pour test
         }
     }
     delete(displayModule);
