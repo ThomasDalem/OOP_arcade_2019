@@ -11,10 +11,10 @@
 #include "Element.hpp"
 #include "Point.hpp"
 
-const Point pacLeft = {580, 0};
-const Point pacRight = {640, 0};
-const Point pacUp = {580, 193};
-const Point pacDown = {640, 193};
+const Point pacLeft = {290, 0};
+const Point pacRight = {320, 0};
+const Point pacUp = {290, 97};
+const Point pacDown = {320, 97};
 
 class SpriteManager {
     public:

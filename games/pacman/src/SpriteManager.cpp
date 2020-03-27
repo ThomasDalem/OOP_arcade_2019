@@ -35,9 +35,9 @@ void SpriteManager::changeDirection(Point &dir)
 void SpriteManager::moveSprite(void)
 {
     _element.rect.pos = _pos;
-    if (_pos.y >= _start.y + 2 * 65) {
+    if (_pos.y >= _start.y + 2 * 33) {
         _pos.y = _start.y;
         return;
     }
-    _pos.y += 65;
+    _pos.y += 33;
 }

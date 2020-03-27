@@ -9,8 +9,8 @@
 #define POINT_HPP_
 
 struct Point {
-    int x;
-    int y;
+    double x;
+    double y;
 };
 
 #endif /* !POINT_HPP_ */

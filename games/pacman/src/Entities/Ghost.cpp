@@ -10,17 +10,29 @@
 
 Ghost::Ghost(
     Point direction,
+    Point position,
     arcade::Element element, 
     std::vector<arcade::Element> &map,
     Entity &player
 ) :
-    Entity(direction, element, map)
+    Entity(direction, position, element, map)
 {
     _behavior = std::make_unique<RedBehavior>(map, player);
 }
 
 Ghost::~Ghost()
 {}
+
+bool Ghost::canMove(void)
+{
+    for (auto it = _map.begin(); it != _map.end(); it++) {
+        if (it->position.x == _element.position.x + _direction.x &&
+            it->position.y == _element.position.y + _direction.y) {
+            return (false);
+        }
+    }
+    return (true);
+}
 
 void Ghost::move(void)
 {
@@ -29,4 +41,6 @@ void Ghost::move(void)
         return;
     _element.position.x += _direction.x;
     _element.position.y += _direction.y;
+    _position.x += _direction.x;
+    _position.y += _direction.y;
 }

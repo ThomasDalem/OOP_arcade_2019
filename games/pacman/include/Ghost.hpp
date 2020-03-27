@@ -17,12 +17,14 @@ class Ghost : public Entity
     public:
         Ghost(
             Point direction,
+            Point position,
             arcade::Element element,
             std::vector<arcade::Element> &map,
             Entity &player
         );
         ~Ghost();
 
+        bool canMove(void);
         void move(void);
 
     private:

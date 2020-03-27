@@ -15,7 +15,9 @@ extern "C" SFMLDisplay *createObject()
 }
 
 SFMLDisplay::SFMLDisplay() : _window(sf::VideoMode(1300, 1200), "Game")
-{}
+{
+    _window.setFramerateLimit(120);
+}
 
 SFMLDisplay::~SFMLDisplay()
 {
@@ -36,7 +38,7 @@ void SFMLDisplay::display(std::vector<arcade::Element> &elements)
     for (auto it = elements.begin(); it != elements.end(); it++) {
         texture.loadFromFile(it->filename);
         sprite.setTexture(texture);
-        position = sf::Vector2f(it->position.x * 100, it->position.y * 100);
+        position = sf::Vector2f(it->position.x * 35, it->position.y * 35);
         sprite.setPosition(position);
         setDisplayRect(sprite, it->rect);
         _window.draw(sprite);

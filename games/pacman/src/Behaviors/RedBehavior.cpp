@@ -53,7 +53,7 @@ int RedBehavior::getDistance(Point a, Point b) const
 
 bool RedBehavior::comparePoints(Point a, Point b) const
 {
-    if (a.x != b.x || a.y != b.y)
+    if ((int)a.x != (int)b.x || (int)a.y != (int)b.y)
         return (false);
     return (true);
 }
