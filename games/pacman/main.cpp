@@ -37,7 +37,7 @@ chrono::duration<double> getElapsedTime(
 
 int main(void)
 {
-    void *graphHandle = dlopen("./../../lib/SFML/lib_arcade_sfml.so", RTLD_LAZY);
+    void *graphHandle = dlopen("./../../lib/LIBCACA/lib_arcade_libcaca.so", RTLD_LAZY);
     void *gameHandle = dlopen("./lib_arcade_pacman.so", RTLD_LAZY);
 
     arcade::Inputs key = arcade::PAUSE;
@@ -66,7 +66,7 @@ int main(void)
         retreivedInputs = displayModule->getInputs();
         inputs.insert(inputs.end(), retreivedInputs.begin(), retreivedInputs.end());
         now = chrono::system_clock::now();
-        if (getElapsedTime(last, now).count() > 0.3) {
+        if (getElapsedTime(last, now).count() > 0.1) {
             gameModule->playLoop(inputs);
             std::vector<arcade::Element> elements = gameModule->getElements();
             displayModule->display(elements);

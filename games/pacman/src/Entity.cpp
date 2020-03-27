@@ -11,7 +11,7 @@
 Entity::Entity(std::vector<arcade::Element> &map) :
     _isAlive(true),
     _direction(Point{0, 0}),
-    _element(arcade::Element{std::string("./assets/sprites.png"), arcade::GREEN, Point{1, 1},
+    _element(arcade::Element{std::string("./assets/sprites.png"), arcade::YELLOW, Point{1, 1},
             arcade::Rect{Point{62, 66}, Point{578, 0}}}),
     _map(map),
     _spriteManager(_element)

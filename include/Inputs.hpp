@@ -20,7 +20,8 @@ namespace arcade {
         UP,
         DOWN,
         LEFT,
-        RIGHT
+        RIGHT,
+        UNDEFINED
     };
 }
 

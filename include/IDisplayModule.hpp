@@ -13,7 +13,6 @@
 #include "Element.hpp"
 
 namespace arcade {
-
     class IDisplayModule {
         public:
             virtual ~IDisplayModule() = default;

@@ -17,6 +17,7 @@ namespace arcade {
         RED,
         BLUE,
         GREEN,
+        YELLOW,
         BLACK
     };
 
