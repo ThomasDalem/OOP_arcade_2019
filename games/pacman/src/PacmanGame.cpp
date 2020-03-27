@@ -31,7 +31,7 @@ PacmanGame::PacmanGame()
     for (int i = 0; i < 8; i++) {
         for (int j = 0; j < 13; j++) {
             if (strMap[i][j] == '*') {
-                arcade::Element element{filename, arcade::BLUE, Point{j, i}};
+                arcade::Element element{filename, arcade::BLUE, Point{j, i}, arcade::Rect{Point{0, 0}, Point{0, 0}}};
                 _constElements.push_back(element);
             }
         }
@@ -39,7 +39,7 @@ PacmanGame::PacmanGame()
     _player = std::make_unique<Entity>(_constElements);
     _enemy = std::make_unique<Ghost>(
         Point{-1, 0},
-        arcade::Element{"./assets/pink.png",arcade::RED, Point{11, 6}},
+        arcade::Element{"./assets/pink.png", arcade::RED, Point{11, 6}, arcade::Rect{Point{62, 62}, Point{960, 0}}},
         _constElements,
         *_player
     );

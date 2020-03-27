@@ -11,15 +11,15 @@
 Entity::Entity(std::vector<arcade::Element> &map) :
     _isAlive(true),
     _direction(Point{0, 0}),
-    _element(arcade::Element{std::string("./assets/pacman.png"), arcade::GREEN, Point{1, 1}}),
-    _map(map)
+    _element(arcade::Element{std::string("./assets/sprites.png"), arcade::GREEN, Point{1, 1},
+            arcade::Rect{Point{62, 66}, Point{578, 0}}}),
+    _map(map),
+    _spriteManager(_element)
 {}
 
-Entity::Entity(Point direction, arcade::Element element, std::vector<arcade::Element> &map) :
-    _isAlive(true),
-    _direction(direction),
-    _element(element),
-    _map(map)
+Entity::Entity(Point direction, arcade::Element &element, std::vector<arcade::Element> &map) :
+    _isAlive(true), _direction(direction), _element(element),
+    _map(map), _spriteManager(_element)
 {}
 
 Point Entity::getDirection(void) const
@@ -47,6 +47,7 @@ void Entity::setDirection(Point direction)
     Point prevDirection = _direction;
 
     _direction = direction;
+    _spriteManager.changeDirection(direction);
     if (!canMove())
         _direction = prevDirection;
 }
@@ -83,4 +84,5 @@ void Entity::move(void)
         return;
     _element.position.x += _direction.x;
     _element.position.y += _direction.y;
+    _spriteManager.moveSprite();
 }

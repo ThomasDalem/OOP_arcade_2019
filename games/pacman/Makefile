@@ -8,7 +8,8 @@
 SRC			= 	src/PacmanGame.cpp				\
 				src/Entity.cpp					\
 				src/Behaviors/RedBehavior.cpp	\
-				src/Entities/Ghost.cpp
+				src/Entities/Ghost.cpp			\
+				src/SpriteManager.cpp
 
 OBJ			=	$(SRC:.cpp=.o)
 

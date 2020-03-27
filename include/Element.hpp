@@ -20,10 +20,16 @@ namespace arcade {
         BLACK
     };
 
+    struct Rect {
+        Point size;
+        Point pos;
+    };
+
     struct Element {
         std::string filename;
         arcade::color color;
         Point position;
+        Rect rect;
     };
 }
 

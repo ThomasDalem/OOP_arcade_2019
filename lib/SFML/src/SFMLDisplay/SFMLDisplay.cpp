@@ -28,6 +28,7 @@ void SFMLDisplay::display(std::vector<arcade::Element> &elements)
     sf::Texture texture;
     sf::Sprite sprite;
     sf::Vector2f position;
+    sf::IntRect rect;
 
     if (_window.isOpen() == false)
         return;
@@ -37,6 +38,7 @@ void SFMLDisplay::display(std::vector<arcade::Element> &elements)
         sprite.setTexture(texture);
         position = sf::Vector2f(it->position.x * 100, it->position.y * 100);
         sprite.setPosition(position);
+        setDisplayRect(sprite, it->rect);
         _window.draw(sprite);
     }
     _window.display();
@@ -66,4 +68,17 @@ std::vector<arcade::Inputs> SFMLDisplay::getInputs(void)
             inputs.push_back(arcade::QUIT);
     }
     return (inputs);
+}
+
+void SFMLDisplay::setDisplayRect(sf::Sprite &sprite, arcade::Rect rect)
+{
+    sf::IntRect sfRect;
+
+    if (rect.size.x == 0 || rect.size.y == 0)
+        return;
+    sfRect.top = rect.pos.y;
+    sfRect.left = rect.pos.x;
+    sfRect.height = rect.size.y;
+    sfRect.width = rect.size.x;
+    sprite.setTextureRect(sfRect);
 }

@@ -12,13 +12,14 @@
 #include <string>
 #include "Element.hpp"
 #include "IBehavior.hpp"
+#include "SpriteManager.hpp"
 
 class Entity {
     public:
         Entity(std::vector<arcade::Element> &map);
         Entity(
             Point direction,
-            arcade::Element element,
+            arcade::Element &element,
             std::vector<arcade::Element> &map
         );
 
@@ -40,6 +41,7 @@ class Entity {
         Point _direction;
         arcade::Element _element;
         std::vector<arcade::Element> &_map;
+        SpriteManager _spriteManager;
 };
 
 #endif /* !ENTITY_HPP_ */

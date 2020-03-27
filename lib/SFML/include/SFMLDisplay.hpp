@@ -20,6 +20,9 @@ class SFMLDisplay : public arcade::IDisplayModule {
         std::vector<arcade::Inputs> getInputs(void);
 
     private:
+        void setDisplayRect(sf::Sprite &sprite, arcade::Rect rect);
+
+    private:
         sf::RenderWindow _window;
 };
 

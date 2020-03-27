@@ -48,7 +48,7 @@ int main(void)
 
     fptr = (arcade::IDisplayModule *(*)()) dlsym(handle, "createObject");
     displayModule = fptr();
-    elements.push_back(arcade::Element{image, arcade::WHITE, Point{0, 0}});
+    elements.push_back(arcade::Element{image, arcade::WHITE, Point{0, 0}, arcade::Rect{Point{0, 0}, Point{0, 0}}});
     while (checkQuit(displayModule->getInputs()) != true) {
         now = chrono::system_clock::now();
         if (getElapsedTime(last, now).count() > 0.5) {
