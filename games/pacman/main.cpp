@@ -37,7 +37,7 @@ chrono::duration<double> getElapsedTime(
 
 int main(void)
 {
-    void *graphHandle = dlopen("./../../lib/LIBCACA/lib_arcade_libcaca.so", RTLD_LAZY);
+    void *graphHandle = dlopen("./../../lib/SFML/lib_arcade_sfml.so", RTLD_LAZY);
     void *gameHandle = dlopen("./lib_arcade_pacman.so", RTLD_LAZY);
 
     arcade::Inputs key = arcade::PAUSE;

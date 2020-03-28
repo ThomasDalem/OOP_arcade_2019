@@ -38,7 +38,7 @@ void SFMLDisplay::display(std::vector<arcade::Element> &elements)
     for (auto it = elements.begin(); it != elements.end(); it++) {
         texture.loadFromFile(it->filename);
         sprite.setTexture(texture);
-        position = sf::Vector2f(it->position.x * 35, it->position.y * 35);
+        position = sf::Vector2f(it->position.x * 32, it->position.y * 32);
         sprite.setPosition(position);
         setDisplayRect(sprite, it->rect);
         _window.draw(sprite);

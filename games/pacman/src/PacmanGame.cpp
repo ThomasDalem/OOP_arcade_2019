@@ -17,22 +17,23 @@ extern "C" PacmanGame *createGame()
 
 PacmanGame::PacmanGame()
 {
-    std::string strMap[10];
+    std::string strMap[11];
     std::string filename("../../games/pacman/assets/blue.png");
 
-    strMap[0] = "*****************";
-    strMap[1] = "*               *";
-    strMap[2] = "*     ****  **  *";
-    strMap[3] = "*            *  *";
-    strMap[4] = "*   *  **  *    *";
-    strMap[5] = "*   *  **  *    *";
-    strMap[6] = "* *          *  *";
-    strMap[7] = "* **  ****  **  *";
-    strMap[8] = "*               *";
-    strMap[9] = "*****************";
+    strMap[0] = "****************";
+    strMap[1] = "*              *";
+    strMap[2] = "* ** ****** ** *";
+    strMap[3] = "* *          * *";
+    strMap[4] = "* * ** ** ** * *";
+    strMap[5] = "*      **      *";
+    strMap[6] = "* * ** ** ** * *";
+    strMap[7] = "* *          * *";
+    strMap[8] = "* ** ****** ** *";
+    strMap[9] = "*              *";
+    strMap[10] = "***************";
 
-    for (int i = 0; i < 10; i++) {
-        for (int j = 0; j < 17; j++) {
+    for (int i = 0; i < 11; i++) {
+        for (int j = 0; j < 16; j++) {
             if (strMap[i][j] == '*') {
                 arcade::Element element{filename, arcade::BLUE, Point{(float)j, (float)i}, arcade::Rect{Point{0, 0}, Point{0, 0}}};
                 _constElements.push_back(element);
