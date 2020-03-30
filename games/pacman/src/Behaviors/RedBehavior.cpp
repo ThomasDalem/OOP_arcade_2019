@@ -23,10 +23,7 @@ Point RedBehavior::chase(Point const& pos, Point const& direction) const
     Point prevDir = invertPoint(direction);
 
     for (int i = 0; i < 4; i++) {
-        if (canMoveAt(pos, dirArray[i])) {
-            if (dirArray[i].x == prevDir.x && dirArray[i].y == prevDir.y) {
-                continue;
-            }
+        if (canMoveAt(pos, dirArray[i]) && !(dirArray[i].x == prevDir.x && dirArray[i].y == prevDir.y)) {
             if (getDistance(_player.getPosition(), Point{pos.x + dirArray[i].x, pos.y + dirArray[i].y}) < shortestDist) {
                 shortestDist = getDistance(_player.getPosition(), Point{pos.x + dirArray[i].x, pos.y + dirArray[i].y});
                 shortestDir = dirArray[i];

@@ -8,18 +8,8 @@
 #include <iostream>
 #include "Entity.hpp"
 
-Entity::Entity(std::vector<arcade::Element> &map) :
-    _isAlive(true),
-    _direction(Point{0, 0}),
-    _position(Point{1, 1}),
-    _element(arcade::Element{std::string("./games/pacman/assets/sprites.png"), arcade::YELLOW, Point{1, 1},
-            arcade::Rect{Point{32, 33}, Point{289, 0}}}),
-    _map(map),
-    _spriteManager(_element)
-{}
-
-Entity::Entity(Point direction, Point position, arcade::Element &element, std::vector<arcade::Element> &map) :
-    _isAlive(true), _direction(direction), _position(position), _element(element),
+Entity::Entity(Point direction, Point position, arcade::Element const& element, std::vector<arcade::Element> &map) :
+    _direction(direction), _position(position), _element(element),
     _map(map), _spriteManager(_element)
 {}
 
@@ -31,11 +21,6 @@ Point Entity::getDirection(void) const
 const Point &Entity::getPosition(void) const
 {
     return (_position);
-}
-
-bool Entity::isAlive(void) const
-{
-   return (_isAlive);
 }
 
 const arcade::Element &Entity::getElement(void) const
@@ -56,11 +41,6 @@ void Entity::setPosition(const Point &position)
 {
     _element.position = position;
     _position = position;
-}
-
-void Entity::setStatus(bool isAlive)
-{
-    _isAlive = isAlive;
 }
 
 void Entity::setElement(arcade::Element &element)

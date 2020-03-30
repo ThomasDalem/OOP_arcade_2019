@@ -40,7 +40,7 @@ PacmanGame::PacmanGame()
             }
         }
     }
-    _player = std::make_unique<Entity>(_constElements);
+    _player = std::make_unique<Player>(_constElements);
     _enemy = std::make_unique<Ghost>(
         Point{-1, 0},
         Point{14, 9},

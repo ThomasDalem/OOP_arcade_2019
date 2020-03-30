@@ -11,8 +11,8 @@
 #include <memory>
 #include <chrono>
 #include "IGameModule.hpp"
-#include "Entity.hpp"
 #include "Ghost.hpp"
+#include "Player.hpp"
 
 class PacmanGame : public arcade::IGameModule {
     public:
@@ -32,7 +32,7 @@ class PacmanGame : public arcade::IGameModule {
     private:
         std::vector<arcade::Element> _elements;
         std::vector<arcade::Element> _constElements;
-        std::unique_ptr<Entity> _player;
+        std::unique_ptr<Player> _player;
         std::unique_ptr<Ghost> _enemy;
 };
 
