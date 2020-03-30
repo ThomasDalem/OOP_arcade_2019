@@ -12,7 +12,7 @@ Entity::Entity(std::vector<arcade::Element> &map) :
     _isAlive(true),
     _direction(Point{0, 0}),
     _position(Point{1, 1}),
-    _element(arcade::Element{std::string("./assets/sprites.png"), arcade::YELLOW, Point{1, 1},
+    _element(arcade::Element{std::string("./games/pacman/assets/sprites.png"), arcade::YELLOW, Point{1, 1},
             arcade::Rect{Point{32, 33}, Point{289, 0}}}),
     _map(map),
     _spriteManager(_element)

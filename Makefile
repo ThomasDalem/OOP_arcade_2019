@@ -5,18 +5,19 @@
 ## Makefile
 ##
 
-SRC			=	src/main.cpp
+SRC			=	src/main.cpp		\
+				src/Core.cpp
 
 OBJ			=	$(SRC:.cpp=.o)
 
-CPPFLAGS	=	-Wall -Werror -Wextra
+CPPFLAGS	=	-Wall -Werror -Wextra -I./include
 
 NAME		=	arcade
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-		g++ -o $(NAME) $(OBJ) $(CPPFLAGS)
+		g++ -o $(NAME) $(OBJ) $(CPPFLAGS) -ldl
 
 clean:
 	rm -f $(OBJ)
