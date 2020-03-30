@@ -20,7 +20,7 @@ Ghost::Ghost(
 {
     _behavior = std::make_unique<RedBehavior>(map, player);
     _spriteManager.setStart(Point{480, 0});
-    _element.rect.pos.x = 480;
+    setDirection(direction);
 }
 
 Ghost::~Ghost()
