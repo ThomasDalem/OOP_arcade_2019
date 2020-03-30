@@ -13,6 +13,7 @@
 #include "IGameModule.hpp"
 #include "Ghost.hpp"
 #include "Player.hpp"
+#include "PacgumManager.hpp"
 
 class PacmanGame : public arcade::IGameModule {
     public:
@@ -37,6 +38,7 @@ class PacmanGame : public arcade::IGameModule {
         std::vector<arcade::Element> _constElements;
         std::unique_ptr<Player> _player;
         std::unique_ptr<Ghost> _enemy;
+        PacgumManager _gumsManager;
 };
 
 #endif /* !PacmanGame_HPP_ */

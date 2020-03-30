@@ -18,25 +18,28 @@ extern "C" PacmanGame *createObject()
 PacmanGame::PacmanGame()
 {
     std::string strMap[11];
-    std::string filename("./games/pacman/assets/blue.png");
+    const std::string wallFile("./games/pacman/assets/blue.png");
 
     strMap[0] = "****************";
-    strMap[1] = "*              *";
-    strMap[2] = "* ** ****** ** *";
-    strMap[3] = "* *          * *";
-    strMap[4] = "* * ** ** ** * *";
-    strMap[5] = "*      **      *";
-    strMap[6] = "* * ** ** ** * *";
-    strMap[7] = "* *          * *";
-    strMap[8] = "* ** ****** ** *";
-    strMap[9] = "*              *";
-    strMap[10] = "***************";
+    strMap[1] = "*..............*";
+    strMap[2] = "*.**.******.**.*";
+    strMap[3] = "*.*..........*.*";
+    strMap[4] = "*.* ** ** ** *.*";
+    strMap[5] = "*......**......*";
+    strMap[6] = "*.* ** ** ** *.*";
+    strMap[7] = "*.*..........*.*";
+    strMap[8] = "*.**.******.**.*";
+    strMap[9] = "*..............*";
+    strMap[10] = "****************";
 
     for (int i = 0; i < 11; i++) {
         for (int j = 0; j < 16; j++) {
+            Point pos = {(double)j, (double)i};
             if (strMap[i][j] == '*') {
-                arcade::Element element{filename, arcade::BLUE, Point{(float)j, (float)i}, arcade::Rect{Point{0, 0}, Point{0, 0}}};
+                arcade::Element element{wallFile, arcade::BLUE, pos, arcade::Rect{Point{0, 0}, Point{0, 0}}};
                 _constElements.push_back(element);
+            } else if (strMap[i][j] == '.') {
+                _gumsManager.addGum(pos);
             }
         }
     }
@@ -55,7 +58,10 @@ PacmanGame::~PacmanGame()
 
 void PacmanGame::playLoop(std::vector<arcade::Inputs> const& inputs)
 {
+    std::vector<arcade::Element> gums = _gumsManager.getGums();
+
     _elements.clear();
+    _elements.insert(_elements.end(), gums.begin(), gums.end());
     if (collide(_player->getPosition(), _enemy->getPosition())) {
         _player->playLoose();
     } else {
@@ -63,6 +69,7 @@ void PacmanGame::playLoop(std::vector<arcade::Inputs> const& inputs)
         _enemy->move();
         _player->move();
         _elements.push_back(_enemy->getElement());
+        _gumsManager.removeTouchedGums(_player->getPosition());
     }
     _elements.push_back(_player->getElement());
     _elements.insert(_elements.end(), _constElements.begin(), _constElements.end());
