@@ -5,6 +5,7 @@
 ** SpriteManager
 */
 
+#include <iostream>
 #include "SpriteManager.hpp"
 
 SpriteManager::SpriteManager(arcade::Element &element) :
@@ -14,7 +15,15 @@ SpriteManager::SpriteManager(arcade::Element &element) :
 SpriteManager::~SpriteManager()
 {}
 
-void SpriteManager::changeDirection(Point &dir)
+void SpriteManager::setStart(Point const& start)
+{
+    _start.x = start.x;
+    _start.y = start.y;
+    _pos.x = start.x;
+    _pos.y = start.y;
+}
+
+void SpriteManager::changePacmanDirection(Point const& dir)
 {
     Point newDir;
 
@@ -32,7 +41,22 @@ void SpriteManager::changeDirection(Point &dir)
     _element.rect.pos = _pos;
 }
 
-void SpriteManager::moveSprite(void)
+void SpriteManager::changeGhostDirection(Point const& dir)
+{
+    if (dir.x == 1) {
+        _pos.y = ghostRight;
+    } else if (dir.x == -1) {
+        _pos.y = ghostLeft;
+    } else if (dir.y == 1) {
+        _pos.y = ghostDown;
+    } else {
+        _pos.y = ghostUp;
+    }
+    _start.y = _pos.y;
+    _element.rect.pos.y = _pos.y;
+}
+
+void SpriteManager::movePacmanSprite(void)
 {
     _element.rect.pos = _pos;
     if (_pos.y >= _start.y + 2 * 33) {
@@ -40,4 +64,14 @@ void SpriteManager::moveSprite(void)
         return;
     }
     _pos.y += 33;
+}
+
+void SpriteManager::moveGhostSprite(void)
+{
+    if (_pos.y >= _start.y + 32) {
+        _pos.y = _start.y;
+    } else {
+        _pos.y += 32;
+    }
+    _element.rect.pos = _pos;
 }

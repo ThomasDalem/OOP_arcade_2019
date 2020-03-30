@@ -50,7 +50,7 @@ int main(void)
 
     fptr = (arcade::IDisplayModule *(*)()) dlsym(graphHandle, "createObject");
 
-    fptr2 = (arcade::IGameModule *(*)()) dlsym(gameHandle, "createGame");
+    fptr2 = (arcade::IGameModule *(*)()) dlsym(gameHandle, "createObject");
 
     displayModule = fptr();
 

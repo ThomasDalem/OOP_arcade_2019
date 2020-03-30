@@ -44,7 +44,7 @@ PacmanGame::PacmanGame()
     _enemy = std::make_unique<Ghost>(
         Point{-1, 0},
         Point{14, 9},
-        arcade::Element{"./assets/pink.png", arcade::RED, Point{14, 9}, arcade::Rect{Point{32, 32}, Point{960, 0}}},
+        arcade::Element{"./assets/sprites.png", arcade::RED, Point{14, 9}, arcade::Rect{Point{32, 33}, Point{480, 0}}},
         _constElements,
         *_player
     );

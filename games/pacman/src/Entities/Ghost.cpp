@@ -19,18 +19,33 @@ Ghost::Ghost(
     Entity(direction, position, element, map)
 {
     _behavior = std::make_unique<RedBehavior>(map, player);
+    _spriteManager.setStart(Point{480, 0});
+    _element.rect.pos.x = 480;
 }
 
 Ghost::~Ghost()
 {}
 
+void Ghost::setDirection(Point const& direction)
+{
+    if (!canMove(Point{direction.x * 0.25, direction.y * 0.25})) {
+        return;
+    }
+    _direction = direction;
+    _spriteManager.changeGhostDirection(direction);
+}
+
 void Ghost::move(void)
 {
     std::chrono::time_point<std::chrono::system_clock> now = std::chrono::system_clock::now();
     std::chrono::duration<double> elapsedTime = now - _prevMove;
+    Point newDir;
 
     if (elapsedTime.count() >= 0.05) {
-        setDirection(_behavior->chase(_element.position, _direction));
+        newDir = _behavior->chase(_element.position, _direction);
+        if (newDir.x != _direction.x || newDir.y != _direction.y) {
+            setDirection(newDir);
+        }
         if (!canMove(Point{_direction.x * 0.25, _direction.y * 0.25})) {
             return;
         }
@@ -39,5 +54,6 @@ void Ghost::move(void)
         _element.position.x = _position.x;
         _element.position.y = _position.y;
         _prevMove = now;
+        _spriteManager.moveGhostSprite();
     }
 }

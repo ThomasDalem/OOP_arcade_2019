@@ -24,6 +24,7 @@ class Ghost : public Entity
         );
         ~Ghost();
 
+        void setDirection(Point const& dir);
         void move(void);
 
     private:

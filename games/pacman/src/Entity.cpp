@@ -43,13 +43,13 @@ const arcade::Element &Entity::getElement(void) const
     return (_element);
 }
 
-void Entity::setDirection(Point direction)
+void Entity::setDirection(Point const &direction)
 {
     if (!canMove(Point{direction.x * 0.25, direction.y * 0.25})) {
         return;
     }
     _direction = direction;
-    _spriteManager.changeDirection(direction);
+    _spriteManager.changePacmanDirection(direction);
 }
 
 void Entity::setPosition(const Point &position)
@@ -99,6 +99,6 @@ void Entity::move(void)
         _element.position.x = _position.x;
         _element.position.y = _position.y;
         _prevMove = now;
-        _spriteManager.moveSprite();
+        _spriteManager.movePacmanSprite();
     }
 }

@@ -30,8 +30,8 @@ class Entity {
         bool isAlive(void) const;
         const arcade::Element &getElement(void) const;
 
-        void setDirection(Point direction);
-        void setPosition(const Point &position);
+        virtual void setDirection(Point const& direction);
+        void setPosition(Point const& position);
         void setStatus(bool isAlive);
         void setElement(arcade::Element &element);
 
