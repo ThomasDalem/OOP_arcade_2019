@@ -10,7 +10,7 @@
 #include "PacmanGame.hpp"
 #include "Inputs.hpp"
 
-extern "C" PacmanGame *createGame()
+extern "C" PacmanGame *createObject()
 {
     return (new PacmanGame);
 }

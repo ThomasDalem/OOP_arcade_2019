@@ -31,8 +31,9 @@ void Ghost::move(void)
 
     if (elapsedTime.count() >= 0.05) {
         setDirection(_behavior->chase(_element.position, _direction));
-        if (!canMove(Point{_direction.x * 0.25, _direction.y * 0.25}))
+        if (!canMove(Point{_direction.x * 0.25, _direction.y * 0.25})) {
             return;
+        }
         _position.x += _direction.x * 0.25;
         _position.y += _direction.y * 0.25;
         _element.position.x = _position.x;
