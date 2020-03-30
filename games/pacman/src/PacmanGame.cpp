@@ -18,7 +18,7 @@ extern "C" PacmanGame *createObject()
 PacmanGame::PacmanGame()
 {
     std::string strMap[11];
-    std::string filename("../../games/pacman/assets/blue.png");
+    std::string filename("./games/pacman/assets/blue.png");
 
     strMap[0] = "****************";
     strMap[1] = "*              *";
@@ -44,7 +44,7 @@ PacmanGame::PacmanGame()
     _enemy = std::make_unique<Ghost>(
         Point{-1, 0},
         Point{14, 9},
-        arcade::Element{"./assets/sprites.png", arcade::RED, Point{14, 9}, arcade::Rect{Point{32, 33}, Point{480, 0}}},
+        arcade::Element{"./games/pacman/assets/sprites.png", arcade::RED, Point{14, 9}, arcade::Rect{Point{32, 33}, Point{480, 0}}},
         _constElements,
         *_player
     );
