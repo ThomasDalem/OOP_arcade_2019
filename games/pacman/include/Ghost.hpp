@@ -24,7 +24,6 @@ class Ghost : public Entity
         );
         ~Ghost();
 
-        bool canMove(void);
         void move(void);
 
     private:

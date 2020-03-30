@@ -43,8 +43,8 @@ PacmanGame::PacmanGame()
     _player = std::make_unique<Entity>(_constElements);
     _enemy = std::make_unique<Ghost>(
         Point{-1, 0},
-        Point{16, 8},
-        arcade::Element{"./assets/pink.png", arcade::RED, Point{16, 8}, arcade::Rect{Point{32, 32}, Point{960, 0}}},
+        Point{14, 9},
+        arcade::Element{"./assets/pink.png", arcade::RED, Point{14, 9}, arcade::Rect{Point{32, 32}, Point{960, 0}}},
         _constElements,
         *_player
     );
@@ -67,7 +67,7 @@ void PacmanGame::playLoop(std::vector<arcade::Inputs> inputs)
         else if (*it == arcade::RIGHT)
             _player->setDirection(Point{1, 0});
     }
-    //_enemy->move();
+    _enemy->move();
     _player->move();
     _elements.push_back(_player->getElement());
     _elements.push_back(_enemy->getElement());

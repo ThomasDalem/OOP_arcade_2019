@@ -35,7 +35,7 @@ class Entity {
         void setStatus(bool isAlive);
         void setElement(arcade::Element &element);
 
-        virtual bool canMove(Point offset);
+        bool canMove(Point offset);
         virtual void move(void);
 
     protected:

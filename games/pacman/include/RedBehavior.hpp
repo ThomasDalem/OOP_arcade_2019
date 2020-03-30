@@ -16,13 +16,13 @@ class RedBehavior : public IBehavior {
         RedBehavior(std::vector<arcade::Element> &map, Entity &player);
         ~RedBehavior();
 
-        Point chase(Point &pos, Point &direction) const;
+        Point chase(Point const& pos, Point const& direction) const;
 
     private:
-        bool canMoveAt(Point pos, Point direction) const;
-        int getDistance(Point a, Point b) const;
-        bool comparePoints(Point a, Point b) const;
-        Point invertPoint(Point a) const;
+        bool canMoveAt(Point const&pos, Point const& direction) const;
+        int getDistance(Point const& a, Point const& b) const;
+        bool comparePoints(Point const& a, Point const& b) const;
+        Point invertPoint(Point const& a) const;
 
     private:
         std::vector<arcade::Element> &_map;

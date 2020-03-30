@@ -5,6 +5,7 @@
 ** Ghost
 */
 
+#include <iostream>
 #include "RedBehavior.hpp"
 #include "Ghost.hpp"
 
@@ -23,24 +24,19 @@ Ghost::Ghost(
 Ghost::~Ghost()
 {}
 
-bool Ghost::canMove(void)
-{
-    for (auto it = _map.begin(); it != _map.end(); it++) {
-        if (it->position.x == _element.position.x + _direction.x &&
-            it->position.y == _element.position.y + _direction.y) {
-            return (false);
-        }
-    }
-    return (true);
-}
-
 void Ghost::move(void)
 {
-    setDirection(_behavior->chase(_element.position, _direction));
-    if (!canMove())
-        return;
-    _element.position.x += _direction.x;
-    _element.position.y += _direction.y;
-    _position.x += _direction.x;
-    _position.y += _direction.y;
+    std::chrono::time_point<std::chrono::system_clock> now = std::chrono::system_clock::now();
+    std::chrono::duration<double> elapsedTime = now - _prevMove;
+
+    if (elapsedTime.count() >= 0.05) {
+        setDirection(_behavior->chase(_element.position, _direction));
+        if (!canMove(Point{_direction.x * 0.25, _direction.y * 0.25}))
+            return;
+        _position.x += _direction.x * 0.25;
+        _position.y += _direction.y * 0.25;
+        _element.position.x = _position.x;
+        _element.position.y = _position.y;
+        _prevMove = now;
+    }
 }
