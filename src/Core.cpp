@@ -5,7 +5,6 @@
 ** Core
 */
 
-#include <chrono>
 #include <ctime>
 #include "Core.hpp"
 
@@ -21,9 +20,29 @@ arcade::Core::~Core()
     delete(gameModule);
 }
 
-using namespace std;
+arcade::IDisplayModule *arcade::Core::getDisplayModule() const
+{
+    return (displayModule);
+}
 
-bool checkQuit(vector<arcade::Inputs> inputs)
+arcade::IGameModule *arcade::Core::getGameModule() const
+{
+    return (gameModule);
+}
+
+void arcade::Core::setDisplayModule(arcade::IDisplayModule *newDisplay)
+{
+    delete(displayModule);
+    displayModule = newDisplay;
+}
+
+void arcade::Core::setGameModule(arcade::IGameModule *newgame)
+{
+    delete(gameModule);
+    gameModule = newgame;
+}
+
+bool arcade::Core::checkQuit(std::vector<arcade::Inputs> inputs) const
 {
     if (inputs.size() == 0)
         return (false);
@@ -34,20 +53,20 @@ bool checkQuit(vector<arcade::Inputs> inputs)
     return (false);
 }
 
-chrono::duration<double> getElapsedTime(
-    chrono::time_point<chrono::system_clock> start,
-    chrono::time_point<chrono::system_clock> end
-)
+std::chrono::duration<double> arcade::Core::getElapsedTime(
+    std::chrono::time_point<std::chrono::system_clock> start,
+    std::chrono::time_point<std::chrono::system_clock> end
+) const
 {
-    chrono::duration<double> elapsedSeconds = end - start;
+    std::chrono::duration<double> elapsedSeconds = end - start;
 
     return (elapsedSeconds);
 }
 
 int arcade::Core::arcade()
 {
-    chrono::time_point<chrono::system_clock> now;
-    chrono::time_point<chrono::system_clock> last = chrono::system_clock::now();
+    std::chrono::time_point<std::chrono::system_clock> now;
+    std::chrono::time_point<std::chrono::system_clock> last = std::chrono::system_clock::now();
 
     std::vector<arcade::Inputs> inputs;
     std::vector<arcade::Inputs> retreivedInputs;
@@ -55,13 +74,13 @@ int arcade::Core::arcade()
     while (checkQuit(inputs) != true) {
         retreivedInputs = displayModule->getInputs();
         inputs.insert(inputs.end(), retreivedInputs.begin(), retreivedInputs.end());
-        now = chrono::system_clock::now();
+        now = std::chrono::system_clock::now();
         if (getElapsedTime(last, now).count() > 0.05) {
             gameModule->playLoop(inputs);
             std::vector<arcade::Element> elements = gameModule->getElements();
             displayModule->display(elements);
             inputs.clear();
-            last = chrono::system_clock::now();
+            last = std::chrono::system_clock::now();
         }
     }
     return (0);

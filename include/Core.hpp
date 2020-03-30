@@ -9,6 +9,7 @@
 #define CORE_HPP_
 
 #include <string>
+#include <chrono>
 #include <iostream>
 #include <dlfcn.h>
 #include "IDisplayModule.hpp"
@@ -22,7 +23,7 @@ namespace arcade {
             Core(std::string path);
             ~Core();
 
-            // Temaplate
+            // Template
             template<typename T>
             T *createLib(const std::string &path)
             {
@@ -36,6 +37,7 @@ namespace arcade {
                 T *module;
                 fptr = (T *(*)()) dlsym(libHandle, "createObject");
                 module = fptr();
+                // dlclose(libHandle);
                 return (module);
             }
 
@@ -43,16 +45,24 @@ namespace arcade {
             int arcade();
 
             // Getter && setter
-            // arcade::IDisplayModule getDisplayModule();
-            // arcade::IGameModule getGameModule();
+            arcade::IDisplayModule *getDisplayModule() const;
+            arcade::IGameModule *getGameModule() const;
 
-            // void setDisplayModule(arcade::IDisplayModule newModule);
-            // void setGameModule(arcade::IGameModule newGame);
+            void setDisplayModule(arcade::IDisplayModule *newDisplay);
+            void setGameModule(arcade::IGameModule *newGame);
 
         protected:
         private:
+            // variables
             arcade::IDisplayModule *displayModule;
             arcade::IGameModule *gameModule;
+
+            // Functions
+            bool checkQuit(std::vector<arcade::Inputs> inputs) const;
+            std::chrono::duration<double> getElapsedTime(
+                std::chrono::time_point<std::chrono::system_clock> start,
+                std::chrono::time_point<std::chrono::system_clock> end
+            ) const;
     };
 }
 
