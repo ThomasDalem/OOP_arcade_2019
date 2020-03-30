@@ -16,6 +16,7 @@ class Player : public Entity {
         ~Player();
 
         bool isAlive(void) const;
+        bool playLoose(void);
 
     private:
         bool _isAlive;

@@ -53,24 +53,18 @@ PacmanGame::PacmanGame()
 PacmanGame::~PacmanGame()
 {}
 
-void PacmanGame::playLoop(std::vector<arcade::Inputs> inputs)
+void PacmanGame::playLoop(std::vector<arcade::Inputs> const& inputs)
 {
-
     _elements.clear();
-    for (auto it = inputs.begin(); it != inputs.end(); it++) {
-        if (*it == arcade::UP)
-            _player->setDirection(Point{0, -1});
-        else if (*it == arcade::DOWN)
-            _player->setDirection(Point{0, 1});
-        else if (*it == arcade::LEFT)
-            _player->setDirection(Point{-1, 0});
-        else if (*it == arcade::RIGHT)
-            _player->setDirection(Point{1, 0});
+    if (collide(_player->getPosition(), _enemy->getPosition())) {
+        _player->playLoose();
+    } else {
+        manageInputs(inputs);
+        _enemy->move();
+        _player->move();
+        _elements.push_back(_enemy->getElement());
     }
-    _enemy->move();
-    _player->move();
     _elements.push_back(_player->getElement());
-    _elements.push_back(_enemy->getElement());
     _elements.insert(_elements.end(), _constElements.begin(), _constElements.end());
 }
 
@@ -90,4 +84,31 @@ std::chrono::duration<double> getElapsedTime(std::chrono::time_point<std::chrono
     std::chrono::duration<double> elapsedSeconds = end - start;
 
     return (elapsedSeconds);
+}
+
+bool PacmanGame::collide(Point const& a, Point const& b) const
+{
+    Point aTop = {a.x, a.y};
+    Point aBottom = {a.x + 1, a.y + 1};
+    Point bTop = {b.x, b.y};
+    Point bBottom = {b.x + 1, b.y + 1};
+
+    if (aTop.x < bBottom.x && aBottom.x > bTop.x && aTop.y < bBottom.y && aBottom.y > bTop.y) {
+        return (true);
+    }
+    return (false);
+}
+
+void PacmanGame::manageInputs(std::vector<arcade::Inputs> const& inputs)
+{
+    for (auto it = inputs.begin(); it != inputs.end(); it++) {
+        if (*it == arcade::UP)
+            _player->setDirection(Point{0, -1});
+        else if (*it == arcade::DOWN)
+            _player->setDirection(Point{0, 1});
+        else if (*it == arcade::LEFT)
+            _player->setDirection(Point{-1, 0});
+        else if (*it == arcade::RIGHT)
+            _player->setDirection(Point{1, 0});
+    }
 }

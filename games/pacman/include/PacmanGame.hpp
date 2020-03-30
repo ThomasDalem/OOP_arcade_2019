@@ -19,15 +19,18 @@ class PacmanGame : public arcade::IGameModule {
         PacmanGame();
         ~PacmanGame();
 
-        void playLoop(std::vector<arcade::Inputs> inputs);
+        void playLoop(std::vector<arcade::Inputs> const& inputs);
         void restart(void);
-        const std::vector<arcade::Element> &getElements() const;
+        std::vector<arcade::Element> const& getElements() const;
 
     private:
         std::chrono::duration<double> getElapsedTime(
             std::chrono::time_point<std::chrono::system_clock> start,
             std::chrono::time_point<std::chrono::system_clock> end
         ) const;
+        bool playerHasLoose(Point const& player, Point const& ghost);
+        bool collide(Point const& a, Point const& b) const;
+        void manageInputs(std::vector<arcade::Inputs> const& inputs);
 
     private:
         std::vector<arcade::Element> _elements;
