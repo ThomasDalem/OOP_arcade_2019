@@ -21,9 +21,11 @@ class SFMLDisplay : public arcade::IDisplayModule {
 
     private:
         void setDisplayRect(sf::Sprite &sprite, arcade::Rect rect);
+        bool isTextureLoaded(std::string const& filename) const;
 
     private:
         sf::RenderWindow _window;
+        std::map<std::string, sf::Texture> _loadedTextures;
 };
 
 #endif /* !SFMLDISPLAY_HPP_ */

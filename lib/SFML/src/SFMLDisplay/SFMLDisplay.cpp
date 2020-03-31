@@ -36,7 +36,12 @@ void SFMLDisplay::display(std::vector<arcade::Element> &elements)
         return;
     _window.clear();
     for (auto it = elements.begin(); it != elements.end(); it++) {
-        texture.loadFromFile(it->filename);
+        if (isTextureLoaded(it->filename)) {
+            texture = _loadedTextures.find(it->filename)->second;
+        } else {
+            texture.loadFromFile(it->filename);
+            _loadedTextures[it->filename] = texture;
+        }
         sprite.setTexture(texture);
         position = sf::Vector2f(it->position.x * 32, it->position.y * 32);
         sprite.setPosition(position);
@@ -83,4 +88,9 @@ void SFMLDisplay::setDisplayRect(sf::Sprite &sprite, arcade::Rect rect)
     sfRect.height = rect.size.y;
     sfRect.width = rect.size.x;
     sprite.setTextureRect(sfRect);
+}
+
+bool SFMLDisplay::isTextureLoaded(std::string const& filename) const
+{
+    return (_loadedTextures.count(filename) == 1);
 }
