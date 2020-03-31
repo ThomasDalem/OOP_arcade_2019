@@ -16,11 +16,11 @@ class SFMLDisplay : public arcade::IDisplayModule {
         SFMLDisplay();
         ~SFMLDisplay();
 
-        void display(std::vector<arcade::Element> &elements);
+        void display(std::vector<arcade::Element> const& elements);
         std::vector<arcade::Inputs> getInputs(void);
 
     private:
-        void setDisplayRect(sf::Sprite &sprite, arcade::Rect rect);
+        void setDisplayRect(sf::Sprite &sprite, arcade::Rect const& rect);
         bool isTextureLoaded(std::string const& filename) const;
 
     private:

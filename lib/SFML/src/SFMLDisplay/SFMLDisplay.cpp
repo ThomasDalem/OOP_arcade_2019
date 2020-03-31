@@ -25,7 +25,7 @@ SFMLDisplay::~SFMLDisplay()
         _window.close();
 }
 
-void SFMLDisplay::display(std::vector<arcade::Element> &elements)
+void SFMLDisplay::display(std::vector<arcade::Element> const& elements)
 {
     sf::Texture texture;
     sf::Sprite sprite;
@@ -60,24 +60,38 @@ std::vector<arcade::Inputs> SFMLDisplay::getInputs(void)
         return (inputs);
     while (_window.pollEvent(event)) {
         if (event.type == sf::Event::KeyPressed) {
-            if (event.key.code == sf::Keyboard::Up)
+            switch (event.key.code)
+            {
+            case sf::Keyboard::Up:
                 inputs.push_back(arcade::UP);
-            if (event.key.code == sf::Keyboard::Down)
+                break;
+            case sf::Keyboard::Down:
                 inputs.push_back(arcade::DOWN);
-            if (event.key.code == sf::Keyboard::Left)
+                break;
+            case sf::Keyboard::Left:
                 inputs.push_back(arcade::LEFT);
-            if (event.key.code == sf::Keyboard::Right)
+                break;
+            case sf::Keyboard::Right:
                 inputs.push_back(arcade::RIGHT);
-            if (event.key.code == sf::Keyboard::Q)
+                break;
+            case sf::Keyboard::Q:
                 inputs.push_back(arcade::QUIT);
+                break;
+            default:
+                break;
+            }
         }
         if (event.type == sf::Event::Closed)
             inputs.push_back(arcade::QUIT);
+        if (event.type == sf::Event::Resized) {
+            sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
+            _window.setView(sf::View(visibleArea));
+        }
     }
     return (inputs);
 }
 
-void SFMLDisplay::setDisplayRect(sf::Sprite &sprite, arcade::Rect rect)
+void SFMLDisplay::setDisplayRect(sf::Sprite &sprite, arcade::Rect const& rect)
 {
     sf::IntRect sfRect;
 
