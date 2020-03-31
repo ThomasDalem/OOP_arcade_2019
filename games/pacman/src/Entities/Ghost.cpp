@@ -9,16 +9,9 @@
 #include "RedBehavior.hpp"
 #include "Ghost.hpp"
 
-Ghost::Ghost(
-    Point direction,
-    Point position,
-    arcade::Element element, 
-    std::vector<arcade::Element> &map,
-    Entity &player
-) :
-    Entity(direction, position, element, map)
+Ghost::Ghost(Point direction, Point position, arcade::Element element, std::vector<arcade::Element> &map, Entity &player):
+    Entity(direction, position, element, map), _behavior(std::make_unique<RedBehavior>(map, player)), _mode(CHASE)
 {
-    _behavior = std::make_unique<RedBehavior>(map, player);
     _spriteManager.setStart(Point{480, 0});
     setDirection(direction);
 }
@@ -42,7 +35,11 @@ void Ghost::move(void)
     Point newDir;
 
     if (elapsedTime.count() >= 0.07) {
-        newDir = _behavior->chase(_element.position, _direction);
+        if (_mode == CHASE) {
+            newDir = _behavior->chase(_position, _direction);
+        } else {
+            newDir = _behavior->goRandom(_position, _direction);
+        }
         if (newDir.x != _direction.x || newDir.y != _direction.y) {
             setDirection(newDir);
         }
@@ -53,7 +50,12 @@ void Ghost::move(void)
         _position.y += _direction.y * 0.25;
         _element.position.x = _position.x;
         _element.position.y = _position.y;
-        _prevMove = now;
         _spriteManager.moveGhostSprite();
+        _prevMove = now;
+    }
+    elapsedTime = now - _prevBehaviorChange;
+    if (elapsedTime.count() >= 10.0) {
+        _mode == RANDOM ? _mode = CHASE : _mode = RANDOM;
+        _prevBehaviorChange = now;
     }
 }

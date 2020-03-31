@@ -6,10 +6,10 @@
 ##
 
 SRC			= 	src/PacmanGame.cpp				\
-				src/Behaviors/RedBehavior.cpp	\
 				src/Entities/Entity.cpp			\
 				src/Entities/Player.cpp			\
 				src/Entities/Ghost.cpp			\
+				src/Behaviors/RedBehavior.cpp	\
 				src/SpriteManager.cpp			\
 				src/PacgumManager.cpp			\
 

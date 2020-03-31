@@ -10,7 +10,7 @@
 
 Entity::Entity(Point direction, Point position, arcade::Element const& element, std::vector<arcade::Element> &map) :
     _direction(direction), _position(position), _element(element),
-    _map(map), _spriteManager(_element)
+    _map(map), _spriteManager(_element), _prevMove(std::chrono::system_clock::now())
 {}
 
 Point Entity::getDirection(void) const

@@ -29,6 +29,7 @@ class IBehavior {
         virtual ~IBehavior() = default;
 
         virtual Point chase(Point const& pos, Point const& direction) const = 0;
+        virtual Point goRandom(Point const& pos, Point const& direction) const = 0;
 };
 
 #endif /* !IBEHAVIOR_HPP_ */
