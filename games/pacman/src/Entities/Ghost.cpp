@@ -41,7 +41,7 @@ void Ghost::move(void)
     std::chrono::duration<double> elapsedTime = now - _prevMove;
     Point newDir;
 
-    if (elapsedTime.count() >= 0.043) {
+    if (elapsedTime.count() >= 0.07) {
         newDir = _behavior->chase(_element.position, _direction);
         if (newDir.x != _direction.x || newDir.y != _direction.y) {
             setDirection(newDir);
