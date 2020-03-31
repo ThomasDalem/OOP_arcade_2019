@@ -17,6 +17,7 @@ extern "C" SFMLDisplay *createObject()
 SFMLDisplay::SFMLDisplay() : _window(sf::VideoMode(1300, 1200), "Game")
 {
     _window.setFramerateLimit(120);
+    _font.loadFromFile("./lib/SFML/font/font.ttf");
 }
 
 SFMLDisplay::~SFMLDisplay()
@@ -25,28 +26,16 @@ SFMLDisplay::~SFMLDisplay()
         _window.close();
 }
 
-void SFMLDisplay::display(std::vector<arcade::Element> const& elements)
+void SFMLDisplay::display(std::vector<arcade::Element> const& elements, std::vector<arcade::Text> const& text)
 {
-    sf::Texture texture;
-    sf::Sprite sprite;
-    sf::Vector2f position;
-    sf::IntRect rect;
-
     if (_window.isOpen() == false)
         return;
     _window.clear();
     for (auto it = elements.begin(); it != elements.end(); it++) {
-        if (isTextureLoaded(it->filename)) {
-            texture = _loadedTextures.find(it->filename)->second;
-        } else {
-            texture.loadFromFile(it->filename);
-            _loadedTextures[it->filename] = texture;
-        }
-        sprite.setTexture(texture);
-        position = sf::Vector2f(it->position.x * 32, it->position.y * 32);
-        sprite.setPosition(position);
-        setDisplayRect(sprite, it->rect);
-        _window.draw(sprite);
+        displayElement(*it);
+    }
+    for (auto it = text.begin(); it != text.end(); it++) {
+        displayText(*it);
     }
     _window.display();
 }
@@ -107,4 +96,31 @@ void SFMLDisplay::setDisplayRect(sf::Sprite &sprite, arcade::Rect const& rect)
 bool SFMLDisplay::isTextureLoaded(std::string const& filename) const
 {
     return (_loadedTextures.count(filename) == 1);
+}
+
+void SFMLDisplay::displayElement(arcade::Element const& element)
+{
+    sf::Texture texture;
+    sf::Sprite sprite;
+
+    if (isTextureLoaded(element.filename)) {
+        texture = _loadedTextures.find(element.filename)->second;
+    } else {
+        texture.loadFromFile(element.filename);
+        _loadedTextures[element.filename] = texture;
+    }
+    sprite.setTexture(texture);
+    sprite.setPosition(sf::Vector2f(element.position.x * 32, element.position.y * 32));
+    setDisplayRect(sprite, element.rect);
+    _window.draw(sprite);
+}
+
+void SFMLDisplay::displayText(arcade::Text const& text)
+{
+    sf::Text displayText(text.text, _font, 11);
+    sf::Vector2f pos(text.pos.x * 10, text.pos.y * 10);
+
+    displayText.setStyle(sf::Text::Regular);
+    displayText.setPosition(pos);
+    _window.draw(displayText);
 }

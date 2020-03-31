@@ -12,7 +12,7 @@
 #include "Point.hpp"
 
 namespace arcade {
-    enum color {
+    enum Color {
         WHITE,
         RED,
         BLUE,
@@ -28,7 +28,7 @@ namespace arcade {
 
     struct Element {
         std::string filename;
-        arcade::color color;
+        arcade::Color color;
         Point position;
         Rect rect;
     };

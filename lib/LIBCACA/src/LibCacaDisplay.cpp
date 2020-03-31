@@ -64,7 +64,7 @@ arcade::Inputs LibCacaDisplay::getInput(caca_event_t &ev)
     return (arcade::UNDEFINED);
 }
 
-void LibCacaDisplay::setColor(arcade::color color)
+void LibCacaDisplay::setColor(arcade::Color color)
 {
     for (int i = 0; i < 5; i++) {
         if (colorsPair[i].first == color) {

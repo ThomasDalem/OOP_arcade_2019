@@ -12,7 +12,7 @@
 #include <memory>
 #include "IDisplayModule.hpp"
 
-static const std::pair<arcade::color, caca_color> colorsPair[5] = {
+static const std::pair<arcade::Color, caca_color> colorsPair[5] = {
     {arcade::RED, CACA_RED},
     {arcade::BLUE, CACA_BLUE},
     {arcade::GREEN, CACA_GREEN},
@@ -32,12 +32,12 @@ class LibCacaDisplay : public arcade::IDisplayModule {
         LibCacaDisplay();
         ~LibCacaDisplay();
 
-        void display(std::vector<arcade::Element> &elements);
+        void display(std::vector<arcade::Element> &elements, std::vector<arcade::Text> const& text);
         std::vector<arcade::Inputs> getInputs(void);
 
     private:
         arcade::Inputs getInput(caca_event_t &event);
-        void setColor(arcade::color color);
+        void setColor(arcade::Color color);
 
     private:
         caca_display_t *_display;

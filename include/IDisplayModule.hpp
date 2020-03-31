@@ -11,13 +11,14 @@
 #include <vector>
 #include "Inputs.hpp"
 #include "Element.hpp"
+#include "Text.hpp"
 
 namespace arcade {
     class IDisplayModule {
         public:
             virtual ~IDisplayModule() = default;
 
-            virtual void display(std::vector<Element> const& elements) = 0;
+            virtual void display(std::vector<Element> const& elements, std::vector<Text> const& text) = 0;
             virtual std::vector<Inputs> getInputs(void) = 0;
     };
 }
