@@ -22,7 +22,8 @@ class PacmanGame : public arcade::IGameModule {
 
         void playLoop(std::vector<arcade::Inputs> const& inputs);
         void restart(void);
-        std::vector<arcade::Element> const& getElements() const;
+        std::vector<arcade::Element> const& getElements(void) const;
+        std::vector<arcade::Text> const& getTexts(void) const;
 
     private:
         std::chrono::duration<double> getElapsedTime(
@@ -32,13 +33,16 @@ class PacmanGame : public arcade::IGameModule {
         bool playerHasLoose(Point const& player, Point const& ghost);
         bool collide(Point const& a, Point const& b) const;
         void manageInputs(std::vector<arcade::Inputs> const& inputs);
+        void setScore(int removedGums);
 
     private:
         std::vector<arcade::Element> _elements;
         std::vector<arcade::Element> _constElements;
+        std::vector<arcade::Text> _texts;
         std::unique_ptr<Player> _player;
         std::unique_ptr<Ghost> _enemy;
         PacgumManager _gumsManager;
+        int _score;
 };
 
 #endif /* !PacmanGame_HPP_ */

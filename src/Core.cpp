@@ -71,10 +71,6 @@ int arcade::Core::arcade()
     std::vector<arcade::Inputs> inputs;
     std::vector<arcade::Inputs> retreivedInputs;
 
-    arcade::Text test = {"Bonjour", Point{20, 20}, arcade::RED};
-    std::vector<arcade::Text> texts;
-
-    texts.push_back(test);
     while (checkQuit(inputs) != true) {
         retreivedInputs = displayModule->getInputs();
         inputs.insert(inputs.end(), retreivedInputs.begin(), retreivedInputs.end());
@@ -82,6 +78,7 @@ int arcade::Core::arcade()
         if (getElapsedTime(last, now).count() > 0.005) {
             gameModule->playLoop(inputs);
             std::vector<arcade::Element> elements = gameModule->getElements();
+            std::vector<arcade::Text> texts = gameModule->getTexts();
             displayModule->display(elements, texts);
             inputs.clear();
             last = std::chrono::system_clock::now();

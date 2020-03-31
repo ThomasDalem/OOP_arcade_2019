@@ -117,10 +117,9 @@ void SFMLDisplay::displayElement(arcade::Element const& element)
 
 void SFMLDisplay::displayText(arcade::Text const& text)
 {
-    sf::Text displayText(text.text, _font, 11);
-    sf::Vector2f pos(text.pos.x * 10, text.pos.y * 10);
+    sf::Text displayText(text.text, _font, 22);
+    sf::Vector2f pos(text.pos.x * 32, text.pos.y * 32);
 
-    displayText.setStyle(sf::Text::Regular);
     displayText.setPosition(pos);
     _window.draw(displayText);
 }

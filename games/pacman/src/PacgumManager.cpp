@@ -26,14 +26,15 @@ void PacgumManager::addGum(Point const& position)
     _gums.push_back(newGum);
 }
 
-void PacgumManager::removeTouchedGums(Point const& position)
+int PacgumManager::removeTouchedGums(Point const& position)
 {
     for (auto it = _gums.begin(); it != _gums.end(); it++) {
         if (collide(position, it->position)) {
             _gums.erase(it);
-            return;
+            return (1);
         }
     }
+    return (0);
 }
 
 bool PacgumManager::areGumsEmpty(void) const

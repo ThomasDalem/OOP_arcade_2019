@@ -21,7 +21,7 @@ class PacgumManager {
         std::vector<arcade::Element> const& getGums(void) const;
 
         void addGum(Point const& position);
-        void removeTouchedGums(Point const& position);
+        int removeTouchedGums(Point const& position);
         bool areGumsEmpty(void) const;
 
     private:

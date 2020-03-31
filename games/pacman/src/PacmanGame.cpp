@@ -15,7 +15,7 @@ extern "C" PacmanGame *createObject()
     return (new PacmanGame);
 }
 
-PacmanGame::PacmanGame()
+PacmanGame::PacmanGame() : _score(0)
 {
     std::string strMap[11];
     const std::string wallFile("./games/pacman/assets/blue.png");
@@ -69,7 +69,7 @@ void PacmanGame::playLoop(std::vector<arcade::Inputs> const& inputs)
         _enemy->move();
         _player->move();
         _elements.push_back(_enemy->getElement());
-        _gumsManager.removeTouchedGums(_player->getPosition());
+        setScore(_gumsManager.removeTouchedGums(_player->getPosition()));
     }
     _elements.push_back(_player->getElement());
     _elements.insert(_elements.end(), _constElements.begin(), _constElements.end());
@@ -83,6 +83,11 @@ void PacmanGame::restart(void)
 const std::vector<arcade::Element> &PacmanGame::getElements(void) const
 {
     return (_elements);
+}
+
+const std::vector<arcade::Text> &PacmanGame::getTexts(void) const
+{
+    return (_texts);
 }
 
 std::chrono::duration<double> getElapsedTime(std::chrono::time_point<std::chrono::system_clock> start,
@@ -118,4 +123,17 @@ void PacmanGame::manageInputs(std::vector<arcade::Inputs> const& inputs)
         else if (*it == arcade::RIGHT)
             _player->setDirection(Point{1, 0});
     }
+}
+
+void PacmanGame::setScore(int removedGums)
+{
+    std::string scoreText("Score: ");
+
+    if (!removedGums) {
+        return;
+    }
+    _texts.clear();
+    _score += removedGums * 100;
+    scoreText += std::to_string(_score);
+    _texts.push_back(arcade::Text{scoreText, Point{17, 2}, arcade::BLACK});
 }
