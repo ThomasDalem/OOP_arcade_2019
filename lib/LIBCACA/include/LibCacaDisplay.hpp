@@ -32,12 +32,14 @@ class LibCacaDisplay : public arcade::IDisplayModule {
         LibCacaDisplay();
         ~LibCacaDisplay();
 
-        void display(std::vector<arcade::Element> &elements, std::vector<arcade::Text> const& text);
+        void display(std::vector<arcade::Element> const& elements, std::vector<arcade::Text> const& text);
         std::vector<arcade::Inputs> getInputs(void);
 
     private:
         arcade::Inputs getInput(caca_event_t &event);
         void setColor(arcade::Color color);
+        void displayElement(arcade::Element const& element);
+        void displayText(arcade::Text const& element);
 
     private:
         caca_display_t *_display;
