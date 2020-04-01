@@ -1,0 +1,37 @@
+/*
+** EPITECH PROJECT, 2020
+** OOP_arcade_2019
+** File description:
+** SDL2Display
+*/
+
+#ifndef SDL2DISPLAY_HPP_
+#define SDL2DISPLAY_HPP_
+
+#include <SDL2/SDL.h>
+#include "Window.hpp"
+#include "IDisplayModule.hpp"
+#include "Element.hpp"
+#include "Text.hpp"
+#include "Renderer.hpp"
+#include "Font.hpp"
+
+class SDL2Display : public arcade::IDisplayModule {
+    public:
+        SDL2Display();
+        ~SDL2Display();
+
+        void display(std::vector<arcade::Element> const& elements, std::vector<arcade::Text> const& texts);
+        std::vector<arcade::Inputs> getInputs(void);
+
+    private:
+        void displayElement(arcade::Element const& element);
+        void displayText(arcade::Text const& text);
+
+    private:
+        std::unique_ptr<sdl2::Window> _window;
+        std::unique_ptr<sdl2::Renderer> _renderer;
+        sdl2::Font _font;
+};
+
+#endif /* !SDL2DISPLAY_HPP_ */
