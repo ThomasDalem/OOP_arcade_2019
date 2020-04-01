@@ -6,10 +6,12 @@
 ##
 
 SRC			= 	src/PacmanGame.cpp				\
-				src/Entity.cpp					\
-				src/Behaviors/RedBehavior.cpp	\
+				src/Entities/Entity.cpp			\
+				src/Entities/Player.cpp			\
 				src/Entities/Ghost.cpp			\
-				src/SpriteManager.cpp
+				src/Behaviors/RedBehavior.cpp	\
+				src/SpriteManager.cpp			\
+				src/PacgumManager.cpp			\
 
 OBJ			=	$(SRC:.cpp=.o)
 

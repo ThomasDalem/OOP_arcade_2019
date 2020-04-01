@@ -7,9 +7,11 @@
 
 #include <iostream>
 #include <cmath>
+#include <cstdlib>
+#include <ctime>
 #include "RedBehavior.hpp"
 
-RedBehavior::RedBehavior(std::vector<arcade::Element> &map, Entity &player) :
+RedBehavior::RedBehavior(std::vector<arcade::Element> const& map, Entity const& player) :
     _map(map), _player(player)
 {}
 
@@ -23,10 +25,7 @@ Point RedBehavior::chase(Point const& pos, Point const& direction) const
     Point prevDir = invertPoint(direction);
 
     for (int i = 0; i < 4; i++) {
-        if (canMoveAt(pos, dirArray[i])) {
-            if (dirArray[i].x == prevDir.x && dirArray[i].y == prevDir.y) {
-                continue;
-            }
+        if (canMoveAt(pos, dirArray[i]) && !(dirArray[i].x == prevDir.x && dirArray[i].y == prevDir.y)) {
             if (getDistance(_player.getPosition(), Point{pos.x + dirArray[i].x, pos.y + dirArray[i].y}) < shortestDist) {
                 shortestDist = getDistance(_player.getPosition(), Point{pos.x + dirArray[i].x, pos.y + dirArray[i].y});
                 shortestDir = dirArray[i];
@@ -34,6 +33,22 @@ Point RedBehavior::chase(Point const& pos, Point const& direction) const
         }
     }
     return (shortestDir);
+}
+
+Point RedBehavior::goRandom(Point const& pos, Point const& direction) const
+{
+    Point prevDir = invertPoint(direction);
+    std::vector<int> possiblePaths;
+    int choice = 0;
+
+    std::srand(std::time(nullptr));
+    for (int i = 0; i < 4; i++) {
+        if (canMoveAt(pos, dirArray[i]) && !(dirArray[i].x == prevDir.x && dirArray[i].y == prevDir.y)) {
+            possiblePaths.push_back(i);
+        }
+    }
+    choice = std::rand() % possiblePaths.size();
+    return (dirArray[possiblePaths[choice]]);
 }
 
 bool RedBehavior::canMoveAt(Point const& pos, Point const& direction) const

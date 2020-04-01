@@ -9,37 +9,34 @@
 #define ENTITY_HPP_
 
 #include <vector>
-#include <string>
 #include <chrono>
 #include "Element.hpp"
 #include "IBehavior.hpp"
 #include "SpriteManager.hpp"
 
+static const std::string sprites = "./games/pacman/assets/sprites.png";
+
 class Entity {
     public:
-        Entity(std::vector<arcade::Element> &map);
         Entity(
             Point direction,
             Point position,
-            arcade::Element &element,
+            arcade::Element const& element,
             std::vector<arcade::Element> &map
         );
 
         Point getDirection(void) const;
         const Point &getPosition(void) const;
-        bool isAlive(void) const;
         const arcade::Element &getElement(void) const;
 
         virtual void setDirection(Point const& direction);
         void setPosition(Point const& position);
-        void setStatus(bool isAlive);
         void setElement(arcade::Element &element);
 
         bool canMove(Point offset);
         virtual void move(void);
 
     protected:
-        bool _isAlive;
         Point _direction;
         Point _position;
         arcade::Element _element;

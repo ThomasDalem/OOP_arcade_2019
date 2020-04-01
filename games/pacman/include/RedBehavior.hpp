@@ -13,10 +13,11 @@
 
 class RedBehavior : public IBehavior {
     public:
-        RedBehavior(std::vector<arcade::Element> &map, Entity &player);
+        RedBehavior(std::vector<arcade::Element> const& map, Entity const& player);
         ~RedBehavior();
 
         Point chase(Point const& pos, Point const& direction) const;
+        Point goRandom(Point const& pos, Point const& direction) const;
 
     private:
         bool canMoveAt(Point const&pos, Point const& direction) const;
@@ -25,8 +26,8 @@ class RedBehavior : public IBehavior {
         Point invertPoint(Point const& a) const;
 
     private:
-        std::vector<arcade::Element> &_map;
-        Entity &_player;
+        std::vector<arcade::Element> const& _map;
+        Entity const& _player;
 };
 
 #endif /* !REDBEHAVIOR_HPP_ */
