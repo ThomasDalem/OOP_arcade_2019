@@ -14,7 +14,7 @@
 namespace fs = std::filesystem;
 using namespace arcade;
 
-Menu::Menu(): _changeGraphLib(false)
+Menu::Menu(): _changeLibs(false)
 {
     retreiveLibs();
 }
@@ -22,19 +22,24 @@ Menu::Menu(): _changeGraphLib(false)
 Menu::~Menu()
 {}
 
-bool Menu::getChangeGraphLib(void) const
+bool Menu::getChangeLibs(void) const
 {
-    return (_changeGraphLib);
+    return (_changeLibs);
 }
 
-void Menu::setChangeGraphLib(bool status)
+void Menu::setChangeLibs(bool status)
 {
-    _changeGraphLib = status;
+    _changeLibs = status;
 }
 
 std::string const& Menu::getSelectedGraphLib(void) const
 {
-    return(_selectedLib->second);
+    return(_selectedGraphLib->second);
+}
+
+std::string const& Menu::getSelectedGameLib(void) const
+{
+    return(_selectedGameLib->second);
 }
 
 void Menu::retreiveLibs(void)
@@ -53,7 +58,8 @@ void Menu::retreiveLibs(void)
             _graphLibs[getLibName(it.path().filename().string())] = it.path();
         }
     }
-    _selectedLib = _graphLibs.begin();
+    _selectedGraphLib = _graphLibs.begin();
+    _selectedGameLib = _gamesLibs.begin();
 }
 
 void Menu::playMenu(std::vector<arcade::Inputs> const& inputs)
@@ -64,12 +70,16 @@ void Menu::playMenu(std::vector<arcade::Inputs> const& inputs)
     manageInputs(inputs);
     _texts.push_back(Text{"ARCADE", Point{18, 5}, arcade::RED});
     for (auto it = _gamesLibs.begin(); it != _gamesLibs.end(); it++) {
-        _texts.push_back(Text{it->first, Point{5, pos}, arcade::RED});
+        if (it == _selectedGameLib) {
+            _texts.push_back(Text{it->first + "<-", Point{5, pos}, arcade::RED});    
+        } else {
+            _texts.push_back(Text{it->first, Point{5, pos}, arcade::RED});
+        }
         pos += 2;
     }
     pos = 10;
     for (auto it = _graphLibs.begin(); it != _graphLibs.end(); it++) {
-        if (it == _selectedLib) {
+        if (it == _selectedGraphLib) {
             _texts.push_back(Text{it->first + " <-", Point{20, pos}, arcade::RED});
         } else {
             _texts.push_back(Text{it->first, Point{20, pos}, arcade::RED});
@@ -91,12 +101,16 @@ std::vector<arcade::Text> const& Menu::getTexts(void) const
 void Menu::manageInputs(std::vector<arcade::Inputs> const& inputs)
 {
     for (auto it = inputs.begin(); it != inputs.end(); it++) {
-        if (*it == arcade::DOWN && _selectedLib != _graphLibs.end()) {
-            _selectedLib++;
-        } else if (*it == arcade::UP && _selectedLib != _graphLibs.begin()) {
-            _selectedLib--;
-        } else if (*it == arcade::RIGHT) {
-            _changeGraphLib = true;
+        if (*it == arcade::NEXT_LIB && _selectedGraphLib != _graphLibs.end()) {
+            _selectedGraphLib++;
+        } else if (*it == arcade::PREV_LIB && _selectedGraphLib != _graphLibs.begin()) {
+            _selectedGraphLib--;
+        } else if (*it == arcade::NEXT_GAME && _selectedGameLib != _gamesLibs.end()) {
+            _selectedGameLib++;
+        } else if (*it == arcade::PREV_GAME && _selectedGameLib != _gamesLibs.begin()) {
+            _selectedGameLib--;
+        } else if (*it == arcade::CONTINUE) {
+            _changeLibs = true;
         }
     }
 }
@@ -105,5 +119,6 @@ std::string Menu::getLibName(std::string const& filename) const
 {
     std::string libName = filename.substr(11, filename.find_last_of('.') - 11);
 
+    libName[0] = std::toupper(libName[0]);
     return (libName);
 }

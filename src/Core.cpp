@@ -82,7 +82,6 @@ int arcade::Core::arcade()
     std::vector<arcade::Inputs> retreivedInputs;
 
     while (checkQuit(inputs) != true) {
-        // menu.mainMenu();
         retreivedInputs = displayModule->getInputs();
         inputs.insert(inputs.end(), retreivedInputs.begin(), retreivedInputs.end());
         now = std::chrono::system_clock::now();
@@ -92,10 +91,10 @@ int arcade::Core::arcade()
             std::vector<arcade::Text> texts = _menu.getTexts();
             displayModule->display(elements, texts);
             inputs.clear();
-            if (_menu.getChangeGraphLib() == true) {
+            if (_menu.getChangeLibs() == true) {
                 delete(displayModule);
                 displayModule = displayLoader.reloadLib(_menu.getSelectedGraphLib());
-                _menu.setChangeGraphLib(false);
+                _menu.setChangeLibs(false);
             }
             last = std::chrono::system_clock::now();
             /*gameModule->playLoop(inputs);

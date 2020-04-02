@@ -21,9 +21,10 @@ namespace arcade {
             Menu();
             ~Menu();
 
-            bool getChangeGraphLib(void) const;
-            void setChangeGraphLib(bool status);
+            bool getChangeLibs(void) const;
+            void setChangeLibs(bool status);
             std::string const& getSelectedGraphLib(void) const;
+            std::string const& getSelectedGameLib(void) const;
 
             void retreiveLibs(void);
             void playMenu(std::vector<arcade::Inputs> const& inputs);
@@ -39,8 +40,9 @@ namespace arcade {
             std::map<std::string, std::string> _graphLibs;
             std::vector<arcade::Element> _elements;
             std::vector<arcade::Text> _texts;
-            std::map<std::string, std::string>::iterator _selectedLib;
-            bool _changeGraphLib;
+            std::map<std::string, std::string>::iterator _selectedGameLib;
+            std::map<std::string, std::string>::iterator _selectedGraphLib;
+            bool _changeLibs;
     };
 }
 

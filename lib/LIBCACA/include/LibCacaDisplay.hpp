@@ -10,6 +10,7 @@
 
 #include <caca.h>
 #include <memory>
+#include <unordered_map>
 #include "IDisplayModule.hpp"
 
 static const std::pair<arcade::Color, caca_color> colorsPair[5] = {
@@ -20,11 +21,21 @@ static const std::pair<arcade::Color, caca_color> colorsPair[5] = {
     {arcade::BLACK, CACA_BLACK}
 };
 
-static const std::pair<arcade::Inputs, caca_key> inputsPair[4] = {
+static const std::unordered_map<arcade::Inputs, caca_key> inputs = {
     {arcade::UP, CACA_KEY_UP},
     {arcade::DOWN, CACA_KEY_DOWN},
     {arcade::LEFT, CACA_KEY_LEFT},
-    {arcade::RIGHT, CACA_KEY_RIGHT}
+    {arcade::RIGHT, CACA_KEY_RIGHT},
+    {arcade::PAUSE, CACA_KEY_BACKSPACE},
+    {arcade::CONTINUE, CACA_KEY_RETURN}
+};
+
+static const std::unordered_map<arcade::Inputs, char> inputsChar = {
+    {arcade::NEXT_LIB, 'm'},
+    {arcade::PREV_LIB, 'p'},
+    {arcade::NEXT_GAME, 'l'},
+    {arcade::PREV_GAME, 'o'},
+    {arcade::QUIT, 'q'}
 };
 
 class LibCacaDisplay : public arcade::IDisplayModule {

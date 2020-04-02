@@ -55,11 +55,14 @@ arcade::Inputs LibCacaDisplay::getInput(caca_event_t &ev)
     int key;
 
     key = caca_get_event_key_ch(&ev);
-    if (key == 'q')
-        return (arcade::QUIT);
-    for (int i = 0; i < 4; i++) {
-        if (key == inputsPair[i].second) {
-            return (inputsPair[i].first);
+    for (auto it = inputs.begin(); it != inputs.end(); it++) {
+        if (key == it->second) {
+            return (it->first);
+        }
+    }
+    for (auto it = inputsChar.begin(); it != inputsChar.end(); it++) {
+        if (key == it->second) {
+            return(it->first);
         }
     }
     return (arcade::UNDEFINED);
