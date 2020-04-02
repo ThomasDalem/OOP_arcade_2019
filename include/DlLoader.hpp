@@ -13,15 +13,18 @@
 #include <dlfcn.h>
 
 namespace arcade {
+    template<typename T>
     class DlLoader {
         public:
 
             // Ctor && Dtor
-            DlLoader();
-            ~DlLoader();
+            DlLoader() {};
+            ~DlLoader()
+            {
+                dlclose(libHandle);
+            };
 
             // Template
-            template<typename T>
             T *createLib(const std::string &path)
             {
                 libHandle = dlopen(path.c_str(), RTLD_LAZY);
@@ -36,7 +39,6 @@ namespace arcade {
                 return (module);
             }
 
-            template<typename T>
             T *reloadLib(const std::string &path)
             {
                 dlclose(libHandle);

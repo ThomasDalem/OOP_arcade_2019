@@ -10,8 +10,8 @@
 
 arcade::Core::Core(std::string path)
 {
-    displayModule = createLib<arcade::IDisplayModule>(path);
-    gameModule = createLib<arcade::IGameModule>("./games/pacman/lib_arcade_pacman.so");
+    displayModule = displayLoader.createLib(path);
+    gameModule = gameLoader.createLib("./games/pacman/lib_arcade_pacman.so");
 }
 
 arcade::Core::~Core()
@@ -28,6 +28,16 @@ arcade::IDisplayModule *arcade::Core::getDisplayModule() const
 arcade::IGameModule *arcade::Core::getGameModule() const
 {
     return (gameModule);
+}
+
+arcade::DlLoader<arcade::IDisplayModule> arcade::Core::getDisplayLoader() const
+{
+    return (displayLoader);
+}
+
+arcade::DlLoader<arcade::IGameModule> arcade::Core::getGameLoader() const
+{
+    return (gameLoader);
 }
 
 void arcade::Core::setDisplayModule(arcade::IDisplayModule *newDisplay)
@@ -72,6 +82,7 @@ int arcade::Core::arcade()
     std::vector<arcade::Inputs> retreivedInputs;
 
     while (checkQuit(inputs) != true) {
+        // menu.mainMenu();
         retreivedInputs = displayModule->getInputs();
         inputs.insert(inputs.end(), retreivedInputs.begin(), retreivedInputs.end());
         now = std::chrono::system_clock::now();

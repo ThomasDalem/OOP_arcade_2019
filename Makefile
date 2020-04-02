@@ -6,7 +6,8 @@
 ##
 
 SRC			=	src/main.cpp		\
-				src/Core.cpp
+				src/Core.cpp		\
+				src/Menu.cpp
 
 OBJ			=	$(SRC:.cpp=.o)
 
