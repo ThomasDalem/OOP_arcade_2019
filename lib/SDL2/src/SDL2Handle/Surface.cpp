@@ -20,7 +20,9 @@ Surface::Surface(Surface const& other): surface(other.surface)
 
 Surface::~Surface()
 {
-    SDL_FreeSurface(surface);
+    if (surface) {
+        SDL_FreeSurface(surface);
+    }
 }
 
 bool Surface::operator==(Surface const& other) const

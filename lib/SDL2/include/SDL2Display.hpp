@@ -8,6 +8,7 @@
 #ifndef SDL2DISPLAY_HPP_
 #define SDL2DISPLAY_HPP_
 
+#include <unordered_map>
 #include <SDL2/SDL.h>
 #include "Window.hpp"
 #include "IDisplayModule.hpp"
@@ -15,6 +16,7 @@
 #include "Text.hpp"
 #include "Renderer.hpp"
 #include "Font.hpp"
+#include "Surface.hpp"
 
 class SDL2Display : public arcade::IDisplayModule {
     public:
@@ -32,6 +34,7 @@ class SDL2Display : public arcade::IDisplayModule {
         std::unique_ptr<sdl2::Window> _window;
         std::unique_ptr<sdl2::Renderer> _renderer;
         sdl2::Font _font;
+        std::unordered_map<std::string, std::unique_ptr<sdl2::Surface>> _loadedSurfaces;
 };
 
 #endif /* !SDL2DISPLAY_HPP_ */

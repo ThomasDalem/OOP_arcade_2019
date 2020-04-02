@@ -102,8 +102,12 @@ void SDL2Display::displayElement(arcade::Element const& element)
     rect.w = 33;
     rect.x = element.position.x * 33;
     rect.y = element.position.y * 33;
-    surface = IMG_Load(element.filename.c_str());
-    texture = SDL_CreateTextureFromSurface(_renderer->renderer, surface.surface);
+    if (_loadedSurfaces.count(element.filename) == 1) {
+       _loadedSurfaces[element.filename];
+    } else {
+        _loadedSurfaces[element.filename] = std::make_unique<sdl2::Surface>(IMG_Load(element.filename.c_str()));
+    }
+    texture = SDL_CreateTextureFromSurface(_renderer->renderer, _loadedSurfaces[element.filename]->surface);
     if (spriteRect.h == 0 || spriteRect.w == 0) {
         SDL_RenderCopy(_renderer->renderer, texture.texture, NULL, &rect);
         return;
