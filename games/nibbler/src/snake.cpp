@@ -15,3 +15,9 @@ snake::snake()
     arcade::Element{path_sprite, arcade::GREEN, _position, arcade::Rect{Point{0, 0}, Point{0,0}}};
     _alive = true;
 }
+
+snake::~snake()
+{
+
+}
+
