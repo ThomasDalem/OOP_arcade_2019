@@ -15,7 +15,7 @@
 #include "IDisplayModule.hpp"
 #include "IGameModule.hpp"
 #include "DlLoader.hpp"
-// #include "Menu.hpp"
+#include "Menu.hpp"
 
 namespace arcade {
     class Core {
@@ -37,7 +37,6 @@ namespace arcade {
             void setDisplayModule(arcade::IDisplayModule *newDisplay);
             void setGameModule(arcade::IGameModule *newGame);
 
-        protected:
         private:
             // variables
             // arcade::Menu menu;
@@ -45,6 +44,7 @@ namespace arcade {
             arcade::DlLoader<arcade::IGameModule> gameLoader;
             arcade::IDisplayModule *displayModule;
             arcade::IGameModule *gameModule;
+            arcade::Menu _menu;
 
             // Functions
             bool checkQuit(std::vector<arcade::Inputs> inputs) const;

@@ -87,12 +87,18 @@ int arcade::Core::arcade()
         inputs.insert(inputs.end(), retreivedInputs.begin(), retreivedInputs.end());
         now = std::chrono::system_clock::now();
         if (getElapsedTime(last, now).count() > 0.005) {
-            gameModule->playLoop(inputs);
+            _menu.playMenu(inputs);
+            std::vector<arcade::Element> elements = _menu.getElements();
+            std::vector<arcade::Text> texts = _menu.getTexts();
+            displayModule->display(elements, texts);
+            inputs.clear();
+            last = std::chrono::system_clock::now();
+            /*gameModule->playLoop(inputs);
             std::vector<arcade::Element> elements = gameModule->getElements();
             std::vector<arcade::Text> texts = gameModule->getTexts();
             displayModule->display(elements, texts);
             inputs.clear();
-            last = std::chrono::system_clock::now();
+            last = std::chrono::system_clock::now();*/
         }
     }
     return (0);

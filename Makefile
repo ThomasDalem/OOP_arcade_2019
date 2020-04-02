@@ -11,7 +11,7 @@ SRC			=	src/main.cpp		\
 
 OBJ			=	$(SRC:.cpp=.o)
 
-CPPFLAGS	=	-Wall -Werror -Wextra -I./include
+CPPFLAGS	=	-Wall -Werror -Wextra -I./include --std=c++2a -lstdc++fs
 
 NAME		=	arcade
 
