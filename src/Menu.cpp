@@ -14,7 +14,7 @@
 namespace fs = std::filesystem;
 using namespace arcade;
 
-Menu::Menu()
+Menu::Menu(): _changeGraphLib(false)
 {
     retreiveLibs();
 }

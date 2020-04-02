@@ -92,6 +92,11 @@ int arcade::Core::arcade()
             std::vector<arcade::Text> texts = _menu.getTexts();
             displayModule->display(elements, texts);
             inputs.clear();
+            if (_menu.getChangeGraphLib() == true) {
+                delete(displayModule);
+                displayModule = displayLoader.reloadLib(_menu.getSelectedGraphLib());
+                _menu.setChangeGraphLib(false);
+            }
             last = std::chrono::system_clock::now();
             /*gameModule->playLoop(inputs);
             std::vector<arcade::Element> elements = gameModule->getElements();

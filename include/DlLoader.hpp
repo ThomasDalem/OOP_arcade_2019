@@ -44,7 +44,7 @@ namespace arcade {
                 dlclose(libHandle);
                 return (createLib(path));
             }
-        protected:
+
         private:
             void *libHandle;
     };

@@ -22,6 +22,7 @@ SFMLDisplay::SFMLDisplay() : _window(sf::VideoMode(1300, 1200), "Game")
 
 SFMLDisplay::~SFMLDisplay()
 {
+    std::cout << "Closing SFML window" << std::endl;
     if (_window.isOpen())
         _window.close();
 }

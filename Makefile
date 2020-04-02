@@ -11,14 +11,14 @@ SRC			=	src/main.cpp		\
 
 OBJ			=	$(SRC:.cpp=.o)
 
-CPPFLAGS	=	-Wall -Werror -Wextra -I./include --std=c++2a -lstdc++fs
+CPPFLAGS	=	-Wall -Werror -Wextra -I./include --std=c++2a -lstdc++fs -g3
 
 NAME		=	arcade
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-		g++ -o $(NAME) $(OBJ) $(CPPFLAGS) -ldl
+		g++ -o $(NAME) $(OBJ) $(CPPFLAGS) -ldl -g3
 
 clean:
 	rm -f $(OBJ)
