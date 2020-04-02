@@ -52,6 +52,7 @@ namespace arcade {
                 std::chrono::time_point<std::chrono::system_clock> start,
                 std::chrono::time_point<std::chrono::system_clock> end
             ) const;
+            int playMenu(void);
     };
 }
 

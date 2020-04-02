@@ -73,6 +73,29 @@ std::chrono::duration<double> arcade::Core::getElapsedTime(
     return (elapsedSeconds);
 }
 
+int arcade::Core::playMenu(void)
+{
+    std::vector<arcade::Inputs> inputs;
+
+    while (checkQuit(inputs) == false) {
+        inputs = displayModule->getInputs();
+        _menu.playMenu(inputs);
+        std::vector<arcade::Element> elements = _menu.getElements();
+        std::vector<arcade::Text> texts = _menu.getTexts();
+        displayModule->display(elements, texts);
+        inputs.clear();
+        if (_menu.getChangeLibs() == true) {
+            delete(displayModule);
+            delete(gameModule);
+            displayModule = displayLoader.reloadLib(_menu.getSelectedGraphLib());
+            gameModule = gameLoader.reloadLib(_menu.getSelectedGameLib());
+            _menu.setChangeLibs(false);
+            return (0);
+        }
+    }
+    return (-1);
+}
+
 int arcade::Core::arcade()
 {
     std::chrono::time_point<std::chrono::system_clock> now;
@@ -81,28 +104,20 @@ int arcade::Core::arcade()
     std::vector<arcade::Inputs> inputs;
     std::vector<arcade::Inputs> retreivedInputs;
 
-    while (checkQuit(inputs) != true) {
+    if (playMenu() == -1) {
+        return (0);
+    }
+    while (checkQuit(inputs) == false) {
         retreivedInputs = displayModule->getInputs();
         inputs.insert(inputs.end(), retreivedInputs.begin(), retreivedInputs.end());
         now = std::chrono::system_clock::now();
         if (getElapsedTime(last, now).count() > 0.005) {
-            _menu.playMenu(inputs);
-            std::vector<arcade::Element> elements = _menu.getElements();
-            std::vector<arcade::Text> texts = _menu.getTexts();
-            displayModule->display(elements, texts);
-            inputs.clear();
-            if (_menu.getChangeLibs() == true) {
-                delete(displayModule);
-                displayModule = displayLoader.reloadLib(_menu.getSelectedGraphLib());
-                _menu.setChangeLibs(false);
-            }
-            last = std::chrono::system_clock::now();
-            /*gameModule->playLoop(inputs);
+            gameModule->playLoop(inputs);
             std::vector<arcade::Element> elements = gameModule->getElements();
             std::vector<arcade::Text> texts = gameModule->getTexts();
             displayModule->display(elements, texts);
             inputs.clear();
-            last = std::chrono::system_clock::now();*/
+            last = std::chrono::system_clock::now();
         }
     }
     return (0);
