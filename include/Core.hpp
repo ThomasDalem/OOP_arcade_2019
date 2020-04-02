@@ -14,6 +14,8 @@
 #include <dlfcn.h>
 #include "IDisplayModule.hpp"
 #include "IGameModule.hpp"
+#include "DlLoader.hpp"
+// #include "Menu.hpp"
 
 namespace arcade {
     class Core {
@@ -23,30 +25,14 @@ namespace arcade {
             Core(std::string path);
             ~Core();
 
-            // Template
-            template<typename T>
-            T *createLib(const std::string &path)
-            {
-                void *libHandle = dlopen(path.c_str(), RTLD_LAZY);
-
-                if (!libHandle) {
-                    std::cerr << "dlopen: " << dlerror() << std::endl;
-                    return (nullptr);
-                }
-                T *(*fptr)();
-                T *module;
-                fptr = (T *(*)()) dlsym(libHandle, "createObject");
-                module = fptr();
-                // dlclose(libHandle);
-                return (module);
-            }
-
             // Functions
             int arcade();
 
             // Getter && setter
             arcade::IDisplayModule *getDisplayModule() const;
             arcade::IGameModule *getGameModule() const;
+            arcade::DlLoader<arcade::IDisplayModule> getDisplayLoader() const;
+            arcade::DlLoader<arcade::IGameModule> getGameLoader() const;
 
             void setDisplayModule(arcade::IDisplayModule *newDisplay);
             void setGameModule(arcade::IGameModule *newGame);
@@ -54,6 +40,9 @@ namespace arcade {
         protected:
         private:
             // variables
+            // arcade::Menu menu;
+            arcade::DlLoader<arcade::IDisplayModule> displayLoader;
+            arcade::DlLoader<arcade::IGameModule> gameLoader;
             arcade::IDisplayModule *displayModule;
             arcade::IGameModule *gameModule;
 
