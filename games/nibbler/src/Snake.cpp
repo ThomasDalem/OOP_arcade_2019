@@ -21,3 +21,22 @@ arcade::Element const& Snake::getElement() const
 {
     return (_element);
 }
+
+void Snake::Move()
+{
+    std::chrono::time_point<std::chrono::system_clock> now = std::chrono::system_clock::now();
+    std::chrono::duration<double> laps = now - _prevMove;
+
+    if (laps.count() >= 0.05) {
+        _position.x += _direction.x * 0.25;
+        _position.y += _direction.y * 0.25;
+        _element.position.x = _position.x;
+        _element.position.y = _position.y;
+        _prevMove = now;
+    }
+}
+
+void Snake::setDirection(Point const &direction)
+{
+    _direction = direction;
+}
