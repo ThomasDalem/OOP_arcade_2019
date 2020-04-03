@@ -12,7 +12,7 @@
 #include <chrono>
 #include "Element.hpp"
 
-static const std::string path_sprite = "./games/pacman/assets/sprites.png";
+static const std::string path_sprite = "./games/nibbler/assets/green.jpg";
 
 class Snake {
     public:
