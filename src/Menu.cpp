@@ -9,6 +9,7 @@
 #include <filesystem>
 #include <regex>
 #include <iostream>
+#include <iterator>
 #include "Menu.hpp"
 
 namespace fs = std::filesystem;
@@ -101,11 +102,11 @@ std::vector<arcade::Text> const& Menu::getTexts(void) const
 void Menu::manageInputs(std::vector<arcade::Inputs> const& inputs)
 {
     for (auto it = inputs.begin(); it != inputs.end(); it++) {
-        if (*it == arcade::NEXT_LIB && _selectedGraphLib != _graphLibs.end()) {
+        if (*it == arcade::NEXT_LIB && std::next(_selectedGraphLib, 1) != _graphLibs.end()) {
             _selectedGraphLib++;
         } else if (*it == arcade::PREV_LIB && _selectedGraphLib != _graphLibs.begin()) {
             _selectedGraphLib--;
-        } else if (*it == arcade::NEXT_GAME && _selectedGameLib != _gamesLibs.end()) {
+        } else if (*it == arcade::NEXT_GAME && std::next(_selectedGameLib, 1) != _gamesLibs.end()) {
             _selectedGameLib++;
         } else if (*it == arcade::PREV_GAME && _selectedGameLib != _gamesLibs.begin()) {
             _selectedGameLib--;
