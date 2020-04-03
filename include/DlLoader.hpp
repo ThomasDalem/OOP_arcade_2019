@@ -18,10 +18,12 @@ namespace arcade {
         public:
 
             // Ctor && Dtor
-            DlLoader() {};
+            DlLoader(): libHandle(nullptr) {};
             ~DlLoader()
             {
-                dlclose(libHandle);
+                if (libHandle) {
+                    dlclose(libHandle);
+                }
             };
 
             // Template
@@ -41,7 +43,9 @@ namespace arcade {
 
             T *reloadLib(const std::string &path)
             {
-                dlclose(libHandle);
+                if (libHandle) {
+                    dlclose(libHandle);
+                }
                 return (createLib(path));
             }
 

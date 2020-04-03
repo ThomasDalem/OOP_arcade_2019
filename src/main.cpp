@@ -16,8 +16,7 @@ int main(int argc, char **argv)
         return (84);
     }
     arcade::Core core(argv[1]);
-    if (core.getDisplayModule() == nullptr
-        || core.getGameModule() == nullptr)
+    if (core.getDisplayModule() == nullptr)
         return (84);
     core.arcade();
     return (0);

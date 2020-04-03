@@ -11,7 +11,7 @@
 arcade::Core::Core(std::string path)
 {
     displayModule = displayLoader.createLib(path);
-    gameModule = gameLoader.createLib("./games/pacman/lib_arcade_pacman.so");
+    gameModule = nullptr;
 }
 
 arcade::Core::~Core()
@@ -42,13 +42,17 @@ arcade::DlLoader<arcade::IGameModule> arcade::Core::getGameLoader() const
 
 void arcade::Core::setDisplayModule(arcade::IDisplayModule *newDisplay)
 {
-    delete(displayModule);
+    if (displayModule) {
+        delete(displayModule);
+    }
     displayModule = newDisplay;
 }
 
 void arcade::Core::setGameModule(arcade::IGameModule *newgame)
 {
-    delete(gameModule);
+    if (gameModule) {
+        delete(gameModule);
+    }
     gameModule = newgame;
 }
 
@@ -86,7 +90,6 @@ int arcade::Core::playMenu(void)
         inputs.clear();
         if (_menu.getChangeLibs() == true) {
             delete(displayModule);
-            delete(gameModule);
             displayModule = displayLoader.reloadLib(_menu.getSelectedGraphLib());
             gameModule = gameLoader.reloadLib(_menu.getSelectedGameLib());
             _menu.setChangeLibs(false);
