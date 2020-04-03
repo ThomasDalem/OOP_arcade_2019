@@ -21,15 +21,15 @@ namespace arcade {
             Menu();
             ~Menu();
 
-            bool getChangeLibs(void) const;
+            bool getChangeLibs() const;
             void setChangeLibs(bool status);
-            std::string const& getSelectedGraphLib(void) const;
-            std::string const& getSelectedGameLib(void) const;
+            std::string const& getSelectedGraphLib() const;
+            std::string const& getSelectedGameLib() const;
 
-            void retreiveLibs(void);
+            void retreiveLibs();
             void playMenu(std::vector<arcade::Inputs> const& inputs);
-            std::vector<arcade::Element> const& getElements(void) const;
-            std::vector<arcade::Text> const& getTexts(void) const;
+            std::vector<arcade::Element> const& getElements() const;
+            std::vector<arcade::Text> const& getTexts() const;
 
         private:
             void manageInputs(std::vector<arcade::Inputs> const& inputs);

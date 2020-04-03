@@ -38,7 +38,7 @@ class SDL2Display : public arcade::IDisplayModule {
         ~SDL2Display();
 
         void display(std::vector<arcade::Element> const& elements, std::vector<arcade::Text> const& texts);
-        std::vector<arcade::Inputs> getInputs(void);
+        std::vector<arcade::Inputs> getInputs();
 
     private:
         arcade::Inputs manageKeyboardInput(SDL_Keycode key) const;

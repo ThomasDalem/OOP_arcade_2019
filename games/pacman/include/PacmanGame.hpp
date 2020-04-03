@@ -21,9 +21,9 @@ class PacmanGame : public arcade::IGameModule {
         ~PacmanGame();
 
         void playLoop(std::vector<arcade::Inputs> const& inputs);
-        void restart(void);
-        std::vector<arcade::Element> const& getElements(void) const;
-        std::vector<arcade::Text> const& getTexts(void) const;
+        void restart();
+        std::vector<arcade::Element> const& getElements() const;
+        std::vector<arcade::Text> const& getTexts() const;
 
     private:
         std::chrono::duration<double> getElapsedTime(

@@ -13,17 +13,17 @@ Entity::Entity(Point direction, Point position, arcade::Element const& element, 
     _map(map), _spriteManager(_element), _prevMove(std::chrono::system_clock::now())
 {}
 
-Point Entity::getDirection(void) const
+Point Entity::getDirection() const
 {
     return (_direction);
 }
 
-const Point &Entity::getPosition(void) const
+const Point &Entity::getPosition() const
 {
     return (_position);
 }
 
-const arcade::Element &Entity::getElement(void) const
+const arcade::Element &Entity::getElement() const
 {
     return (_element);
 }
@@ -65,7 +65,7 @@ bool Entity::canMove(Point offset)
     return (true);
 }
 
-void Entity::move(void)
+void Entity::move()
 {
     std::chrono::time_point<std::chrono::system_clock> now = std::chrono::system_clock::now();
     std::chrono::duration<double> elapsedTime = now - _prevMove;

@@ -30,7 +30,7 @@ class Ghost : public Entity
         ~Ghost();
 
         void setDirection(Point const& dir);
-        void move(void);
+        void move();
 
     private:
         std::unique_ptr<IBehavior> _behavior;

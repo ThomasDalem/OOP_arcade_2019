@@ -15,8 +15,8 @@ class Player : public Entity {
         Player(std::vector<arcade::Element> &map);
         ~Player();
 
-        bool isAlive(void) const;
-        bool playLoose(void);
+        bool isAlive() const;
+        bool playLoose();
 
     private:
         bool _isAlive;

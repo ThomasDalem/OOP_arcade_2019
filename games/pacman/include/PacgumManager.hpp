@@ -18,11 +18,11 @@ class PacgumManager {
         PacgumManager();
         ~PacgumManager();
 
-        std::vector<arcade::Element> const& getGums(void) const;
+        std::vector<arcade::Element> const& getGums() const;
 
         void addGum(Point const& position);
         int removeTouchedGums(Point const& position);
-        bool areGumsEmpty(void) const;
+        bool areGumsEmpty() const;
 
     private:
         bool collide(Point const& a, Point const& b) const;

@@ -40,7 +40,7 @@ void SFMLDisplay::display(std::vector<arcade::Element> const& elements, std::vec
     _window.display();
 }
 
-std::vector<arcade::Inputs> SFMLDisplay::getInputs(void)
+std::vector<arcade::Inputs> SFMLDisplay::getInputs()
 {
     sf::Event event;
     std::vector<arcade::Inputs> inputs;

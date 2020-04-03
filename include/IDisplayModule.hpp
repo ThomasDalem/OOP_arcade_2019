@@ -19,7 +19,7 @@ namespace arcade {
             virtual ~IDisplayModule() = default;
 
             virtual void display(std::vector<Element> const& elements, std::vector<Text> const& text) = 0;
-            virtual std::vector<Inputs> getInputs(void) = 0;
+            virtual std::vector<Inputs> getInputs() = 0;
     };
 }
 

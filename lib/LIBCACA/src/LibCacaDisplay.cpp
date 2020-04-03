@@ -34,7 +34,7 @@ void LibCacaDisplay::display(std::vector<arcade::Element> const& elements, std::
     caca_refresh_display(_display);
 }
 
-std::vector<arcade::Inputs> LibCacaDisplay::getInputs(void)
+std::vector<arcade::Inputs> LibCacaDisplay::getInputs()
 {
     std::vector<arcade::Inputs> inputs;
     caca_event_t ev;

@@ -49,11 +49,11 @@ void nibbler::playLoop(std::vector<arcade::Inputs> const& inputs)
     _elements.insert(_element.end(), _element_const.begin(), _element_const());
 }
 
-void nibbler::restart(void)
+void nibbler::restart()
 {
 }
 
-const std::vector<arcade::Element> &nibbler::getElements(void) const
+const std::vector<arcade::Element> &nibbler::getElements() const
 {
     return (_element);
 }

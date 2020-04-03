@@ -44,7 +44,7 @@ class LibCacaDisplay : public arcade::IDisplayModule {
         ~LibCacaDisplay();
 
         void display(std::vector<arcade::Element> const& elements, std::vector<arcade::Text> const& text);
-        std::vector<arcade::Inputs> getInputs(void);
+        std::vector<arcade::Inputs> getInputs();
 
     private:
         arcade::Inputs getInput(caca_event_t &event);

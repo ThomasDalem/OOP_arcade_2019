@@ -14,7 +14,7 @@ PacgumManager::PacgumManager()
 PacgumManager::~PacgumManager()
 {}
 
-std::vector<arcade::Element> const& PacgumManager::getGums(void) const
+std::vector<arcade::Element> const& PacgumManager::getGums() const
 {
     return (_gums);
 }
@@ -37,7 +37,7 @@ int PacgumManager::removeTouchedGums(Point const& position)
     return (0);
 }
 
-bool PacgumManager::areGumsEmpty(void) const
+bool PacgumManager::areGumsEmpty() const
 {
     return (_gums.size() == 0);
 }

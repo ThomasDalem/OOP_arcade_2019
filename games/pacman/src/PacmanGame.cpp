@@ -75,17 +75,17 @@ void PacmanGame::playLoop(std::vector<arcade::Inputs> const& inputs)
     _elements.insert(_elements.end(), _constElements.begin(), _constElements.end());
 }
 
-void PacmanGame::restart(void)
+void PacmanGame::restart()
 {
 
 }
 
-const std::vector<arcade::Element> &PacmanGame::getElements(void) const
+const std::vector<arcade::Element> &PacmanGame::getElements() const
 {
     return (_elements);
 }
 
-const std::vector<arcade::Text> &PacmanGame::getTexts(void) const
+const std::vector<arcade::Text> &PacmanGame::getTexts() const
 {
     return (_texts);
 }

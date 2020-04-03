@@ -67,7 +67,7 @@ std::chrono::duration<double> arcade::Core::getElapsedTime(
     return (elapsedSeconds);
 }
 
-int arcade::Core::playMenu(void)
+int arcade::Core::playMenu()
 {
     std::vector<arcade::Inputs> inputs;
 
