@@ -8,8 +8,23 @@
 #ifndef SFMLDISPLAY_HPP_
 #define SFMLDISPLAY_HPP_
 
+#include <unordered_map>
 #include <SFML/Graphics.hpp>
 #include "IDisplayModule.hpp"
+
+static const std::unordered_map<arcade::Inputs, sf::Keyboard::Key> inputs = {
+    {arcade::UP, sf::Keyboard::Up},
+    {arcade::DOWN, sf::Keyboard::Down},
+    {arcade::LEFT, sf::Keyboard::Left},
+    {arcade::RIGHT, sf::Keyboard::Right},
+    {arcade::QUIT, sf::Keyboard::Q},
+    {arcade::NEXT_GAME, sf::Keyboard::L},
+    {arcade::PREV_GAME, sf::Keyboard::O},
+    {arcade::NEXT_LIB, sf::Keyboard::M},
+    {arcade::PREV_LIB, sf::Keyboard::P},
+    {arcade::PAUSE, sf::Keyboard::Space},
+    {arcade::CONTINUE, sf::Keyboard::Enter}
+};
 
 class SFMLDisplay : public arcade::IDisplayModule {
     public:
@@ -20,6 +35,7 @@ class SFMLDisplay : public arcade::IDisplayModule {
         std::vector<arcade::Inputs> getInputs(void);
 
     private:
+        arcade::Inputs checkKeys(sf::Keyboard::Key key);
         void setDisplayRect(sf::Sprite &sprite, arcade::Rect const& rect);
         bool isTextureLoaded(std::string const& filename) const;
         void displayElement(arcade::Element const& element);

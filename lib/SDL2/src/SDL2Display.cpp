@@ -54,36 +54,29 @@ void SDL2Display::display(std::vector<arcade::Element> const& elements, std::vec
 
 std::vector<arcade::Inputs> SDL2Display::getInputs(void)
 {
-    std::vector<arcade::Inputs> inputs;
+    std::vector<arcade::Inputs> retreivedInputs;
     SDL_Event event;
 
     while (SDL_PollEvent(&event)) {
         if (event.type == SDL_QUIT) {
-            inputs.push_back(arcade::QUIT);
-        } else if (event.type == SDL_KEYDOWN) {
-            switch (event.key.keysym.sym)
-            {
-            case SDLK_UP:
-                inputs.push_back(arcade::UP);
-                break;
-            case SDLK_DOWN:
-                inputs.push_back(arcade::DOWN);
-                break;
-            case SDLK_LEFT:
-                inputs.push_back(arcade::LEFT);
-                break;
-            case SDLK_RIGHT:
-                inputs.push_back(arcade::RIGHT);
-                break;
-            case SDLK_q:
-                inputs.push_back(arcade::QUIT);
-                break;
-            default:
-                break;
-            }
+            retreivedInputs.push_back(arcade::QUIT);
+            return(retreivedInputs);
+        }
+        if (event.type == SDL_KEYDOWN) {
+            retreivedInputs.push_back(manageKeyboardInput(event.key.keysym.sym));
         }
     }
-    return (inputs);
+    return (retreivedInputs);
+}
+
+arcade::Inputs SDL2Display::manageKeyboardInput(SDL_Keycode key) const
+{
+    for (auto it = inputs.begin(); it != inputs.end(); it++) {
+        if (key == it->second) {
+            return(it->first);
+        }
+    }
+    return(arcade::UNDEFINED);
 }
 
 void SDL2Display::displayElement(arcade::Element const& element)

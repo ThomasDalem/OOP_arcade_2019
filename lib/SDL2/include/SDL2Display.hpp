@@ -18,6 +18,20 @@
 #include "Font.hpp"
 #include "Surface.hpp"
 
+static const std::unordered_map<arcade::Inputs, SDL_KeyCode> inputs = {
+    {arcade::UP, SDLK_UP},
+    {arcade::DOWN, SDLK_DOWN},
+    {arcade::LEFT, SDLK_LEFT},
+    {arcade::RIGHT, SDLK_RIGHT},
+    {arcade::QUIT, SDLK_q},
+    {arcade::NEXT_GAME, SDLK_l},
+    {arcade::PREV_GAME, SDLK_o},
+    {arcade::NEXT_LIB, SDLK_m},
+    {arcade::PREV_LIB, SDLK_p},
+    {arcade::PAUSE, SDLK_SPACE},
+    {arcade::CONTINUE, SDLK_RETURN}
+};
+
 class SDL2Display : public arcade::IDisplayModule {
     public:
         SDL2Display();
@@ -27,6 +41,7 @@ class SDL2Display : public arcade::IDisplayModule {
         std::vector<arcade::Inputs> getInputs(void);
 
     private:
+        arcade::Inputs manageKeyboardInput(SDL_Keycode key) const;
         void displayElement(arcade::Element const& element);
         void displayText(arcade::Text const& text);
 

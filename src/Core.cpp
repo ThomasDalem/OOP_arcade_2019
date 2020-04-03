@@ -11,7 +11,7 @@
 arcade::Core::Core(std::string path)
 {
     displayModule = displayLoader.createLib(path);
-    gameModule = gameLoader.createLib("./games/pacman/lib_arcade_pacman.so");
+    gameModule = nullptr;
 }
 
 arcade::Core::~Core()
@@ -42,13 +42,17 @@ arcade::DlLoader<arcade::IGameModule> arcade::Core::getGameLoader() const
 
 void arcade::Core::setDisplayModule(arcade::IDisplayModule *newDisplay)
 {
-    delete(displayModule);
+    if (displayModule) {
+        delete(displayModule);
+    }
     displayModule = newDisplay;
 }
 
 void arcade::Core::setGameModule(arcade::IGameModule *newgame)
 {
-    delete(gameModule);
+    if (gameModule) {
+        delete(gameModule);
+    }
     gameModule = newgame;
 }
 
@@ -73,6 +77,28 @@ std::chrono::duration<double> arcade::Core::getElapsedTime(
     return (elapsedSeconds);
 }
 
+int arcade::Core::playMenu(void)
+{
+    std::vector<arcade::Inputs> inputs;
+
+    while (checkQuit(inputs) == false) {
+        inputs = displayModule->getInputs();
+        _menu.playMenu(inputs);
+        std::vector<arcade::Element> elements = _menu.getElements();
+        std::vector<arcade::Text> texts = _menu.getTexts();
+        displayModule->display(elements, texts);
+        inputs.clear();
+        if (_menu.getChangeLibs() == true) {
+            delete(displayModule);
+            displayModule = displayLoader.reloadLib(_menu.getSelectedGraphLib());
+            gameModule = gameLoader.reloadLib(_menu.getSelectedGameLib());
+            _menu.setChangeLibs(false);
+            return (0);
+        }
+    }
+    return (-1);
+}
+
 int arcade::Core::arcade()
 {
     std::chrono::time_point<std::chrono::system_clock> now;
@@ -81,8 +107,10 @@ int arcade::Core::arcade()
     std::vector<arcade::Inputs> inputs;
     std::vector<arcade::Inputs> retreivedInputs;
 
-    while (checkQuit(inputs) != true) {
-        // menu.mainMenu();
+    if (playMenu() == -1) {
+        return (0);
+    }
+    while (checkQuit(inputs) == false) {
         retreivedInputs = displayModule->getInputs();
         inputs.insert(inputs.end(), retreivedInputs.begin(), retreivedInputs.end());
         now = std::chrono::system_clock::now();

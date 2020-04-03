@@ -49,35 +49,25 @@ std::vector<arcade::Inputs> SFMLDisplay::getInputs(void)
         return (inputs);
     while (_window.pollEvent(event)) {
         if (event.type == sf::Event::KeyPressed) {
-            switch (event.key.code)
-            {
-            case sf::Keyboard::Up:
-                inputs.push_back(arcade::UP);
-                break;
-            case sf::Keyboard::Down:
-                inputs.push_back(arcade::DOWN);
-                break;
-            case sf::Keyboard::Left:
-                inputs.push_back(arcade::LEFT);
-                break;
-            case sf::Keyboard::Right:
-                inputs.push_back(arcade::RIGHT);
-                break;
-            case sf::Keyboard::Q:
-                inputs.push_back(arcade::QUIT);
-                break;
-            default:
-                break;
-            }
-        }
-        if (event.type == sf::Event::Closed)
+            inputs.push_back(checkKeys(event.key.code));
+        } else if (event.type == sf::Event::Closed) {
             inputs.push_back(arcade::QUIT);
-        if (event.type == sf::Event::Resized) {
+        } else if (event.type == sf::Event::Resized) {
             sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
             _window.setView(sf::View(visibleArea));
         }
     }
     return (inputs);
+}
+
+arcade::Inputs SFMLDisplay::checkKeys(sf::Keyboard::Key key)
+{
+    for (auto it = inputs.begin(); it != inputs.end(); it++) {
+        if (key == it->second) {
+            return (it->first);
+        }
+    }
+    return (arcade::UNDEFINED);
 }
 
 void SFMLDisplay::setDisplayRect(sf::Sprite &sprite, arcade::Rect const& rect)
