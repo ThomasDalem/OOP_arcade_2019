@@ -29,6 +29,7 @@ $(NAME): all
 
 all: $(OBJ)
 	$(CC) -shared -o $(NAME) $(OBJ) -g3
+	mv lib_arcade_nibbler.so ../
 
 clean:
 	rm -f $(OBJ)
