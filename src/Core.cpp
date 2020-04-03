@@ -45,13 +45,14 @@ void arcade::Core::setGameModule(arcade::IGameModule *newgame)
     _gameModule.reset(newgame);
 }
 
-bool arcade::Core::checkQuit(std::vector<arcade::Inputs> inputs) const
+bool arcade::Core::checkQuit(std::vector<arcade::Inputs> const& inputs) const
 {
     if (inputs.size() == 0)
         return (false);
     for (auto it = inputs.begin(); it != inputs.end(); it++) {
-        if (*it == arcade::QUIT)
+        if (*it == arcade::QUIT) {
             return (true);
+        }
     }
     return (false);
 }
@@ -71,12 +72,12 @@ int arcade::Core::playMenu(void)
     std::vector<arcade::Inputs> inputs;
 
     while (checkQuit(inputs) == false) {
+        inputs.clear();
         inputs = _displayModule->getInputs();
         _menu.playMenu(inputs);
         std::vector<arcade::Element> elements = _menu.getElements();
         std::vector<arcade::Text> texts = _menu.getTexts();
         _displayModule->display(elements, texts);
-        inputs.clear();
         if (_menu.getChangeLibs() == true) {
             _displayModule.reset(nullptr);
             setDisplayModule(_displayLoader.reloadLib(_menu.getSelectedGraphLib()));

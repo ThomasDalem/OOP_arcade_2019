@@ -48,7 +48,7 @@ namespace arcade {
             arcade::Menu _menu;
 
             // Functions
-            bool checkQuit(std::vector<arcade::Inputs> inputs) const;
+            bool checkQuit(std::vector<arcade::Inputs> const& inputs) const;
             std::chrono::duration<double> getElapsedTime(
                 std::chrono::time_point<std::chrono::system_clock> start,
                 std::chrono::time_point<std::chrono::system_clock> end
