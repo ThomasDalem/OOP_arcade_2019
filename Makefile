@@ -47,4 +47,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: clean fclean re all
+.PHONY: core games graphicals clean fclean re all
