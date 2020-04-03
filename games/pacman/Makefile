@@ -34,12 +34,13 @@ $(NAME): all
 
 all: $(OBJ)
 	$(CC) -shared -o $(NAME) $(OBJ) -g3
+	mv lib_arcade_pacman.so ../
 
 clean:
 	rm -f $(OBJ)
 
 fclean: clean
-	rm -f $(NAME)
+	rm -f ../$(NAME)
 
 re: fclean all
 

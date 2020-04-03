@@ -28,12 +28,13 @@ $(NAME): all
 
 all: $(OBJ)
 	$(CC) -shared -o $(NAME) $(OBJ) -g3 `pkg-config --libs --cflags caca`
+	mv lib_arcade_libcaca.so ../
 
 clean:
 	rm -f $(OBJ)
 
 fclean: clean
-	rm -f $(NAME)
+	rm -f ../$(NAME)
 
 re: fclean all
 

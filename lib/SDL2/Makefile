@@ -33,12 +33,13 @@ $(NAME): all
 
 all: $(OBJ)
 	$(CC) -shared -o $(NAME) $(OBJ) -g3 -lSDL2 -lSDL2_image -lSDL2_ttf
+	mv lib_arcade_sdl2.so ../
 
 clean:
 	rm -f $(OBJ)
 
 fclean: clean
-	rm -f $(NAME)
+	rm -f ../$(NAME)
 
 re: fclean all
 
