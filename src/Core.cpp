@@ -8,52 +8,41 @@
 #include <ctime>
 #include "Core.hpp"
 
-arcade::Core::Core(std::string path)
-{
-    displayModule = displayLoader.createLib(path);
-    gameModule = nullptr;
-}
+arcade::Core::Core(std::string path):
+    _displayModule(_displayLoader.createLib(path))
+{}
 
 arcade::Core::~Core()
-{
-    delete(displayModule);
-    delete(gameModule);
-}
+{}
 
 arcade::IDisplayModule *arcade::Core::getDisplayModule() const
 {
-    return (displayModule);
+    return (_displayModule.get());
 }
 
 arcade::IGameModule *arcade::Core::getGameModule() const
 {
-    return (gameModule);
+    return (_gameModule.get());
 }
 
 arcade::DlLoader<arcade::IDisplayModule> arcade::Core::getDisplayLoader() const
 {
-    return (displayLoader);
+    return (_displayLoader);
 }
 
 arcade::DlLoader<arcade::IGameModule> arcade::Core::getGameLoader() const
 {
-    return (gameLoader);
+    return (_gameLoader);
 }
 
 void arcade::Core::setDisplayModule(arcade::IDisplayModule *newDisplay)
 {
-    if (displayModule) {
-        delete(displayModule);
-    }
-    displayModule = newDisplay;
+    _displayModule.reset(newDisplay);
 }
 
 void arcade::Core::setGameModule(arcade::IGameModule *newgame)
 {
-    if (gameModule) {
-        delete(gameModule);
-    }
-    gameModule = newgame;
+    _gameModule.reset(newgame);
 }
 
 bool arcade::Core::checkQuit(std::vector<arcade::Inputs> inputs) const
@@ -82,16 +71,16 @@ int arcade::Core::playMenu(void)
     std::vector<arcade::Inputs> inputs;
 
     while (checkQuit(inputs) == false) {
-        inputs = displayModule->getInputs();
+        inputs = _displayModule->getInputs();
         _menu.playMenu(inputs);
         std::vector<arcade::Element> elements = _menu.getElements();
         std::vector<arcade::Text> texts = _menu.getTexts();
-        displayModule->display(elements, texts);
+        _displayModule->display(elements, texts);
         inputs.clear();
         if (_menu.getChangeLibs() == true) {
-            delete(displayModule);
-            displayModule = displayLoader.reloadLib(_menu.getSelectedGraphLib());
-            gameModule = gameLoader.reloadLib(_menu.getSelectedGameLib());
+            _displayModule.reset(nullptr);
+            setDisplayModule(_displayLoader.reloadLib(_menu.getSelectedGraphLib()));
+            setGameModule(_gameLoader.reloadLib(_menu.getSelectedGameLib()));
             _menu.setChangeLibs(false);
             return (0);
         }
@@ -111,14 +100,14 @@ int arcade::Core::arcade()
         return (0);
     }
     while (checkQuit(inputs) == false) {
-        retreivedInputs = displayModule->getInputs();
+        retreivedInputs = _displayModule->getInputs();
         inputs.insert(inputs.end(), retreivedInputs.begin(), retreivedInputs.end());
         now = std::chrono::system_clock::now();
         if (getElapsedTime(last, now).count() > 0.005) {
-            gameModule->playLoop(inputs);
-            std::vector<arcade::Element> elements = gameModule->getElements();
-            std::vector<arcade::Text> texts = gameModule->getTexts();
-            displayModule->display(elements, texts);
+            _gameModule->playLoop(inputs);
+            std::vector<arcade::Element> elements = _gameModule->getElements();
+            std::vector<arcade::Text> texts = _gameModule->getTexts();
+            _displayModule->display(elements, texts);
             inputs.clear();
             last = std::chrono::system_clock::now();
         }

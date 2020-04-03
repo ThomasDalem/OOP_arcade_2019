@@ -12,6 +12,7 @@
 #include <chrono>
 #include <iostream>
 #include <dlfcn.h>
+#include <memory>
 #include "IDisplayModule.hpp"
 #include "IGameModule.hpp"
 #include "DlLoader.hpp"
@@ -40,10 +41,10 @@ namespace arcade {
         private:
             // variables
             // arcade::Menu menu;
-            arcade::DlLoader<arcade::IDisplayModule> displayLoader;
-            arcade::DlLoader<arcade::IGameModule> gameLoader;
-            arcade::IDisplayModule *displayModule;
-            arcade::IGameModule *gameModule;
+            arcade::DlLoader<arcade::IDisplayModule> _displayLoader;
+            arcade::DlLoader<arcade::IGameModule> _gameLoader;
+            std::unique_ptr<arcade::IDisplayModule> _displayModule;
+            std::unique_ptr<arcade::IGameModule> _gameModule;
             arcade::Menu _menu;
 
             // Functions
