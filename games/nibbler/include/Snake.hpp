@@ -19,6 +19,7 @@ class Snake {
         Snake(std::vector<arcade::Element> &map);
         ~Snake();
         void Move();
+        bool canMove(Point offset);
         arcade::Element const& getElement() const;
         void setDirection(Point const &direction);
     private:
