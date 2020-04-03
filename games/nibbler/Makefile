@@ -14,7 +14,7 @@ CPPFLAGS	=	-Wall -Werror -Wextra -I./include/ -I../../include/
 
 CC			=	g++
 
-NAME		=	lib_arcade_pacman.so
+NAME		=	lib_arcade_nibbler.so
 
 GREEN		=	\033[32m
 YELLOW		=	\033[33m
