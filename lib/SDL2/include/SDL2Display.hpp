@@ -18,7 +18,7 @@
 #include "Font.hpp"
 #include "Surface.hpp"
 
-static const std::unordered_map<arcade::Inputs, SDL_KeyCode> inputs = {
+static const std::unordered_map<arcade::Inputs, SDL_Keycode> inputs = {
     {arcade::UP, SDLK_UP},
     {arcade::DOWN, SDLK_DOWN},
     {arcade::LEFT, SDLK_LEFT},
