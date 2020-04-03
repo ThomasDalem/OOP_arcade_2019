@@ -5,8 +5,8 @@
 ## Makefile
 ##
 
-SRC			= 	src/nibbler.cpp		\
-				src/snake.cpp		\
+SRC			= 	src/Nibbler.cpp		\
+				src/Snake.cpp		\
 
 OBJ			=	$(SRC:.cpp=.o)
 

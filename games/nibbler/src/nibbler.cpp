@@ -4,14 +4,19 @@
 ** File description:
 ** nibbler
 */
-#include <iostream>
-#include <chrono>
-#include "nibbler.hpp"
 
-nibbler::nibbler()
+#include <iostream>
+#include "Nibbler.hpp"
+
+extern "C" Nibbler *createObject()
+{
+    return (new Nibbler);
+}
+
+Nibbler::Nibbler()
 {
     std::string strMap[11];
-    std::string path_wall("./games/nibbler/assets/wall.jpg");
+    const std::string path_wall("./games/nibbler/assets/wall.jpg");
 
     strMap[0] = "****************";
     strMap[1] = "*              *";
@@ -25,35 +30,41 @@ nibbler::nibbler()
     strMap[9] = "*              *";
     strMap[10] = "***************";
 
-    for (int i = 0, i < 11, i++) {
-        for (int j = 0, j < 16, j++) {
-            Point pos = {(double)j, (double)i};
+    for (int i = 0; i < 11; i++) {
+        for (int j = 0; j < 16; j++) {
+            Point pos = {static_cast<double>(j), static_cast<double>(i)};
             if (strMap[i][j] == '*') {
                 arcade::Element elem{path_wall, arcade::WHITE, pos, arcade::Rect{Point{0,0}, Point{0,0}}};
-                _element_const.push_back(elem);
+                _elements_const.push_back(elem);
+            }
         }
     }
-    _snake = std::make_unique<snake>(_element);
-
+    _snake = std::make_unique<Snake>(_elements_const);
 }
 
-nibbler::~nibbler()
-{
-}
+Nibbler::~Nibbler()
+{}
 
-void nibbler::playLoop(std::vector<arcade::Inputs> const& inputs)
+void Nibbler::playLoop(std::vector<arcade::Inputs> const& inputs)
 {
+    if (inputs.size()) {
+        std::cout << "bonjour" << std::endl;
+    }
     _elements.clear();
-    _elements.insert(_elements.end());
-    _elements.push_back(_snake.getElement());
-    _elements.insert(_element.end(), _element_const.begin(), _element_const());
+    _elements.insert(_elements.end(), _elements_const.begin(), _elements_const.end());
+    _elements.push_back(_snake->getElement());
 }
 
-void nibbler::restart(void)
+void Nibbler::restart()
 {
 }
 
-const std::vector<arcade::Element> &nibbler::getElements(void) const
+std::vector<arcade::Element> const& Nibbler::getElements() const
 {
-    return (_element);
+    return (_elements);
+}
+
+std::vector<arcade::Text> const& Nibbler::getTexts() const
+{
+    return (_text);
 }

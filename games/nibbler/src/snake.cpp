@@ -6,18 +6,18 @@
 */
 
 #include <iostream>
-#include "snake.hpp"
+#include "Snake.hpp"
 
-snake::snake()
+Snake::Snake(std::vector<arcade::Element> &map):
+    _position({5, 5}),
+    _element({path_sprite, arcade::GREEN, _position, arcade::Rect{Point{0, 0}, Point{0,0}}}),
+    _size(1), _map(map), _alive(true) 
+{}
+
+Snake::~Snake()
+{}
+
+arcade::Element const& Snake::getElement() const
 {
-    _position = {5, 5};
-    _size = 1;
-    arcade::Element{path_sprite, arcade::GREEN, _position, arcade::Rect{Point{0, 0}, Point{0,0}}};
-    _alive = true;
+    return (_element);
 }
-
-snake::~snake()
-{
-
-}
-

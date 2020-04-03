@@ -11,26 +11,22 @@
 #include <memory>
 #include <chrono>
 #include "IGameModule.hpp"
-#include "snake.hpp"
+#include "Snake.hpp"
 
-class nibbler : public arcade::IGameModule {
+class Nibbler : public arcade::IGameModule {
     public:
-        nibbler();
-        ~nibbler();
-        void playloop(std::vector<arcade::Inputs> inputs);
-        void restart (void);
-        const std::vector<arcade::Element> &getElements() const;
+        Nibbler();
+        ~Nibbler();
+
+        void playLoop(std::vector<arcade::Inputs> const& inputs);
+        void restart();
+        std::vector<arcade::Element> const& getElements() const;
+        std::vector<arcade::Text> const& getTexts() const;
 
     private:
-        std::chrono::duration<double> getElapsedTime(
-            std::chrono::time_point<std::chrono::system_clock> start,
-            std::chrono::time_point<std::chrono::system_clock> end
-        ) const;
-        std::vector<arcade::Element> _element;
-        std::vector<arcade::Element> _element_const;
-        std::unique_ptr<snake> _snake;
-
-        
-}
-
+        std::vector<arcade::Element> _elements;
+        std::vector<arcade::Element> _elements_const;
+        std::vector<arcade::Text> _text;
+        std::unique_ptr<Snake> _snake;        
+};
 #endif /* !NIBBLER_HPP_ */

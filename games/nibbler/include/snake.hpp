@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2020
 ** OOP_arcade_2019
 ** File description:
-** snake
+** Snake
 */
 
 #ifndef SNAKE_HPP_
@@ -14,17 +14,18 @@
 
 static const std::string path_sprite = "./games/pacman/assets/sprites.png";
 
-class snake {
+class Snake {
     public:
-        snake();
-        ~snake();
-        
+        Snake(std::vector<arcade::Element> &map);
+        ~Snake();
+
+        arcade::Element const& getElement() const;
     private:
         Point _position;
         Point _direction;
         arcade::Element _element;
         size_t _size;
-        std::vector<arcade::Element> &map;
+        std::vector<arcade::Element> &_map;
         bool _alive;
 };
 
