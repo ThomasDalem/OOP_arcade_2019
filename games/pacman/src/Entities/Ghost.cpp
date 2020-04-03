@@ -28,7 +28,7 @@ void Ghost::setDirection(Point const& direction)
     _spriteManager.changeGhostDirection(direction);
 }
 
-void Ghost::move(void)
+void Ghost::move()
 {
     std::chrono::time_point<std::chrono::system_clock> now = std::chrono::system_clock::now();
     std::chrono::duration<double> elapsedTime = now - _prevMove;

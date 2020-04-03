@@ -19,12 +19,12 @@ Player::Player(std::vector<arcade::Element> &map) :
 Player::~Player()
 {}
 
-bool Player::isAlive(void) const
+bool Player::isAlive() const
 {
    return (_isAlive);
 }
 
-bool Player::playLoose(void)
+bool Player::playLoose()
 {
     static std::chrono::time_point<std::chrono::system_clock> now = std::chrono::system_clock::now();
     static std::chrono::time_point<std::chrono::system_clock> prev;

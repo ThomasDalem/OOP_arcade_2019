@@ -56,7 +56,7 @@ void SpriteManager::changeGhostDirection(Point const& dir)
     _element.rect.pos.y = _pos.y;
 }
 
-void SpriteManager::movePacmanSprite(void)
+void SpriteManager::movePacmanSprite()
 {
     _element.rect.pos = _pos;
     if (_pos.y >= _start.y + 2 * 33) {
@@ -66,7 +66,7 @@ void SpriteManager::movePacmanSprite(void)
     _pos.y += 33;
 }
 
-void SpriteManager::moveGhostSprite(void)
+void SpriteManager::moveGhostSprite()
 {
     if (_pos.y >= _start.y + 32) {
         _pos.y = _start.y;

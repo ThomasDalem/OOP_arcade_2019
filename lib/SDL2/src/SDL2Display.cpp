@@ -52,7 +52,7 @@ void SDL2Display::display(std::vector<arcade::Element> const& elements, std::vec
     SDL_RenderPresent(_renderer->renderer);
 }
 
-std::vector<arcade::Inputs> SDL2Display::getInputs(void)
+std::vector<arcade::Inputs> SDL2Display::getInputs()
 {
     std::vector<arcade::Inputs> retreivedInputs;
     SDL_Event event;

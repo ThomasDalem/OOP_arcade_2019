@@ -40,7 +40,6 @@ namespace arcade {
 
         private:
             // variables
-            // arcade::Menu menu;
             arcade::DlLoader<arcade::IDisplayModule> _displayLoader;
             arcade::DlLoader<arcade::IGameModule> _gameLoader;
             std::unique_ptr<arcade::IDisplayModule> _displayModule;
@@ -53,7 +52,7 @@ namespace arcade {
                 std::chrono::time_point<std::chrono::system_clock> start,
                 std::chrono::time_point<std::chrono::system_clock> end
             ) const;
-            int playMenu(void);
+            int playMenu();
     };
 }
 

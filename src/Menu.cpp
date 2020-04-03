@@ -23,7 +23,7 @@ Menu::Menu(): _changeLibs(false)
 Menu::~Menu()
 {}
 
-bool Menu::getChangeLibs(void) const
+bool Menu::getChangeLibs() const
 {
     return (_changeLibs);
 }
@@ -33,17 +33,17 @@ void Menu::setChangeLibs(bool status)
     _changeLibs = status;
 }
 
-std::string const& Menu::getSelectedGraphLib(void) const
+std::string const& Menu::getSelectedGraphLib() const
 {
     return(_selectedGraphLib->second);
 }
 
-std::string const& Menu::getSelectedGameLib(void) const
+std::string const& Menu::getSelectedGameLib() const
 {
     return(_selectedGameLib->second);
 }
 
-void Menu::retreiveLibs(void)
+void Menu::retreiveLibs()
 {
     const std::string gamesPath = "./games/";
     const std::string graphPath = "./lib/";
@@ -89,12 +89,12 @@ void Menu::playMenu(std::vector<arcade::Inputs> const& inputs)
     }
 }
 
-std::vector<arcade::Element> const& Menu::getElements(void) const
+std::vector<arcade::Element> const& Menu::getElements() const
 {
     return (_elements);
 }
 
-std::vector<arcade::Text> const& Menu::getTexts(void) const
+std::vector<arcade::Text> const& Menu::getTexts() const
 {
     return (_texts);
 }

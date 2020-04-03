@@ -32,7 +32,7 @@ class SFMLDisplay : public arcade::IDisplayModule {
         ~SFMLDisplay();
 
         void display(std::vector<arcade::Element> const& elements, std::vector<arcade::Text> const& text);
-        std::vector<arcade::Inputs> getInputs(void);
+        std::vector<arcade::Inputs> getInputs();
 
     private:
         arcade::Inputs checkKeys(sf::Keyboard::Key key);

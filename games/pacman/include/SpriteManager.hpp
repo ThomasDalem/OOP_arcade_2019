@@ -30,8 +30,8 @@ class SpriteManager {
 
         void changePacmanDirection(Point const& dir);
         void changeGhostDirection(Point const& dir);
-        void movePacmanSprite(void);
-        void moveGhostSprite(void);
+        void movePacmanSprite();
+        void moveGhostSprite();
 
     private:
         arcade::Element &_element;

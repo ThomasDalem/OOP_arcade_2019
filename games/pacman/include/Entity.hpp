@@ -25,16 +25,16 @@ class Entity {
             std::vector<arcade::Element> &map
         );
 
-        Point getDirection(void) const;
-        const Point &getPosition(void) const;
-        const arcade::Element &getElement(void) const;
+        Point getDirection() const;
+        const Point &getPosition() const;
+        const arcade::Element &getElement() const;
 
         virtual void setDirection(Point const& direction);
         void setPosition(Point const& position);
         void setElement(arcade::Element &element);
 
         bool canMove(Point offset);
-        virtual void move(void);
+        virtual void move();
 
     protected:
         Point _direction;
