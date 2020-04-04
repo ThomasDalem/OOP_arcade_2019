@@ -28,7 +28,7 @@ static const std::unordered_map<arcade::Inputs, SDL_Keycode> inputs = {
     {arcade::PREV_GAME, SDLK_o},
     {arcade::NEXT_LIB, SDLK_m},
     {arcade::PREV_LIB, SDLK_p},
-    {arcade::PAUSE, SDLK_SPACE},
+    {arcade::PAUSE, SDLK_ESCAPE},
     {arcade::CONTINUE, SDLK_RETURN}
 };
 

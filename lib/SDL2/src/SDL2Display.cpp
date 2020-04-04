@@ -25,7 +25,7 @@ SDL2Display::SDL2Display()
     if (TTF_Init() == -1) {
         throw(std::string("Error while SDL2 ttf init"));
     }
-    _window = std::make_unique<sdl2::Window>(1000, 800);
+    _window = std::make_unique<sdl2::Window>(1300, 1200);
     if (_window->window == nullptr) {
         throw(std::string("Error: cannot create SDL2 window"));
     }
@@ -112,8 +112,8 @@ void SDL2Display::displayText(arcade::Text const& text)
 {
     SDL_Color color = {255, 255, 255, 255};
     SDL_Rect rect = {
-        static_cast<int>(text.pos.x),
-        static_cast<int>(text.pos.y),
+        static_cast<int>(text.pos.x * 33),
+        static_cast<int>(text.pos.y * 33),
         static_cast<int>(12 * text.text.size()),
         24
     };
