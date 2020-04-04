@@ -89,14 +89,42 @@ void Menu::playMenu(std::vector<arcade::Inputs> const& inputs)
     }
 }
 
+void Menu::pauseMenu(std::vector<arcade::Inputs> const & inputs)
+{
+    double pos = 10;
+
+    _pauseTexts.clear();
+    manageInputs(inputs);
+    _pauseTexts.push_back(Text{"ARCADE", Point{18, 4}, arcade::RED});
+    _pauseTexts.push_back(Text{"Press ?? to return to menu", Point{18, 6}, arcade::RED});
+    _pauseTexts.push_back(Text{"Press Q to quit", Point{18, 8}, arcade::RED});
+    for (auto it = _graphLibs.begin(); it != _graphLibs.end(); it++, pos += 2) {
+        if (it == _selectedGraphLib) {
+            _pauseTexts.push_back(Text{it->first + " <-", Point{18, pos}, arcade::RED});
+        } else {
+            _pauseTexts.push_back(Text{it->first, Point{18, pos}, arcade::RED});
+        }
+    }
+}
+
 std::vector<arcade::Element> const& Menu::getElements() const
 {
     return (_elements);
 }
 
+std::vector<arcade::Element> const& Menu::getPauseElements() const
+{
+    return (_pauseElements);
+}
+
 std::vector<arcade::Text> const& Menu::getTexts() const
 {
     return (_texts);
+}
+
+std::vector<arcade::Text> const&    Menu::getPauseTexts() const
+{
+    return (_pauseTexts);
 }
 
 void Menu::manageInputs(std::vector<arcade::Inputs> const& inputs)
