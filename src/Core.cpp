@@ -70,6 +70,7 @@ std::chrono::duration<double> arcade::Core::getElapsedTime(
 int arcade::Core::playMenu()
 {
     std::vector<arcade::Inputs> inputs;
+    std::vector<Score> scores;
 
     while (checkQuit(inputs) == false) {
         inputs.clear();

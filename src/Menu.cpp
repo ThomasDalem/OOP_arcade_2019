@@ -69,21 +69,21 @@ void Menu::playMenu(std::vector<arcade::Inputs> const& inputs)
 
     _texts.clear();
     manageInputs(inputs);
-    _texts.push_back(Text{"ARCADE", Point{18, 5}, arcade::RED});
+    _texts.push_back({"ARCADE", {18, 5}, arcade::RED});
     for (auto it = _gamesLibs.begin(); it != _gamesLibs.end(); it++) {
         if (it == _selectedGameLib) {
-            _texts.push_back(Text{it->first + "<-", Point{5, pos}, arcade::RED});    
+            _texts.push_back({it->first + "<-", {5, pos}, arcade::RED});
         } else {
-            _texts.push_back(Text{it->first, Point{5, pos}, arcade::RED});
+            _texts.push_back({it->first, {5, pos}, arcade::RED});
         }
         pos += 2;
     }
     pos = 10;
     for (auto it = _graphLibs.begin(); it != _graphLibs.end(); it++) {
         if (it == _selectedGraphLib) {
-            _texts.push_back(Text{it->first + " <-", Point{20, pos}, arcade::RED});
+            _texts.push_back({it->first + " <-", {15, pos}, arcade::RED});
         } else {
-            _texts.push_back(Text{it->first, Point{20, pos}, arcade::RED});
+            _texts.push_back({it->first, {15, pos}, arcade::RED});
         }
         pos += 2;
     }

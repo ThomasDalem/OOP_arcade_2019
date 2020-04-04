@@ -17,6 +17,7 @@
 #include "IGameModule.hpp"
 #include "DlLoader.hpp"
 #include "Menu.hpp"
+#include "ScoresManager.hpp"
 
 namespace arcade {
     class Core {
@@ -34,7 +35,6 @@ namespace arcade {
             arcade::IGameModule *getGameModule() const;
             arcade::DlLoader<arcade::IDisplayModule> getDisplayLoader() const;
             arcade::DlLoader<arcade::IGameModule> getGameLoader() const;
-
             void setDisplayModule(arcade::IDisplayModule *newDisplay);
             void setGameModule(arcade::IGameModule *newGame);
 
@@ -45,6 +45,7 @@ namespace arcade {
             std::unique_ptr<arcade::IDisplayModule> _displayModule;
             std::unique_ptr<arcade::IGameModule> _gameModule;
             arcade::Menu _menu;
+            ScoresManager _scoreManager;
 
             // Functions
             bool checkQuit(std::vector<arcade::Inputs> const& inputs) const;
