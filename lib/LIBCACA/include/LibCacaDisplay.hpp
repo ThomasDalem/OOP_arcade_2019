@@ -27,7 +27,8 @@ static const std::unordered_map<arcade::Inputs, caca_key> inputs = {
     {arcade::LEFT, CACA_KEY_LEFT},
     {arcade::RIGHT, CACA_KEY_RIGHT},
     {arcade::PAUSE, CACA_KEY_ESCAPE},
-    {arcade::CONTINUE, CACA_KEY_RETURN}
+    {arcade::CONTINUE, CACA_KEY_RETURN},
+    {arcade::PAUSE, CACA_KEY_SPACE}
 };
 
 static const std::unordered_map<arcade::Inputs, char> inputsChar = {
