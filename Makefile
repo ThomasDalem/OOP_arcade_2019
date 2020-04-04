@@ -5,9 +5,11 @@
 ## Makefile
 ##
 
-SRC			=	src/main.cpp		\
-				src/Core.cpp		\
-				src/Menu.cpp
+SRC			=	src/main.cpp			\
+				src/Core.cpp			\
+				src/Menu.cpp			\
+				src/CoreException.cpp	\
+				src/ScoresManager.cpp	\
 
 OBJ			=	$(SRC:.cpp=.o)
 
