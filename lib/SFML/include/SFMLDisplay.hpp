@@ -22,8 +22,9 @@ static const std::unordered_map<arcade::Inputs, sf::Keyboard::Key> inputs = {
     {arcade::PREV_GAME, sf::Keyboard::O},
     {arcade::NEXT_LIB, sf::Keyboard::M},
     {arcade::PREV_LIB, sf::Keyboard::P},
-    {arcade::PAUSE, sf::Keyboard::Space},
-    {arcade::CONTINUE, sf::Keyboard::Return}
+    {arcade::PAUSE, sf::Keyboard::Escape},
+    {arcade::CONTINUE, sf::Keyboard::Return},
+    {arcade::MENU, sf::Keyboard::Space}
 };
 
 class SFMLDisplay : public arcade::IDisplayModule {

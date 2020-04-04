@@ -29,7 +29,8 @@ static const std::unordered_map<arcade::Inputs, SDL_Keycode> inputs = {
     {arcade::NEXT_LIB, SDLK_m},
     {arcade::PREV_LIB, SDLK_p},
     {arcade::PAUSE, SDLK_ESCAPE},
-    {arcade::CONTINUE, SDLK_RETURN}
+    {arcade::CONTINUE, SDLK_RETURN},
+    {arcade::MENU, SDLK_SPACE}
 };
 
 class SDL2Display : public arcade::IDisplayModule {

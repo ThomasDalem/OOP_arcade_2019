@@ -12,6 +12,7 @@ namespace arcade {
     enum Inputs {
         QUIT,
         PAUSE,
+        MENU,
         RESTART,
         NEXT_LIB,
         PREV_LIB,

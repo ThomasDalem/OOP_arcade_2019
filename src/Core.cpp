@@ -100,6 +100,8 @@ int arcade::Core::playPause(std::vector<arcade::Inputs> & inputs)
         std::vector<arcade::Element> elements = _menu.getPauseElements();
         std::vector<arcade::Text> texts = _menu.getPauseTexts();
         _displayModule->display(elements, texts);
+        if (checkInput(inputs, arcade::MENU) == true)
+            return (42);
         if (_menu.getChangeLibs() == true) {
             _displayModule.reset(nullptr);
             setDisplayModule(_displayLoader.reloadLib(_menu.getSelectedGraphLib()));
@@ -129,6 +131,8 @@ int arcade::Core::arcade()
             resultPause = playPause(inputs);
         if (resultPause == -1)
             return (0);
+        if (resultPause == 42)
+            return (arcade());
         now = std::chrono::system_clock::now();
         if (getElapsedTime(last, now).count() > 0.005) {
             _scoreManager.updateActualScore(_gameModule->playLoop(inputs));
