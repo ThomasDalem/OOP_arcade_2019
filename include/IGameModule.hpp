@@ -18,7 +18,7 @@ namespace arcade {
         public:
             virtual ~IGameModule() = default;
 
-            virtual void playLoop(std::vector<arcade::Inputs> const& inputs) = 0;
+            virtual int playLoop(std::vector<arcade::Inputs> const& inputs) = 0;
             virtual void restart() = 0;
             virtual std::vector<arcade::Element> const& getElements() const = 0;
             virtual std::vector<arcade::Text> const& getTexts() const = 0;

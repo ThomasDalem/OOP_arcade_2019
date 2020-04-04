@@ -47,11 +47,12 @@ namespace arcade {
             ScoresManager _scoreManager;
 
             // Functions
-            bool checkQuit(std::vector<arcade::Inputs> const& inputs) const;
+            bool checkInput(std::vector<arcade::Inputs> const& inputs, arcade::Inputs checkInput) const;
             std::chrono::duration<double> getElapsedTime(
                 std::chrono::time_point<std::chrono::system_clock> start,
                 std::chrono::time_point<std::chrono::system_clock> end
             ) const;
+            int playPause(std::vector<arcade::Inputs> & inputs);
             int playMenu();
     };
 }

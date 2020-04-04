@@ -18,7 +18,9 @@ class ScoresManager {
         ScoresManager();
         ~ScoresManager();
 
-        void addScore(std::string const& name, int score);
+        void addScore(std::string const& name);
+        void updateActualScore(int score);
+        void registerActualScore();
         std::vector<Score> const& getScores() const;
 
     private:
@@ -27,6 +29,7 @@ class ScoresManager {
         void setScorePlayerName(Score &score, std::string const& str) const;
 
     private:
+        Score _actualScore;
         std::vector<Score> _scores;
 };
 

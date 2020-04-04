@@ -30,13 +30,20 @@ ScoresManager::~ScoresManager()
     }
 }
 
-void ScoresManager::addScore(std::string const& name, int score)
+void ScoresManager::addScore(std::string const& name)
 {
-    Score newScore;
+    setScorePlayerName(_actualScore, name);
+    _actualScore.score = 0;
+}
 
-    setScorePlayerName(newScore, name);
-    newScore.score = score;
-    _scores.push_back(newScore);
+void ScoresManager::updateActualScore(int score)
+{
+    _actualScore.score = score;
+}
+
+void ScoresManager::registerActualScore()
+{
+    _scores.push_back(_actualScore);
 }
 
 std::vector<Score> const& ScoresManager::getScores() const

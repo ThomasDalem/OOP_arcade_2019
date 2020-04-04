@@ -36,7 +36,7 @@ PacmanGame::PacmanGame() : _score(0)
         for (int j = 0; j < 16; j++) {
             Point pos = {(double)j, (double)i};
             if (strMap[i][j] == '*') {
-                arcade::Element element{wallFile, arcade::BLUE, pos, arcade::Rect{Point{0, 0}, Point{0, 0}}};
+                arcade::Element element{wallFile, arcade::BLUE, pos, arcade::Rect{{0, 0}, {0, 0}}};
                 _constElements.push_back(element);
             } else if (strMap[i][j] == '.') {
                 _gumsManager.addGum(pos);
@@ -47,7 +47,7 @@ PacmanGame::PacmanGame() : _score(0)
     _enemy = std::make_unique<Ghost>(
         Point{-1, 0},
         Point{14, 9},
-        arcade::Element{sprites, arcade::RED, Point{14, 9}, arcade::Rect{Point{32, 33}, Point{480, 0}}},
+        arcade::Element{sprites, arcade::RED, Point{14, 9}, arcade::Rect{{32, 33}, {480, 0}}},
         _constElements,
         *_player
     );
@@ -56,7 +56,7 @@ PacmanGame::PacmanGame() : _score(0)
 PacmanGame::~PacmanGame()
 {}
 
-void PacmanGame::playLoop(std::vector<arcade::Inputs> const& inputs)
+int PacmanGame::playLoop(std::vector<arcade::Inputs> const& inputs)
 {
     std::vector<arcade::Element> gums = _gumsManager.getGums();
 
@@ -73,6 +73,7 @@ void PacmanGame::playLoop(std::vector<arcade::Inputs> const& inputs)
     }
     _elements.push_back(_player->getElement());
     _elements.insert(_elements.end(), _constElements.begin(), _constElements.end());
+    return (_score);
 }
 
 void PacmanGame::restart()

@@ -28,10 +28,14 @@ namespace arcade {
             std::string const& getSelectedGameLib() const;
 
             void retreiveLibs();
+            void retreivePause();
             void playMenu(std::vector<arcade::Inputs> const& inputs);
+            void pauseMenu(std::vector<arcade::Inputs> const& inputs);
             std::vector<arcade::Element> const& getElements() const;
+            std::vector<arcade::Element> const& getPauseElements() const;
             std::vector<arcade::Text> const& getTexts() const;
             void setDisplayScores(std::vector<Score> const& scores);
+            std::vector<arcade::Text> const& getPauseTexts() const;
 
         private:
             void manageInputs(std::vector<arcade::Inputs> const& inputs);
@@ -40,8 +44,11 @@ namespace arcade {
         private:
             std::map<std::string, std::string> _gamesLibs;
             std::map<std::string, std::string> _graphLibs;
+            std::map<std::string, std::string> _pauseGraphLibs;
             std::vector<arcade::Element> _elements;
+            std::vector<arcade::Element> _pauseElements;
             std::vector<arcade::Text> _texts;
+            std::vector<arcade::Text> _pauseTexts;
             std::map<std::string, std::string>::iterator _selectedGameLib;
             std::map<std::string, std::string>::iterator _selectedGraphLib;
             bool _changeLibs;
