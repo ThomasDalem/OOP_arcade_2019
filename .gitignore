@@ -3,6 +3,6 @@ arcade
 *.o
 *.so
 *~
-.txt
+*.txt
 test
 vgcore.*
