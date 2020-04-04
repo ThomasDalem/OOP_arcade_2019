@@ -22,7 +22,7 @@ class Nibbler : public arcade::IGameModule {
         void restart();
         std::vector<arcade::Element> const& getElements() const;
         std::vector<arcade::Text> const& getTexts() const;
-
+        void Where(std::vector<arcade::Inputs> const& inputs);
     private:
         std::vector<arcade::Element> _elements;
         std::vector<arcade::Element> _elements_const;

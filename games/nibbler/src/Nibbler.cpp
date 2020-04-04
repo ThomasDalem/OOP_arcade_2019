@@ -16,7 +16,7 @@ extern "C" Nibbler *createObject()
 Nibbler::Nibbler()
 {
     std::string strMap[11];
-    const std::string path_wall("./games/nibbler/assets/wall.jpg");
+    const std::string path_wall("./games/pacman/assets/blue.png");
 
     strMap[0] = "****************";
     strMap[1] = "*              *";
@@ -47,10 +47,9 @@ Nibbler::~Nibbler()
 
 void Nibbler::playLoop(std::vector<arcade::Inputs> const& inputs)
 {
-    if (inputs.size()) {
-        std::cout << "bonjour" << std::endl;
-    }
     _elements.clear();
+    Where(inputs);
+    _snake->Move();
     _elements.insert(_elements.end(), _elements_const.begin(), _elements_const.end());
     _elements.push_back(_snake->getElement());
 }
@@ -67,4 +66,18 @@ std::vector<arcade::Element> const& Nibbler::getElements() const
 std::vector<arcade::Text> const& Nibbler::getTexts() const
 {
     return (_text);
+}
+
+void Nibbler::Where(std::vector<arcade::Inputs> const& inputs)
+{
+    for (auto it = inputs.begin(); it != inputs.end(); it++) {
+        if (*it == arcade::UP)
+            _snake->setDirection(Point{0, -1});
+        else if (*it == arcade::DOWN)
+            _snake->setDirection(Point{0, 1});
+        else if (*it == arcade::LEFT)
+            _snake->setDirection(Point{-1, 0});
+        else if (*it == arcade::RIGHT)
+            _snake->setDirection(Point{1, 0});
+    }
 }
