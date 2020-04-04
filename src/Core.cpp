@@ -72,10 +72,12 @@ int arcade::Core::playMenu()
     std::vector<arcade::Inputs> inputs;
     std::vector<Score> scores;
 
+    _scoreManager.addScore("thomas", 7800);
     while (checkQuit(inputs) == false) {
         inputs.clear();
         inputs = _displayModule->getInputs();
         _menu.playMenu(inputs);
+        _menu.setDisplayScores(_scoreManager.getScores());
         std::vector<arcade::Element> elements = _menu.getElements();
         std::vector<arcade::Text> texts = _menu.getTexts();
         _displayModule->display(elements, texts);

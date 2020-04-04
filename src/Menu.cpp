@@ -65,11 +65,12 @@ void Menu::retreiveLibs()
 
 void Menu::playMenu(std::vector<arcade::Inputs> const& inputs)
 {
-    double pos = 10;
+    double pos = 12;
 
     _texts.clear();
     manageInputs(inputs);
     _texts.push_back({"ARCADE", {18, 5}, arcade::RED});
+    _texts.push_back({"Games:", {5, 10}, arcade::RED});
     for (auto it = _gamesLibs.begin(); it != _gamesLibs.end(); it++) {
         if (it == _selectedGameLib) {
             _texts.push_back({it->first + "<-", {5, pos}, arcade::RED});
@@ -78,7 +79,8 @@ void Menu::playMenu(std::vector<arcade::Inputs> const& inputs)
         }
         pos += 2;
     }
-    pos = 10;
+    pos = 12;
+    _texts.push_back({"Graphics:", {15, 10}, arcade::RED});
     for (auto it = _graphLibs.begin(); it != _graphLibs.end(); it++) {
         if (it == _selectedGraphLib) {
             _texts.push_back({it->first + " <-", {15, pos}, arcade::RED});
@@ -122,4 +124,16 @@ std::string Menu::getLibName(std::string const& filename) const
 
     libName[0] = std::toupper(libName[0]);
     return (libName);
+}
+
+void Menu::setDisplayScores(std::vector<Score> const& scores)
+{
+    double pos = 12;
+
+    _texts.push_back({"Scores:", {28, 10}, arcade::RED});
+    for (auto it = scores.begin(); it != scores.end(); it++) {
+        _texts.push_back({it->playerName, {25, pos}, arcade::RED});
+        _texts.push_back({std::to_string(it->score), {32, pos}, arcade::RED});
+        pos += 2;
+    }
 }

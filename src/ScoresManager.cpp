@@ -66,7 +66,7 @@ void ScoresManager::writeScores() const
     std::ofstream file;
     Score score = {};
 
-    file.open(scoresFile, std::ios::app);
+    file.open(scoresFile, std::ios::binary);
     if (file.is_open() == false) {
         throw (CoreException("Could not open or create score file"));
     }

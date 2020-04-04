@@ -17,7 +17,6 @@
 #include "IGameModule.hpp"
 #include "DlLoader.hpp"
 #include "Menu.hpp"
-#include "ScoresManager.hpp"
 
 namespace arcade {
     class Core {

@@ -14,6 +14,7 @@
 #include "Element.hpp"
 #include "Text.hpp"
 #include "Inputs.hpp"
+#include "ScoresManager.hpp"
 
 namespace arcade {
     class Menu {
@@ -30,6 +31,7 @@ namespace arcade {
             void playMenu(std::vector<arcade::Inputs> const& inputs);
             std::vector<arcade::Element> const& getElements() const;
             std::vector<arcade::Text> const& getTexts() const;
+            void setDisplayScores(std::vector<Score> const& scores);
 
         private:
             void manageInputs(std::vector<arcade::Inputs> const& inputs);
