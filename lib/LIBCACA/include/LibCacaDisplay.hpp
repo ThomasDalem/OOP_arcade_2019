@@ -28,7 +28,6 @@ static const std::unordered_map<arcade::Inputs, caca_key> inputs = {
     {arcade::RIGHT, CACA_KEY_RIGHT},
     {arcade::PAUSE, CACA_KEY_ESCAPE},
     {arcade::CONTINUE, CACA_KEY_RETURN},
-    {arcade::MENU, CACA_KEY_PAUSE}
 };
 
 static const std::unordered_map<arcade::Inputs, char> inputsChar = {
@@ -36,7 +35,8 @@ static const std::unordered_map<arcade::Inputs, char> inputsChar = {
     {arcade::PREV_LIB, 'p'},
     {arcade::NEXT_GAME, 'l'},
     {arcade::PREV_GAME, 'o'},
-    {arcade::QUIT, 'q'}
+    {arcade::QUIT, 'q'},
+    {arcade::MENU, 'e'}
 };
 
 class LibCacaDisplay : public arcade::IDisplayModule {
