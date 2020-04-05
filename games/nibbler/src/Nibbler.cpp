@@ -97,3 +97,8 @@ void Nibbler::score(int nbApple)
     text += std::to_string(_score);
     _text.push_back(arcade::Text{text, Point{15, 5}, arcade::BLUE});
 }
+
+bool Nibbler::snakeCollide(Point const& obj) const
+{
+    return (_snake->getPosition().x == obj.x &&  _snake->getPosition().y == obj.y);
+}

@@ -26,8 +26,7 @@ class Nibbler : public arcade::IGameModule {
         void score(int nbApple);
 
     private:
-        bool snakeCollide() const;
-        bool collide(Point const& a, Point const& b) const;
+        bool snakeCollide(Point const& obj) const;
     
     private:
         std::vector<arcade::Element> _elements;
