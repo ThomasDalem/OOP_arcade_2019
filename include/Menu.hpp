@@ -30,6 +30,7 @@ namespace arcade {
             std::vector<arcade::Text> const& getTexts() const;
             std::vector<arcade::Text> const& getPauseTexts() const;
             std::vector<arcade::Element> const& getPauseElements() const;
+            std::string const& getPlayerName() const;
 
             void retreiveLibs();
             void retreivePause();

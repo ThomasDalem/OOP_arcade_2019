@@ -15,7 +15,7 @@
 namespace fs = std::filesystem;
 using namespace arcade;
 
-Menu::Menu(): _changeLibs(false), _pressedContinue(false)
+Menu::Menu(): _changeLibs(false), _pressedContinue(false), _playerName("Unknown")
 {
     retreiveLibs();
 }
@@ -58,9 +58,14 @@ std::vector<arcade::Text> const& Menu::getTexts() const
     return (_texts);
 }
 
-std::vector<arcade::Text> const&    Menu::getPauseTexts() const
+std::vector<arcade::Text> const& Menu::getPauseTexts() const
 {
     return (_pauseTexts);
+}
+
+std::string const& Menu::getPlayerName() const
+{
+    return (_playerName);
 }
 
 void Menu::retreiveLibs()
@@ -178,7 +183,7 @@ void Menu::getPlayerName(std::vector<arcade::Inputs> const& inputs, std::string 
     if (textInputs[0] == '\b' && _playerName.length() > 0) {
         _playerName.pop_back();
     }
-    if (_playerName.length() < 10 && textInputs[0] > 32) {
+    if (_playerName.length() < 10 && textInputs[0] > 32 && std::isalpha(textInputs[0])) {
         _playerName += textInputs;
     }
     _texts.push_back({_playerName, {5, 20}, arcade::RED});

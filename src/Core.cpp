@@ -122,7 +122,7 @@ int arcade::Core::arcade()
     if (playMenu() == -1) {
         return (0);
     }
-    _scoreManager.addScore("pseudo");
+    _scoreManager.addScore(_menu.getPlayerName());
     while (checkInput(inputs, arcade::QUIT) == false) {
         retreivedInputs = _displayModule->getInputs();
         inputs.insert(inputs.end(), retreivedInputs.begin(), retreivedInputs.end());
