@@ -40,7 +40,9 @@ std::vector<arcade::Inputs> LibCacaDisplay::getInputs()
     caca_event_t ev;
     caca_event_type type;
 
-    caca_get_event(_display, CACA_EVENT_KEY_PRESS | CACA_EVENT_QUIT, &ev, 10000);
+    if (caca_get_event(_display, CACA_EVENT_KEY_PRESS | CACA_EVENT_QUIT, &ev, 10000) == 0) {
+        return (inputs);
+    }
     type = caca_get_event_type(&ev);
     if (type == CACA_EVENT_QUIT) {
         inputs.push_back(arcade::QUIT);
@@ -50,11 +52,20 @@ std::vector<arcade::Inputs> LibCacaDisplay::getInputs()
     return (inputs);
 }
 
+std::string LibCacaDisplay::getTextInput()
+{
+    std::string save = _text;
+
+    _text.clear();
+    return (save);
+}
+
 arcade::Inputs LibCacaDisplay::getInput(caca_event_t &ev)
 {
     int key;
 
     key = caca_get_event_key_ch(&ev);
+    _text += key;
     for (auto it = inputs.begin(); it != inputs.end(); it++) {
         if (key == it->second) {
             return (it->first);

@@ -75,7 +75,7 @@ int arcade::Core::playMenu()
     while (checkInput(inputs, arcade::QUIT) == false) {
         inputs.clear();
         inputs = _displayModule->getInputs();
-        _menu.playMenu(inputs);
+        _menu.playMenu(inputs, _displayModule->getTextInput());
         _menu.setDisplayScores(_scoreManager.getScores());
         std::vector<arcade::Element> elements = _menu.getElements();
         std::vector<arcade::Text> texts = _menu.getTexts();
@@ -96,7 +96,6 @@ int arcade::Core::playPause(std::vector<arcade::Inputs> & inputs)
     while (checkInput(inputs, arcade::QUIT) == false) {
         inputs.clear();
         inputs = _displayModule->getInputs();
-        _menu.pauseMenu(inputs);
         std::vector<arcade::Element> elements = _menu.getPauseElements();
         std::vector<arcade::Text> texts = _menu.getPauseTexts();
         _displayModule->display(elements, texts);

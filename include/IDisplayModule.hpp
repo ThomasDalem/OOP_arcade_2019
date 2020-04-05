@@ -20,6 +20,7 @@ namespace arcade {
 
             virtual void display(std::vector<Element> const& elements, std::vector<Text> const& text) = 0;
             virtual std::vector<Inputs> getInputs() = 0;
+            virtual std::string getTextInput() = 0;
     };
 }
 

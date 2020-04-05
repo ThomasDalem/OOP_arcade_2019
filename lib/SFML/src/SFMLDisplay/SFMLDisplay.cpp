@@ -56,8 +56,19 @@ std::vector<arcade::Inputs> SFMLDisplay::getInputs()
             sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
             _window.setView(sf::View(visibleArea));
         }
+        if (event.type == sf::Event::TextEntered) {
+            _text += event.text.unicode;
+        }
     }
     return (inputs);
+}
+
+std::string SFMLDisplay::getTextInput()
+{
+    std::string copy = _text;
+
+    _text.clear();
+    return (copy);
 }
 
 arcade::Inputs SFMLDisplay::checkKeys(sf::Keyboard::Key key)

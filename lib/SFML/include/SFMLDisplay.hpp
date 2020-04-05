@@ -34,6 +34,7 @@ class SFMLDisplay : public arcade::IDisplayModule {
 
         void display(std::vector<arcade::Element> const& elements, std::vector<arcade::Text> const& text);
         std::vector<arcade::Inputs> getInputs();
+        std::string getTextInput();
 
     private:
         arcade::Inputs checkKeys(sf::Keyboard::Key key);
@@ -46,6 +47,7 @@ class SFMLDisplay : public arcade::IDisplayModule {
         sf::RenderWindow _window;
         std::map<std::string, sf::Texture> _loadedTextures;
         sf::Font _font;
+        std::string _text;
 };
 
 #endif /* !SFMLDISPLAY_HPP_ */

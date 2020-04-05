@@ -9,7 +9,7 @@
 #define SCORE_HPP_
 
 struct Score {
-    char playerName[10];
+    char playerName[11];
     int score;
 };
 

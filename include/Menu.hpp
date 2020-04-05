@@ -26,20 +26,26 @@ namespace arcade {
             void setChangeLibs(bool status);
             std::string const& getSelectedGraphLib() const;
             std::string const& getSelectedGameLib() const;
+            std::vector<arcade::Element> const& getElements() const;
+            std::vector<arcade::Text> const& getTexts() const;
+            std::vector<arcade::Text> const& getPauseTexts() const;
+            std::vector<arcade::Element> const& getPauseElements() const;
 
             void retreiveLibs();
             void retreivePause();
-            void playMenu(std::vector<arcade::Inputs> const& inputs);
+            void playMenu(std::vector<arcade::Inputs> const& inputs, std::string const& textInputs);
             void pauseMenu(std::vector<arcade::Inputs> const& inputs);
-            std::vector<arcade::Element> const& getElements() const;
-            std::vector<arcade::Element> const& getPauseElements() const;
-            std::vector<arcade::Text> const& getTexts() const;
             void setDisplayScores(std::vector<Score> const& scores);
-            std::vector<arcade::Text> const& getPauseTexts() const;
 
         private:
-            void manageInputs(std::vector<arcade::Inputs> const& inputs);
+            int manageInputs(std::vector<arcade::Inputs> const& inputs);
             std::string getLibName(std::string const& filename) const;
+            void getPlayerName(std::vector<arcade::Inputs> const& inputs, std::string const& textInputs);
+            void displayLibs(
+                std::map<std::string, std::string> const& map,
+                std::map<std::string, std::string>::iterator &selectedLib,
+                double posX
+            );
 
         private:
             std::map<std::string, std::string> _gamesLibs;
@@ -52,6 +58,8 @@ namespace arcade {
             std::map<std::string, std::string>::iterator _selectedGameLib;
             std::map<std::string, std::string>::iterator _selectedGraphLib;
             bool _changeLibs;
+            bool _pressedContinue;
+            std::string _playerName;
     };
 }
 

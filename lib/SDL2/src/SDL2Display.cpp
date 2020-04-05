@@ -57,6 +57,7 @@ std::vector<arcade::Inputs> SDL2Display::getInputs()
     std::vector<arcade::Inputs> retreivedInputs;
     SDL_Event event;
 
+    SDL_StartTextInput();
     while (SDL_PollEvent(&event)) {
         if (event.type == SDL_QUIT) {
             retreivedInputs.push_back(arcade::QUIT);
@@ -65,15 +66,22 @@ std::vector<arcade::Inputs> SDL2Display::getInputs()
         if (event.type == SDL_KEYDOWN) {
             retreivedInputs.push_back(manageKeyboardInput(event.key.keysym.sym));
         }
+        if (event.type == SDL_TEXTINPUT) {
+            _text += event.text.text;
+        }
     }
+    SDL_StopTextInput();
     return (retreivedInputs);
 }
 
-arcade::Inputs SDL2Display::manageKeyboardInput(SDL_Keycode key) const
+arcade::Inputs SDL2Display::manageKeyboardInput(SDL_Keycode key)
 {
     for (auto it = inputs.begin(); it != inputs.end(); it++) {
         if (key == it->second) {
             return(it->first);
+        }
+        if (key == SDLK_BACKSPACE) {
+            _text += '\b';
         }
     }
     return(arcade::UNDEFINED);
@@ -123,4 +131,12 @@ void SDL2Display::displayText(arcade::Text const& text)
     surface = TTF_RenderText_Solid(_font.font, text.text.c_str(), color);
     texture = SDL_CreateTextureFromSurface(_renderer->renderer, surface.surface);
     SDL_RenderCopy(_renderer->renderer, texture.texture, NULL, &rect);
+}
+
+std::string SDL2Display::getTextInput()
+{
+    std::string save = _text;
+
+    _text.clear();
+    return (save);
 }

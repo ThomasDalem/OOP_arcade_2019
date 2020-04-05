@@ -40,9 +40,10 @@ class SDL2Display : public arcade::IDisplayModule {
 
         void display(std::vector<arcade::Element> const& elements, std::vector<arcade::Text> const& texts);
         std::vector<arcade::Inputs> getInputs();
+        std::string getTextInput();
 
     private:
-        arcade::Inputs manageKeyboardInput(SDL_Keycode key) const;
+        arcade::Inputs manageKeyboardInput(SDL_Keycode key);
         void displayElement(arcade::Element const& element);
         void displayText(arcade::Text const& text);
 
@@ -51,6 +52,7 @@ class SDL2Display : public arcade::IDisplayModule {
         std::unique_ptr<sdl2::Renderer> _renderer;
         sdl2::Font _font;
         std::unordered_map<std::string, std::unique_ptr<sdl2::Surface>> _loadedSurfaces;
+        std::string _text;
 };
 
 #endif /* !SDL2DISPLAY_HPP_ */
