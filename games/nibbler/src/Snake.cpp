@@ -31,15 +31,15 @@ void Snake::Move()
     std::chrono::time_point<std::chrono::system_clock> now = std::chrono::system_clock::now();
     std::chrono::duration<double> laps = now - _prevMove;
 
-    if (laps.count() >= 0.05) {
-        if (!canMove(Point{_direction.x * 0.25, _direction.y * 0.25})) {
+    if (laps.count() >= 0.12) {
+        if (!canMove(Point{_direction.x, _direction.y})) {
             return;
         }
         if (_direction.x != 0 || _direction.y != 0) {
             moveTail();
         }
-        _position.x += _direction.x * 0.25;
-        _position.y += _direction.y * 0.25;
+        _position.x += _direction.x;
+        _position.y += _direction.y;
         _elements[0].position.x = _position.x;
         _elements[0].position.y = _position.y;
         _prevMove = now;
@@ -48,7 +48,7 @@ void Snake::Move()
 
 void Snake::setDirection(Point const &direction)
 {
-    if (!canMove(Point{direction.x * 0.25, direction.y * 0.25}))
+    if (!canMove(Point{direction.x, direction.y}))
         return;
     _direction = direction;
 }

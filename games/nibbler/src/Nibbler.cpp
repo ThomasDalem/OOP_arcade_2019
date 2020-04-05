@@ -56,7 +56,6 @@ int Nibbler::playLoop(std::vector<arcade::Inputs> const& inputs)
     snakeElem = _snake->getElements();
     _elements.insert(_elements.end(), _elements_const.begin(), _elements_const.end());
     _elements.insert(_elements.end(), snakeElem.begin(), snakeElem.end());
-    _elements.push_back({pathSprite, arcade::GREEN, {10, 10}, arcade::Rect{{0, 0}, {0, 0}}});
     return (100);
 }
 
