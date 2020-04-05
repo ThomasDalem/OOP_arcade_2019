@@ -55,6 +55,10 @@ int Nibbler::playLoop(std::vector<arcade::Inputs> const& inputs)
         where(inputs);
         _snake->move();
     }
+    if (snakeCollide(_apple.position)) {
+        _snake->addTail();
+        apple();
+    }
     snakeElem = _snake->getElements();
     _elements.insert(_elements.end(), _elementsConst.begin(), _elementsConst.end());
     _elements.insert(_elements.end(), snakeElem.begin(), snakeElem.end());
@@ -101,11 +105,12 @@ void Nibbler::getScore()
 
 void Nibbler::apple()
 {
-    std::srand(std::time(nullptr));
     Point snakePos = _snake->getPosition();
+
+    std::srand(std::time(nullptr));
     if (snakePos.x == _apple.position.x && snakePos.y == _apple.position.y) {
         getScore();
-        _apple.position = {std::rand() % 10, std::rand() % 10};
+        _apple.position = {static_cast<double>(std::rand() % 10), static_cast<double>(std::rand() % 10)};
     }
 }
 
