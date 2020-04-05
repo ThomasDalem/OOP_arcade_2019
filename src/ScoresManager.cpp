@@ -10,7 +10,7 @@
 #include "ScoresManager.hpp"
 #include "CoreException.hpp"
 
-ScoresManager::ScoresManager()
+ScoresManager::ScoresManager(): _actualScore(Score{"Unknown", -1})
 {
     try {
         retreiveScores();
@@ -43,7 +43,9 @@ void ScoresManager::updateActualScore(int score)
 
 void ScoresManager::registerActualScore()
 {
-    _scores.push_back(_actualScore);
+    if (_actualScore.score > 0) {
+        _scores.push_back(_actualScore);
+    }
 }
 
 std::vector<Score> const& ScoresManager::getScores() const
@@ -88,6 +90,7 @@ void ScoresManager::writeScores() const
 void ScoresManager::setScorePlayerName(Score &score, std::string const& str) const
 {
     int i = 0;
+
     for (; i < 10 && i < static_cast<int>(str.size()); i++) {
         score.playerName[i] = str[i];
     }

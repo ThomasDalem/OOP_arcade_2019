@@ -11,7 +11,7 @@
 #include <vector>
 #include "Score.hpp"
 
-static const std::string scoresFile("./.scores.txt");
+static const std::string scoresFile(".scores.txt");
 
 class ScoresManager {
     public:
