@@ -51,8 +51,10 @@ int Nibbler::playLoop(std::vector<arcade::Inputs> const& inputs)
     std::vector<arcade::Element> snakeElem;
 
     _elements.clear();
-    where(inputs);
-    _snake->move();
+    if (_snake->getHasLost() == false) {
+        where(inputs);
+        _snake->move();
+    }
     snakeElem = _snake->getElements();
     _elements.insert(_elements.end(), _elementsConst.begin(), _elementsConst.end());
     _elements.insert(_elements.end(), snakeElem.begin(), snakeElem.end());
@@ -61,8 +63,7 @@ int Nibbler::playLoop(std::vector<arcade::Inputs> const& inputs)
 }
 
 void Nibbler::restart()
-{
-}
+{}
 
 std::vector<arcade::Element> const& Nibbler::getElements() const
 {
@@ -108,20 +109,7 @@ void Nibbler::apple()
     }
 }
 
-/*
-bool Nibbler::collide() const
+bool Nibbler::snakeCollide(Point const& obj) const
 {
-    Point aTop = {_snake. .x + offset.x, _position.y + offset.y};
-    Point aBottom = {_position.x + offset.x + 1.0f, _position.y + offset.y + 1.0f};
-    Point bTop;
-    Point bBottom;
-
-    for (auto it = _map.begin(); it != _map.end(); it++) {
-        bTop = {it->position.x, it->position.y};
-        bBottom = {it->position.x + 1.0, it->position.y + 1.0};
-        if (aTop.x < bBottom.x && aBottom.x > bTop.x && aTop.y < bBottom.y && aBottom.y > bTop.y) {
-            return (false);
-        }
-    }
-    return (true);
-}*/
+    return (_snake->getPosition().x == obj.x &&  _snake->getPosition().y == obj.y);
+}

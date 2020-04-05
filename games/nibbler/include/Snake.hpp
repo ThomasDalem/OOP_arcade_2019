@@ -20,12 +20,16 @@ class Snake {
         ~Snake();
 
         Point const& getPosition() const;
+        std::vector<arcade::Element> const& getElements() const;
+        bool getHasLost() const;
         void setDirection(Point const &direction);
 
         void move();
-        std::vector<arcade::Element> const& getElements() const;
         void addTail();
+
+    private:
         void moveTail();
+        bool isColliding() const;
 
     private:
         Point _position;
@@ -34,8 +38,8 @@ class Snake {
         Point _lastTailPos;
         size_t _size;
         std::vector<arcade::Element> &_map;
-        bool _alive;
         std::chrono::time_point<std::chrono::system_clock> _prevMove;
+        bool _hasLost;
 };
 
 #endif /* !SNAKE_HPP_ */
