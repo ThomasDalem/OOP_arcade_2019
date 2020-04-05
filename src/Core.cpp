@@ -136,6 +136,10 @@ int arcade::Core::arcade()
         now = std::chrono::system_clock::now();
         if (getElapsedTime(last, now).count() > 0.005) {
             _scoreManager.updateActualScore(_gameModule->playLoop(inputs));
+            if (_gameModule->getIsGame() == false) {
+                _scoreManager.registerActualScore();
+                return (arcade());
+            }
             std::vector<arcade::Element> elements = _gameModule->getElements();
             std::vector<arcade::Text> texts = _gameModule->getTexts();
             _displayModule->display(elements, texts);

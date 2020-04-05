@@ -51,6 +51,7 @@ PacmanGame::PacmanGame() : _score(0)
         _constElements,
         *_player
     );
+    _isGame = true;
 }
 
 PacmanGame::~PacmanGame()
@@ -63,7 +64,10 @@ int PacmanGame::playLoop(std::vector<arcade::Inputs> const& inputs)
     _elements.clear();
     _elements.insert(_elements.end(), gums.begin(), gums.end());
     if (collide(_player->getPosition(), _enemy->getPosition())) {
-        _player->playLoose();
+        if (_player->playLoose()) {
+            _isGame = false;
+            return (-1);
+        }
     } else {
         manageInputs(inputs);
         _enemy->move();
@@ -79,6 +83,11 @@ int PacmanGame::playLoop(std::vector<arcade::Inputs> const& inputs)
 void PacmanGame::restart()
 {
 
+}
+
+bool PacmanGame::getIsGame() const
+{
+    return (_isGame);
 }
 
 const std::vector<arcade::Element> &PacmanGame::getElements() const

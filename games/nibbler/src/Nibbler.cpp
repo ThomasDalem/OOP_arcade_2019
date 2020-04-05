@@ -40,6 +40,7 @@ Nibbler::Nibbler()
         }
     }
     _snake = std::make_unique<Snake>(_elements_const);
+    _isGame = true;
 }
 
 Nibbler::~Nibbler()
@@ -57,6 +58,11 @@ int Nibbler::playLoop(std::vector<arcade::Inputs> const& inputs)
 
 void Nibbler::restart()
 {
+}
+
+bool Nibbler::getIsGame() const
+{
+    return (_isGame);
 }
 
 std::vector<arcade::Element> const& Nibbler::getElements() const

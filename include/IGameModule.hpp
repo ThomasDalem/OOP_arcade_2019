@@ -22,6 +22,7 @@ namespace arcade {
             virtual void restart() = 0;
             virtual std::vector<arcade::Element> const& getElements() const = 0;
             virtual std::vector<arcade::Text> const& getTexts() const = 0;
+            virtual bool getIsGame() const = 0;
     };
 }
 

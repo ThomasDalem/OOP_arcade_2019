@@ -23,10 +23,12 @@ class Nibbler : public arcade::IGameModule {
         std::vector<arcade::Element> const& getElements() const;
         std::vector<arcade::Text> const& getTexts() const;
         void Where(std::vector<arcade::Inputs> const& inputs);
+        bool getIsGame() const;
     private:
         std::vector<arcade::Element> _elements;
         std::vector<arcade::Element> _elements_const;
         std::vector<arcade::Text> _text;
         std::unique_ptr<Snake> _snake;        
+        bool _isGame;
 };
 #endif /* !NIBBLER_HPP_ */

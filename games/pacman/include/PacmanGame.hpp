@@ -24,6 +24,7 @@ class PacmanGame : public arcade::IGameModule {
         void restart();
         std::vector<arcade::Element> const& getElements() const;
         std::vector<arcade::Text> const& getTexts() const;
+        bool getIsGame() const;
 
     private:
         std::chrono::duration<double> getElapsedTime(
@@ -43,6 +44,7 @@ class PacmanGame : public arcade::IGameModule {
         std::unique_ptr<Ghost> _enemy;
         PacgumManager _gumsManager;
         int _score;
+        bool _isGame;
 };
 
 #endif /* !PacmanGame_HPP_ */
