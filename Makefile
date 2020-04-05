@@ -26,15 +26,16 @@ core: $(OBJ)
 
 games:
 	make -C ./games/pacman/
+	make -C ./games/nibbler/
 
 graphicals:
-	make -C ./games/pacman/
 	make -C ./lib/LIBCACA/
 	make -C ./lib/SDL2/
 	make -C ./lib/SFML/
 
 clean:
 	make clean -C ./games/pacman/
+	make clean -C ./games/nibbler/
 	make clean -C ./lib/LIBCACA/
 	make clean -C ./lib/SDL2/
 	make clean -C ./lib/SFML/
@@ -42,6 +43,7 @@ clean:
 
 fclean: clean
 	make fclean -C ./games/pacman/
+	make fclean -C ./games/nibbler/
 	make fclean -C ./lib/LIBCACA/
 	make fclean -C ./lib/SDL2/
 	make fclean -C ./lib/SFML/
