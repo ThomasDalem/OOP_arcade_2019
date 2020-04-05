@@ -41,6 +41,9 @@ void Snake::Move()
 
 void Snake::setDirection(Point const &direction)
 {
+    if (!canMove(Point{direction.x * 0.25, direction.y * 0.25})) {
+        return;
+    }
     _direction = direction;
 }
 
