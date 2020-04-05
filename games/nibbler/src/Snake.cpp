@@ -9,17 +9,21 @@
 #include "Snake.hpp"
 
 Snake::Snake(std::vector<arcade::Element> &map):
-    _position({5, 5}),
-    _element({pathSprite, arcade::GREEN, _position, arcade::Rect{Point{0, 0}, Point{0,0}}}),
-    _size(1), _map(map), _alive(true) 
-{}
+    _position({5, 5}), _size(1), _map(map), _alive(true)
+{
+    _elements.push_back({pathSprite, arcade::GREEN, _position, arcade::Rect{{0, 0}, {0,0}}});
+    _elements.push_back({pathSprite, arcade::GREEN, {_position.x - 1, _position.y}, arcade::Rect{{0, 0}, {0, 0}}});
+    _elements.push_back({pathSprite, arcade::GREEN, {_position.x - 2, _position.y}, arcade::Rect{{0, 0}, {0, 0}}});
+    _elements.push_back({pathSprite, arcade::GREEN, {_position.x - 3, _position.y}, arcade::Rect{{0, 0}, {0, 0}}});
+    _elements.push_back({pathSprite, arcade::GREEN, {_position.x - 3, _position.y}, arcade::Rect{{0, 0}, {0, 0}}});
+}
 
 Snake::~Snake()
 {}
 
-arcade::Element const& Snake::getElement() const
+std::vector<arcade::Element> const& Snake::getElements() const
 {
-    return (_element);
+    return (_elements);
 }
 
 void Snake::Move()
@@ -31,10 +35,13 @@ void Snake::Move()
         if (!canMove(Point{_direction.x * 0.25, _direction.y * 0.25})) {
             return;
         }
+        if (_direction.x != 0 || _direction.y != 0) {
+            moveTail();
+        }
         _position.x += _direction.x * 0.25;
         _position.y += _direction.y * 0.25;
-        _element.position.x = _position.x;
-        _element.position.y = _position.y;
+        _elements[0].position.x = _position.x;
+        _elements[0].position.y = _position.y;
         _prevMove = now;
     }
 }
@@ -65,15 +72,15 @@ bool Snake::canMove(Point offset)
 
 void Snake::addTail()
 {
-    _tail.push_back({pathSprite, arcade::GREEN, _lastTailPos, arcade::Rect{{0, 0}, {0, 0}}});
+    _elements.push_back({pathSprite, arcade::GREEN, _lastTailPos, arcade::Rect{{0, 0}, {0, 0}}});
 }
 
 void Snake::moveTail()
 {
-    Point prevPos = _element.position;
     Point posSave;
+    Point prevPos = _elements[0].position;
 
-    for (auto it = _tail.begin(); it != _tail.end(); it++) {
+    for (auto it = _elements.begin(); it != _elements.end(); it++) {
         posSave = it->position;
         it->position = prevPos;
         prevPos = posSave;

@@ -41,9 +41,6 @@ Nibbler::Nibbler():
         }
     }
     _snake = std::make_unique<Snake>(_elements_const);
-    _snake->addTail();
-    _snake->addTail();
-    _snake->addTail();
 }
 
 Nibbler::~Nibbler()
@@ -51,12 +48,15 @@ Nibbler::~Nibbler()
 
 int Nibbler::playLoop(std::vector<arcade::Inputs> const& inputs)
 {
+    std::vector<arcade::Element> snakeElem;
+
     _elements.clear();
     where(inputs);
     _snake->Move();
-    _snake->moveTail();
+    snakeElem = _snake->getElements();
     _elements.insert(_elements.end(), _elements_const.begin(), _elements_const.end());
-    _elements.push_back(_snake->getElement());
+    _elements.insert(_elements.end(), snakeElem.begin(), snakeElem.end());
+    _elements.push_back({pathSprite, arcade::GREEN, {10, 10}, arcade::Rect{{0, 0}, {0, 0}}});
     return (100);
 }
 
