@@ -10,7 +10,7 @@
 
 Snake::Snake(std::vector<arcade::Element> &map):
     _position({5, 5}),
-    _element({path_sprite, arcade::GREEN, _position, arcade::Rect{Point{0, 0}, Point{0,0}}}),
+    _element({pathSprite, arcade::GREEN, _position, arcade::Rect{Point{0, 0}, Point{0,0}}}),
     _size(1), _map(map), _alive(true) 
 {}
 
@@ -41,9 +41,8 @@ void Snake::Move()
 
 void Snake::setDirection(Point const &direction)
 {
-    if (!canMove(Point{direction.x * 0.25, direction.y * 0.25})) {
+    if (!canMove(Point{direction.x * 0.25, direction.y * 0.25}))
         return;
-    }
     _direction = direction;
 }
 
@@ -62,4 +61,22 @@ bool Snake::canMove(Point offset)
         }
     }
     return (true);
+}
+
+void Snake::addTail()
+{
+    _tail.push_back({pathSprite, arcade::GREEN, _lastTailPos, arcade::Rect{{0, 0}, {0, 0}}});
+}
+
+void Snake::moveTail()
+{
+    Point prevPos = _element.position;
+    Point posSave;
+
+    for (auto it = _tail.begin(); it != _tail.end(); it++) {
+        posSave = it->position;
+        it->position = prevPos;
+        prevPos = posSave;
+    }
+    _lastTailPos = posSave;
 }

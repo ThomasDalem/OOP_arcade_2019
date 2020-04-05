@@ -13,7 +13,8 @@ extern "C" Nibbler *createObject()
     return (new Nibbler);
 }
 
-Nibbler::Nibbler()
+Nibbler::Nibbler():
+    _apple({"./games/nibbler/assets/apple.png", arcade::RED, {5, 5}, arcade::Rect{{0, 0}, {0, 0}}})
 {
     std::string strMap[11];
     const std::string path_wall("./games/pacman/assets/blue.png");
@@ -28,7 +29,7 @@ Nibbler::Nibbler()
     strMap[7] = "*              *";
     strMap[8] = "*              *";
     strMap[9] = "*              *";
-    strMap[10] = "***************";
+    strMap[10] = "****************";
 
     for (int i = 0; i < 11; i++) {
         for (int j = 0; j < 16; j++) {
@@ -40,6 +41,9 @@ Nibbler::Nibbler()
         }
     }
     _snake = std::make_unique<Snake>(_elements_const);
+    _snake->addTail();
+    _snake->addTail();
+    _snake->addTail();
 }
 
 Nibbler::~Nibbler()
@@ -48,8 +52,9 @@ Nibbler::~Nibbler()
 int Nibbler::playLoop(std::vector<arcade::Inputs> const& inputs)
 {
     _elements.clear();
-    Where(inputs);
+    where(inputs);
     _snake->Move();
+    _snake->moveTail();
     _elements.insert(_elements.end(), _elements_const.begin(), _elements_const.end());
     _elements.push_back(_snake->getElement());
     return (100);
@@ -69,7 +74,7 @@ std::vector<arcade::Text> const& Nibbler::getTexts() const
     return (_text);
 }
 
-void Nibbler::Where(std::vector<arcade::Inputs> const& inputs)
+void Nibbler::where(std::vector<arcade::Inputs> const& inputs)
 {
     for (auto it = inputs.begin(); it != inputs.end(); it++) {
         if (*it == arcade::UP)
@@ -82,3 +87,31 @@ void Nibbler::Where(std::vector<arcade::Inputs> const& inputs)
             _snake->setDirection(Point{1, 0});
     }
 }
+
+void Nibbler::score(int nbApple)
+{
+    std::string text("Score: ");
+    
+    _text.clear();
+    _score += nbApple * 100;
+    text += std::to_string(_score);
+    _text.push_back(arcade::Text{text, Point{15, 5}, arcade::BLUE});
+}
+
+/*
+bool Nibbler::collide() const
+{
+    Point aTop = {_snake. .x + offset.x, _position.y + offset.y};
+    Point aBottom = {_position.x + offset.x + 1.0f, _position.y + offset.y + 1.0f};
+    Point bTop;
+    Point bBottom;
+
+    for (auto it = _map.begin(); it != _map.end(); it++) {
+        bTop = {it->position.x, it->position.y};
+        bBottom = {it->position.x + 1.0, it->position.y + 1.0};
+        if (aTop.x < bBottom.x && aBottom.x > bTop.x && aTop.y < bBottom.y && aBottom.y > bTop.y) {
+            return (false);
+        }
+    }
+    return (true);
+}*/
