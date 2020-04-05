@@ -111,6 +111,7 @@ void Menu::pauseMenu(std::vector<arcade::Inputs> const& inputs)
     _changeLibs = false;
     _pauseTexts.clear();
     if (manageInputs(inputs) == 1) {
+        _pressedContinue = false;
         _changeLibs = true;
     }
     _pauseTexts.push_back(Text{"ARCADE", Point{18, 4}, arcade::RED});
