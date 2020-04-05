@@ -18,10 +18,12 @@ class Snake {
     public:
         Snake(std::vector<arcade::Element> &map);
         ~Snake();
-        void Move();
-        bool canMove(Point offset);
-        std::vector<arcade::Element> const& getElements() const;
+
+        Point const& getPosition() const;
         void setDirection(Point const &direction);
+
+        void move();
+        std::vector<arcade::Element> const& getElements() const;
         void addTail();
         void moveTail();
 
@@ -35,6 +37,5 @@ class Snake {
         bool _alive;
         std::chrono::time_point<std::chrono::system_clock> _prevMove;
 };
-
 
 #endif /* !SNAKE_HPP_ */

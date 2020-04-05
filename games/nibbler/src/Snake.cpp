@@ -14,8 +14,6 @@ Snake::Snake(std::vector<arcade::Element> &map):
     _elements.push_back({pathSprite, arcade::GREEN, _position, arcade::Rect{{0, 0}, {0,0}}});
     _elements.push_back({pathSprite, arcade::GREEN, {_position.x - 1, _position.y}, arcade::Rect{{0, 0}, {0, 0}}});
     _elements.push_back({pathSprite, arcade::GREEN, {_position.x - 2, _position.y}, arcade::Rect{{0, 0}, {0, 0}}});
-    _elements.push_back({pathSprite, arcade::GREEN, {_position.x - 3, _position.y}, arcade::Rect{{0, 0}, {0, 0}}});
-    _elements.push_back({pathSprite, arcade::GREEN, {_position.x - 3, _position.y}, arcade::Rect{{0, 0}, {0, 0}}});
 }
 
 Snake::~Snake()
@@ -26,15 +24,12 @@ std::vector<arcade::Element> const& Snake::getElements() const
     return (_elements);
 }
 
-void Snake::Move()
+void Snake::move()
 {
     std::chrono::time_point<std::chrono::system_clock> now = std::chrono::system_clock::now();
     std::chrono::duration<double> laps = now - _prevMove;
 
     if (laps.count() >= 0.12) {
-        if (!canMove(Point{_direction.x, _direction.y})) {
-            return;
-        }
         if (_direction.x != 0 || _direction.y != 0) {
             moveTail();
         }
@@ -46,28 +41,18 @@ void Snake::Move()
     }
 }
 
-void Snake::setDirection(Point const &direction)
+Point const& Snake::getPosition() const
 {
-    if (!canMove(Point{direction.x, direction.y}))
-        return;
-    _direction = direction;
+    return (_position);
 }
 
-bool Snake::canMove(Point offset)
+void Snake::setDirection(Point const &direction)
 {
-    Point aTop = {_position.x + offset.x, _position.y + offset.y};
-    Point aBottom = {_position.x + offset.x + 1.0f, _position.y + offset.y + 1.0f};
-    Point bTop;
-    Point bBottom;
+    Point invertedDirection = {_direction.x * -1, _direction.y * -1};
 
-    for (auto it = _map.begin(); it != _map.end(); it++) {
-        bTop = {it->position.x, it->position.y};
-        bBottom = {it->position.x + 1.0, it->position.y + 1.0};
-        if (aTop.x < bBottom.x && aBottom.x > bTop.x && aTop.y < bBottom.y && aBottom.y > bTop.y) {
-            return (false);
-        }
-    }
-    return (true);
+    if (direction.x == invertedDirection.x && direction.y == invertedDirection.y)
+        return;
+    _direction = direction;
 }
 
 void Snake::addTail()

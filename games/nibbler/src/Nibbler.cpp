@@ -36,11 +36,11 @@ Nibbler::Nibbler():
             Point pos = {static_cast<double>(j), static_cast<double>(i)};
             if (strMap[i][j] == '*') {
                 arcade::Element elem{path_wall, arcade::WHITE, pos, arcade::Rect{Point{0,0}, Point{0,0}}};
-                _elements_const.push_back(elem);
+                _elementsConst.push_back(elem);
             }
         }
     }
-    _snake = std::make_unique<Snake>(_elements_const);
+    _snake = std::make_unique<Snake>(_elementsConst);
 }
 
 Nibbler::~Nibbler()
@@ -51,10 +51,12 @@ int Nibbler::playLoop(std::vector<arcade::Inputs> const& inputs)
     std::vector<arcade::Element> snakeElem;
 
     _elements.clear();
-    where(inputs);
-    _snake->Move();
+    if (!snakeCollide()) {
+        where(inputs);
+        _snake->move();
+    }
     snakeElem = _snake->getElements();
-    _elements.insert(_elements.end(), _elements_const.begin(), _elements_const.end());
+    _elements.insert(_elements.end(), _elementsConst.begin(), _elementsConst.end());
     _elements.insert(_elements.end(), snakeElem.begin(), snakeElem.end());
     return (100);
 }
@@ -97,20 +99,17 @@ void Nibbler::score(int nbApple)
     _text.push_back(arcade::Text{text, Point{15, 5}, arcade::BLUE});
 }
 
-/*
-bool Nibbler::collide() const
+bool Nibbler::snakeCollide() const
 {
-    Point aTop = {_snake. .x + offset.x, _position.y + offset.y};
-    Point aBottom = {_position.x + offset.x + 1.0f, _position.y + offset.y + 1.0f};
-    Point bTop;
-    Point bBottom;
-
-    for (auto it = _map.begin(); it != _map.end(); it++) {
-        bTop = {it->position.x, it->position.y};
-        bBottom = {it->position.x + 1.0, it->position.y + 1.0};
-        if (aTop.x < bBottom.x && aBottom.x > bTop.x && aTop.y < bBottom.y && aBottom.y > bTop.y) {
-            return (false);
+    for (auto it = _elementsConst.begin(); it != _elementsConst.end(); it++) {
+        if (collide(_snake->getPosition(), it->position)) {
+            return (true);
         }
     }
-    return (true);
-}*/
+    return (false);
+}
+
+bool Nibbler::collide(Point const& a, Point const& b) const
+{
+    return (a.x == b.x && a.y == b.y);
+}

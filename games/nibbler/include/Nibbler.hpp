@@ -25,12 +25,13 @@ class Nibbler : public arcade::IGameModule {
         void where(std::vector<arcade::Inputs> const& inputs);
         void score(int nbApple);
     
-    //private:
-        //bool collide() const;
+    private:
+        bool snakeCollide() const;
+        bool collide(Point const& a, Point const& b) const;
     
     private:
         std::vector<arcade::Element> _elements;
-        std::vector<arcade::Element> _elements_const;
+        std::vector<arcade::Element> _elementsConst;
         std::vector<arcade::Text> _text;
         std::unique_ptr<Snake> _snake;        
         arcade::Element _apple;
