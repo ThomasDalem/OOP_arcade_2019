@@ -23,7 +23,8 @@ class Nibbler : public arcade::IGameModule {
         std::vector<arcade::Element> const& getElements() const;
         std::vector<arcade::Text> const& getTexts() const;
         void where(std::vector<arcade::Inputs> const& inputs);
-        void score(int nbApple);
+        void getScore();
+        void apple();
     
     private:
         bool snakeCollide() const;
@@ -35,6 +36,6 @@ class Nibbler : public arcade::IGameModule {
         std::vector<arcade::Text> _text;
         std::unique_ptr<Snake> _snake;        
         arcade::Element _apple;
-        int _score;
+        int score;
 };
 #endif /* !NIBBLER_HPP_ */

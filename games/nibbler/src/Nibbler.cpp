@@ -51,14 +51,13 @@ int Nibbler::playLoop(std::vector<arcade::Inputs> const& inputs)
     std::vector<arcade::Element> snakeElem;
 
     _elements.clear();
-    if (!snakeCollide()) {
-        where(inputs);
-        _snake->move();
-    }
+    where(inputs);
+    _snake->move();
     snakeElem = _snake->getElements();
     _elements.insert(_elements.end(), _elementsConst.begin(), _elementsConst.end());
     _elements.insert(_elements.end(), snakeElem.begin(), snakeElem.end());
-    return (100);
+    _elements.push_back(_apple);
+    return (score);
 }
 
 void Nibbler::restart()
@@ -89,27 +88,40 @@ void Nibbler::where(std::vector<arcade::Inputs> const& inputs)
     }
 }
 
-void Nibbler::score(int nbApple)
+void Nibbler::getScore()
 {
     std::string text("Score: ");
     
     _text.clear();
-    _score += nbApple * 100;
-    text += std::to_string(_score);
+    score += 100;
+    text += std::to_string(score);
     _text.push_back(arcade::Text{text, Point{15, 5}, arcade::BLUE});
 }
 
-bool Nibbler::snakeCollide() const
+void Nibbler::apple()
 {
-    for (auto it = _elementsConst.begin(); it != _elementsConst.end(); it++) {
-        if (collide(_snake->getPosition(), it->position)) {
-            return (true);
-        }
+    std::srand(std::time(nullptr));
+    Point snakePos = _snake->getPosition();
+    if (snakePos.x == _apple.position.x && snakePos.y == _apple.position.y) {
+        getScore();
+        _apple.position = {std::rand() % 10, std::rand() % 10};
     }
-    return (false);
 }
 
-bool Nibbler::collide(Point const& a, Point const& b) const
+/*
+bool Nibbler::collide() const
 {
-    return (a.x == b.x && a.y == b.y);
-}
+    Point aTop = {_snake. .x + offset.x, _position.y + offset.y};
+    Point aBottom = {_position.x + offset.x + 1.0f, _position.y + offset.y + 1.0f};
+    Point bTop;
+    Point bBottom;
+
+    for (auto it = _map.begin(); it != _map.end(); it++) {
+        bTop = {it->position.x, it->position.y};
+        bBottom = {it->position.x + 1.0, it->position.y + 1.0};
+        if (aTop.x < bBottom.x && aBottom.x > bTop.x && aTop.y < bBottom.y && aBottom.y > bTop.y) {
+            return (false);
+        }
+    }
+    return (true);
+}*/
