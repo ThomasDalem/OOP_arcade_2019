@@ -12,26 +12,34 @@
 #include <chrono>
 #include "Element.hpp"
 
-static const std::string path_sprite = "./games/nibbler/assets/green.jpg";
+static const std::string pathSprite = "./games/nibbler/assets/green.jpg";
 
 class Snake {
     public:
         Snake(std::vector<arcade::Element> &map);
         ~Snake();
-        void Move();
-        bool canMove(Point offset);
-        arcade::Element const& getElement() const;
+
+        Point const& getPosition() const;
+        std::vector<arcade::Element> const& getElements() const;
+        bool getHasLost() const;
         void setDirection(Point const &direction);
+
+        void move();
+        void addTail();
+
+    private:
+        void moveTail();
+        bool isColliding() const;
+
     private:
         Point _position;
         Point _direction;
-        arcade::Element _element;
+        std::vector<arcade::Element> _elements;
+        Point _lastTailPos;
         size_t _size;
         std::vector<arcade::Element> &_map;
-        bool _alive;
         std::chrono::time_point<std::chrono::system_clock> _prevMove;
-
+        bool _hasLost;
 };
-
 
 #endif /* !SNAKE_HPP_ */
