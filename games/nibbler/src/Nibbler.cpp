@@ -51,7 +51,7 @@ int Nibbler::playLoop(std::vector<arcade::Inputs> const& inputs)
     std::vector<arcade::Element> snakeElem;
 
     _elements.clear();
-    if (!snakeCollide()) {
+    if (_snake->getHasLost() == false) {
         where(inputs);
         _snake->move();
     }
@@ -62,8 +62,7 @@ int Nibbler::playLoop(std::vector<arcade::Inputs> const& inputs)
 }
 
 void Nibbler::restart()
-{
-}
+{}
 
 std::vector<arcade::Element> const& Nibbler::getElements() const
 {
@@ -97,19 +96,4 @@ void Nibbler::score(int nbApple)
     _score += nbApple * 100;
     text += std::to_string(_score);
     _text.push_back(arcade::Text{text, Point{15, 5}, arcade::BLUE});
-}
-
-bool Nibbler::snakeCollide() const
-{
-    for (auto it = _elementsConst.begin(); it != _elementsConst.end(); it++) {
-        if (collide(_snake->getPosition(), it->position)) {
-            return (true);
-        }
-    }
-    return (false);
-}
-
-bool Nibbler::collide(Point const& a, Point const& b) const
-{
-    return (a.x == b.x && a.y == b.y);
 }

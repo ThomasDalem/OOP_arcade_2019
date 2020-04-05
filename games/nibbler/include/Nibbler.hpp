@@ -24,7 +24,7 @@ class Nibbler : public arcade::IGameModule {
         std::vector<arcade::Text> const& getTexts() const;
         void where(std::vector<arcade::Inputs> const& inputs);
         void score(int nbApple);
-    
+
     private:
         bool snakeCollide() const;
         bool collide(Point const& a, Point const& b) const;

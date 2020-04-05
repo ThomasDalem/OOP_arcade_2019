@@ -9,7 +9,7 @@
 #include "Snake.hpp"
 
 Snake::Snake(std::vector<arcade::Element> &map):
-    _position({5, 5}), _size(1), _map(map), _alive(true)
+    _position({5, 5}), _size(1), _map(map), _hasLost(false)
 {
     _elements.push_back({pathSprite, arcade::GREEN, _position, arcade::Rect{{0, 0}, {0,0}}});
     _elements.push_back({pathSprite, arcade::GREEN, {_position.x - 1, _position.y}, arcade::Rect{{0, 0}, {0, 0}}});
@@ -19,9 +19,19 @@ Snake::Snake(std::vector<arcade::Element> &map):
 Snake::~Snake()
 {}
 
+Point const& Snake::getPosition() const
+{
+    return (_position);
+}
+
 std::vector<arcade::Element> const& Snake::getElements() const
 {
     return (_elements);
+}
+
+bool Snake::getHasLost() const
+{
+    return (_hasLost);
 }
 
 void Snake::move()
@@ -37,13 +47,11 @@ void Snake::move()
         _position.y += _direction.y;
         _elements[0].position.x = _position.x;
         _elements[0].position.y = _position.y;
+        if (isColliding()) {
+            _hasLost = true;
+        }
         _prevMove = now;
     }
-}
-
-Point const& Snake::getPosition() const
-{
-    return (_position);
 }
 
 void Snake::setDirection(Point const &direction)
@@ -71,4 +79,19 @@ void Snake::moveTail()
         prevPos = posSave;
     }
     _lastTailPos = posSave;
+}
+
+bool Snake::isColliding() const
+{
+    for (auto it = _map.begin(); it != _map.end(); it++) {
+        if (_position.x == it->position.x && _position.y == it->position.y) {
+            return (true);
+        }
+    }
+    for (auto it = _elements.begin() + 1; it != _elements.end(); it++) {
+        if (_position.x == it->position.x && _position.y == it->position.y) {
+            return (true);
+        } 
+    }
+    return (false);
 }
