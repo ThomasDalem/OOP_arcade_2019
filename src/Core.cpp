@@ -13,7 +13,9 @@ arcade::Core::Core(std::string path):
 {}
 
 arcade::Core::~Core()
-{}
+{
+    _scoreManager.registerActualScore();
+}
 
 arcade::IDisplayModule *arcade::Core::getDisplayModule() const
 {
@@ -77,9 +79,7 @@ int arcade::Core::playMenu()
         inputs = _displayModule->getInputs();
         _menu.playMenu(inputs, _displayModule->getTextInput());
         _menu.setDisplayScores(_scoreManager.getScores());
-        std::vector<arcade::Element> elements = _menu.getElements();
-        std::vector<arcade::Text> texts = _menu.getTexts();
-        _displayModule->display(elements, texts);
+        _displayModule->display(_menu.getElements(), _menu.getTexts());
         if (_menu.getChangeLibs() == true) {
             _displayModule.reset(nullptr);
             setDisplayModule(_displayLoader.reloadLib(_menu.getSelectedGraphLib()));
@@ -96,9 +96,8 @@ int arcade::Core::playPause(std::vector<arcade::Inputs> & inputs)
     while (checkInput(inputs, arcade::QUIT) == false) {
         inputs.clear();
         inputs = _displayModule->getInputs();
-        std::vector<arcade::Element> elements = _menu.getPauseElements();
-        std::vector<arcade::Text> texts = _menu.getPauseTexts();
-        _displayModule->display(elements, texts);
+        _menu.pauseMenu(inputs);
+        _displayModule->display(_menu.getPauseElements(), _menu.getPauseTexts());
         if (checkInput(inputs, arcade::MENU) == true)
             return (42);
         if (_menu.getChangeLibs() == true) {
@@ -126,8 +125,9 @@ int arcade::Core::arcade()
     while (checkInput(inputs, arcade::QUIT) == false) {
         retreivedInputs = _displayModule->getInputs();
         inputs.insert(inputs.end(), retreivedInputs.begin(), retreivedInputs.end());
-        if (checkInput(inputs, arcade::PAUSE) == true)
+        if (checkInput(inputs, arcade::PAUSE) == true) {
             resultPause = playPause(inputs);
+        }
         if (resultPause == -1)
             return (0);
         if (resultPause == 42)
@@ -142,6 +142,5 @@ int arcade::Core::arcade()
             last = std::chrono::system_clock::now();
         }
     }
-    _scoreManager.registerActualScore();
     return (0);
 }

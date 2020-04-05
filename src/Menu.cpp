@@ -90,6 +90,7 @@ void Menu::retreiveLibs()
 
 void Menu::playMenu(std::vector<arcade::Inputs> const& inputs, std::string const& textInputs)
 {
+    _changeLibs = false;
     _texts.clear();
     if (_pressedContinue) {
         getPlayerName(inputs, textInputs);
@@ -107,8 +108,11 @@ void Menu::pauseMenu(std::vector<arcade::Inputs> const& inputs)
 {
     double pos = 10;
 
+    _changeLibs = false;
     _pauseTexts.clear();
-    manageInputs(inputs);
+    if (manageInputs(inputs) == 1) {
+        _changeLibs = true;
+    }
     _pauseTexts.push_back(Text{"ARCADE", Point{18, 4}, arcade::RED});
     _pauseTexts.push_back(Text{"Press Space to return to menu", Point{22, 8}, arcade::RED});
     _pauseTexts.push_back(Text{"Press Q to quit", Point{22, 10}, arcade::RED});
