@@ -9,7 +9,7 @@
 #include "Snake.hpp"
 
 Snake::Snake(std::vector<arcade::Element> &map):
-    _position({5, 5}), _size(1), _map(map), _hasLost(false)
+    _position({5, 5}), _direction({1, 0}), _size(1), _map(map), _hasLost(false)
 {
     _elements.push_back({pathSprite, arcade::GREEN, _position, arcade::Rect{{0, 0}, {0,0}}});
     _elements.push_back({pathSprite, arcade::GREEN, {_position.x - 1, _position.y}, arcade::Rect{{0, 0}, {0, 0}}});

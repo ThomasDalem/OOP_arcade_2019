@@ -14,7 +14,7 @@ extern "C" Nibbler *createObject()
 }
 
 Nibbler::Nibbler():
-    _apple({"./games/nibbler/assets/apple.png", arcade::RED, {5, 5}, arcade::Rect{{0, 0}, {0, 0}}})
+    _apple({"./games/nibbler/assets/apple.png", arcade::RED, {5, 5}, arcade::Rect{{0, 0}, {0, 0}}}),
 {
     std::string strMap[11];
     const std::string path_wall("./games/pacman/assets/blue.png");
@@ -100,7 +100,7 @@ void Nibbler::getScore()
     _text.clear();
     score += 100;
     text += std::to_string(score);
-    _text.push_back(arcade::Text{text, Point{15, 5}, arcade::BLUE});
+    _text.push_back(arcade::Text{text, Point{18, 5}, arcade::BLUE});
 }
 
 void Nibbler::apple()
@@ -110,7 +110,7 @@ void Nibbler::apple()
     std::srand(std::time(nullptr));
     if (snakePos.x == _apple.position.x && snakePos.y == _apple.position.y) {
         getScore();
-        _apple.position = {static_cast<double>(std::rand() % 10), static_cast<double>(std::rand() % 10)};
+        _apple.position = {static_cast<double>(std::rand() % 8) + 1, static_cast<double>(std::rand() % 8) + 1};
     }
 }
 
