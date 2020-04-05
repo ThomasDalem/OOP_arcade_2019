@@ -82,6 +82,7 @@ int arcade::Core::playMenu()
         _displayModule->display(_menu.getElements(), _menu.getTexts());
         if (_menu.getChangeLibs() == true) {
             _displayModule.reset(nullptr);
+            _gameModule.reset(nullptr);
             setDisplayModule(_displayLoader.reloadLib(_menu.getSelectedGraphLib()));
             setGameModule(_gameLoader.reloadLib(_menu.getSelectedGameLib()));
             _menu.setChangeLibs(false);
