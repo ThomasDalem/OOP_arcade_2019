@@ -45,13 +45,14 @@ Nibbler::Nibbler()
 Nibbler::~Nibbler()
 {}
 
-void Nibbler::playLoop(std::vector<arcade::Inputs> const& inputs)
+int Nibbler::playLoop(std::vector<arcade::Inputs> const& inputs)
 {
     _elements.clear();
     Where(inputs);
     _snake->Move();
     _elements.insert(_elements.end(), _elements_const.begin(), _elements_const.end());
     _elements.push_back(_snake->getElement());
+    return (100);
 }
 
 void Nibbler::restart()

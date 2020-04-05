@@ -18,7 +18,7 @@ class Nibbler : public arcade::IGameModule {
         Nibbler();
         ~Nibbler();
 
-        void playLoop(std::vector<arcade::Inputs> const& inputs);
+        int playLoop(std::vector<arcade::Inputs> const& inputs);
         void restart();
         std::vector<arcade::Element> const& getElements() const;
         std::vector<arcade::Text> const& getTexts() const;
