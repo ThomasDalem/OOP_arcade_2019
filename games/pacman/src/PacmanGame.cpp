@@ -73,6 +73,10 @@ int PacmanGame::playLoop(std::vector<arcade::Inputs> const& inputs)
         _enemy->move();
         _player->move();
         _elements.push_back(_enemy->getElement());
+        if (_gumsManager.areGumsEmpty()) {
+            _isGame = false;
+            return (_score);
+        }
         setScore(_gumsManager.removeTouchedGums(_player->getPosition()));
     }
     _elements.push_back(_player->getElement());
