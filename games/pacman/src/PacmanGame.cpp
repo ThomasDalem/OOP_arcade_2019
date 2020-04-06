@@ -66,7 +66,7 @@ int PacmanGame::playLoop(std::vector<arcade::Inputs> const& inputs)
     if (collide(_player->getPosition(), _enemy->getPosition())) {
         if (_player->playLoose()) {
             _isGame = false;
-            return (-1);
+            return (_score);
         }
     } else {
         manageInputs(inputs);

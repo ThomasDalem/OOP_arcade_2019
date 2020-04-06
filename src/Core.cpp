@@ -137,7 +137,7 @@ int arcade::Core::arcade()
         if (getElapsedTime(last, now).count() > 0.005) {
             _scoreManager.updateActualScore(_gameModule->playLoop(inputs));
             if (_gameModule->getIsGame() == false) {
-                _scoreManager.registerActualScore();
+                // _scoreManager.registerActualScore();
                 return (arcade());
             }
             std::vector<arcade::Element> elements = _gameModule->getElements();
