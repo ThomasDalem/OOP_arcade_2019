@@ -13,7 +13,8 @@ extern "C" Nibbler *createObject()
     return (new Nibbler);
 }
 
-Nibbler::Nibbler()
+Nibbler::Nibbler():
+    _apple({"./games/nibbler/assets/apple.png", arcade::RED, {5, 5}, arcade::Rect{{0, 0}, {0, 0}}})
 {
     std::string strMap[11];
     const std::string path_wall("./games/pacman/assets/blue.png");
@@ -28,18 +29,18 @@ Nibbler::Nibbler()
     strMap[7] = "*              *";
     strMap[8] = "*              *";
     strMap[9] = "*              *";
-    strMap[10] = "***************";
+    strMap[10] = "****************";
 
     for (int i = 0; i < 11; i++) {
         for (int j = 0; j < 16; j++) {
             Point pos = {static_cast<double>(j), static_cast<double>(i)};
             if (strMap[i][j] == '*') {
                 arcade::Element elem{path_wall, arcade::WHITE, pos, arcade::Rect{Point{0,0}, Point{0,0}}};
-                _elements_const.push_back(elem);
+                _elementsConst.push_back(elem);
             }
         }
     }
-    _snake = std::make_unique<Snake>(_elements_const);
+    _snake = std::make_unique<Snake>(_elementsConst);
     _isGame = true;
 }
 
@@ -48,17 +49,26 @@ Nibbler::~Nibbler()
 
 int Nibbler::playLoop(std::vector<arcade::Inputs> const& inputs)
 {
+    std::vector<arcade::Element> snakeElem;
+
     _elements.clear();
-    Where(inputs);
-    _snake->Move();
-    _elements.insert(_elements.end(), _elements_const.begin(), _elements_const.end());
-    _elements.push_back(_snake->getElement());
-    return (100);
+    if (_snake->getHasLost() == false) {
+        where(inputs);
+        _snake->move();
+    }
+    if (snakeCollide(_apple.position)) {
+        _snake->addTail();
+        apple();
+    }
+    snakeElem = _snake->getElements();
+    _elements.insert(_elements.end(), _elementsConst.begin(), _elementsConst.end());
+    _elements.insert(_elements.end(), snakeElem.begin(), snakeElem.end());
+    _elements.push_back(_apple);
+    return (score);
 }
 
 void Nibbler::restart()
-{
-}
+{}
 
 bool Nibbler::getIsGame() const
 {
@@ -75,7 +85,7 @@ std::vector<arcade::Text> const& Nibbler::getTexts() const
     return (_text);
 }
 
-void Nibbler::Where(std::vector<arcade::Inputs> const& inputs)
+void Nibbler::where(std::vector<arcade::Inputs> const& inputs)
 {
     for (auto it = inputs.begin(); it != inputs.end(); it++) {
         if (*it == arcade::UP)
@@ -87,4 +97,30 @@ void Nibbler::Where(std::vector<arcade::Inputs> const& inputs)
         else if (*it == arcade::RIGHT)
             _snake->setDirection(Point{1, 0});
     }
+}
+
+void Nibbler::getScore()
+{
+    std::string text("Score: ");
+    
+    _text.clear();
+    score += 100;
+    text += std::to_string(score);
+    _text.push_back(arcade::Text{text, Point{18, 5}, arcade::BLUE});
+}
+
+void Nibbler::apple()
+{
+    Point snakePos = _snake->getPosition();
+
+    std::srand(std::time(nullptr));
+    if (snakePos.x == _apple.position.x && snakePos.y == _apple.position.y) {
+        getScore();
+        _apple.position = {static_cast<double>(std::rand() % 8) + 1, static_cast<double>(std::rand() % 8) + 1};
+    }
+}
+
+bool Nibbler::snakeCollide(Point const& obj) const
+{
+    return (_snake->getPosition().x == obj.x &&  _snake->getPosition().y == obj.y);
 }

@@ -22,13 +22,21 @@ class Nibbler : public arcade::IGameModule {
         void restart();
         std::vector<arcade::Element> const& getElements() const;
         std::vector<arcade::Text> const& getTexts() const;
-        void Where(std::vector<arcade::Inputs> const& inputs);
+        void where(std::vector<arcade::Inputs> const& inputs);
+        void getScore();
+        void apple();
         bool getIsGame() const;
+
+    private:
+        bool snakeCollide(Point const& obj) const;
+
     private:
         std::vector<arcade::Element> _elements;
-        std::vector<arcade::Element> _elements_const;
+        std::vector<arcade::Element> _elementsConst;
         std::vector<arcade::Text> _text;
-        std::unique_ptr<Snake> _snake;        
+        std::unique_ptr<Snake> _snake;
+        arcade::Element _apple;
+        int score;
         bool _isGame;
 };
 #endif /* !NIBBLER_HPP_ */
